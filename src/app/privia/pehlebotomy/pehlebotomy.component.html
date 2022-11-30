@@ -1,0 +1,164 @@
+<div class="body">
+    <div class="test-heading">
+        <h3>PHLEBOTOMY</h3>
+    </div>
+
+    <div class="row fields">
+        <div class="col-lg-6">
+            <div class="row">
+                <div class="col-lg-3">
+                    <label for="usr">Barcode:</label>
+                    <input type="text" class="form-control">
+                </div>
+                <div class="col-lg-3">
+                    <label for="usr">Branch:</label>
+                    <input type="text" class="form-control">
+                </div>
+                <div class="col-lg-3">
+                    <label for="usr">Name:</label>
+                    <input type="text" class="form-control">
+                </div>
+                <div class="col-lg-3">
+                    <label for="usr">Age/Sex:</label>
+                    <input type="text" class="form-control">
+                </div>
+                <div class="col-lg-3">
+                    <label for="usr">Referred By:</label>
+                    <select class="form-control">
+                        <option>--select--</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                    </select>
+                </div>
+                <div class="col-lg-3">
+                    <label for="usr">&nbsp;</label>
+                    <input type="text" class="form-control">
+                </div>
+                <div class="col-lg-5">
+                    <label for="usr">&nbsp;</label>
+                    <input type="text" class="form-control">
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="row">
+                <div class="col-lg-6">
+                    <label for="usr">SID Date:</label>
+                    <input type="date" class="form-control">
+                </div>
+                <div class="col-lg-6">
+                    <label for="usr">SID No:</label>
+                    <input type="text" class="form-control">
+                </div>
+
+                <div class="col-lg-12">
+                    <label for="usr">Remarks/History:</label>
+                    <textarea class="form-control"></textarea>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+    <div class="row tables">
+        <div class="col-lg-7">
+            <div class="mat-elevation-z8">
+                <table mat-table [dataSource]="dataSource">
+
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="s_no">
+                        <th mat-header-cell *matHeaderCellDef> S.No </th>
+                        <td mat-cell *matCellDef="let element"> 1 </td>
+                    </ng-container>
+
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="suffix">
+                        <th mat-header-cell *matHeaderCellDef> Suffix </th>
+                        <td mat-cell *matCellDef="let element"> 82-fasting </td>
+                    </ng-container>
+
+                    <!-- Weight Column -->
+                    <ng-container matColumnDef="specimen">
+                        <th mat-header-cell *matHeaderCellDef> Specimen </th>
+                        <td mat-cell *matCellDef="let element"> Urine </td>
+                    </ng-container>
+
+                    <!-- Symbol Column -->
+                    <ng-container matColumnDef="container">
+                        <th mat-header-cell *matHeaderCellDef> Container </th>
+                        <td mat-cell *matCellDef="let element"> Sterile container</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="select">
+                        <th mat-header-cell *matHeaderCellDef> Select </th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-checkbox class="example-margin"></mat-checkbox>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+
+                <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+            </div>
+
+        </div>
+        <div class="col-lg-5">
+            <div class="mat-elevation-z8">
+                <table mat-table [dataSource]="dataSource2">
+
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="s_no">
+                        <th mat-header-cell *matHeaderCellDef> S.No </th>
+                        <td mat-cell *matCellDef="let element"> 1 </td>
+                    </ng-container>
+
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="test_names">
+                        <th mat-header-cell *matHeaderCellDef> Test Names </th>
+                        <td mat-cell *matCellDef="let element">fasting urine sugar </td>
+                    </ng-container>
+
+                    <!-- Weight Column -->
+                    <ng-container matColumnDef="selected">
+                        <th mat-header-cell *matHeaderCellDef> </th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-checkbox class="example-margin"></mat-checkbox>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+                </table>
+
+                <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4">
+
+        </div>
+        <div class="col-lg-8">
+            <div class="row">
+              <div class="col-lg-6 credentials">
+                <label for="usr">Staff code:</label>
+                <!-- <input type="text staff" class="form-control staff"> -->
+                <input type="text " class="form-control">
+              </div>
+              <div class="col-lg-6 credentials">
+                <label for="usr">Password:</label>
+                <input type="text" class="form-control">
+                <span class="material-icons"> save</span>
+                <span class="material-icons"> clear</span>
+              </div>
+            </div>
+           
+        </div>
+    </div>
+</div>

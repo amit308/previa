@@ -1,0 +1,131 @@
+<div class="country-container mt-3">
+    <div class="container-fluid">
+        <div class="card card-custom example example-compact gutter-b">
+            <div class="card-header">
+                <div class="card-title">
+                    <h2 class="card-label">MENUS-ROLES</h2>
+                </div>
+            </div>
+            <div class="card-body">
+                <mat-tab-group>
+                    <mat-tab label="Menus">
+                        <div class="p-3">
+                            <div class="row">
+                                <div class="col-md-3 mt-2">
+                                    <input type="text"  class="full-width" class="select_input" value="{{user?.role}}" readonly>
+                                </div>
+                                <div class="col-md-3">
+                                    <mat-form-field class="full-width">
+                                        <mat-label>Select Role </mat-label>
+                                        <!-- (selectionChange)="onChangeRole($event , '1')" -->
+                                        <mat-select [(ngModel)]="selectedRole" (selectionChange)="onChangeRole($event , '1')">
+                                            <mat-option value="{{role._id}}" *ngFor="let role of roles">
+                                                {{role?.displayName}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-3" *ngIf="!user.subdivision_id">
+                                    <mat-form-field class="full-width">
+                                        <mat-label>Select Organization </mat-label>
+                                        <mat-select [(ngModel)]="selectedSubDivisionId">
+                                            <mat-option *ngFor="let item of filteredOrganizations" [value]="item?._id">
+                                                {{item?.name}} - {{item?.category}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-3 text-center mt-2" *ngIf="!user.subdivision_id">
+                                    <button  class="button-select" [disabled]="!selectedRole || !selectedSubDivisionId" (click)="getRoleOrgMenus()">Submit</button>
+                                </div>
+
+
+                            </div>
+                            <hr>
+                            <div class="row mt-2">
+                                <div class="col-md-5">
+                                    <p class="text-center p-0 m-0"><b>Total Menus</b></p>
+                                    <div class="card" style="height: 43vh; overflow: auto;">
+                                        <div class="row text-center border-bottom p-0 m-0 bg-color"
+                                            *ngFor="let menu of menus">
+                                            <div class="col-md-10">
+                                                <p class="menus-items">{{menu?.menu}}</p>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <input type="checkbox" class="check_box" value="{{menu?.isChecked}}"
+                                                    checked="{{menu?.isChecked}}"
+                                                    (click)="onChangeMenu($event,menu?.menuId)">
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                                <div class="col-md-5">
+                                    <p class="text-center p-0 m-0 "><b>Selected Menus</b></p>
+
+                                    <div class="card" style="height: 43vh; overflow: auto;"
+                                        *ngIf="selectedRoleMenus.length>0;">
+                                        <div class="row text-center border-bottom p-0 m-0 bg-color"
+                                            *ngFor="let menu of selectedRoleMenus">
+                                            <div class="col-md-12">
+                                                <p class="menus-items">{{menu?.menu}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                
+                            </div>
+                        </div>
+                    </mat-tab>
+                    <mat-tab label="Roles">
+                        <div class="p-3">
+                            <div class="row">
+                                <mat-form-field class="">
+                                    <mat-label>Select Role </mat-label>
+                                    <mat-select (selectionChange)="onChangeRole($event,'2')">
+                                        <mat-option value="{{role._id}}" *ngFor="let role of roles">
+                                            {{role?.displayName}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>S.NO</th>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Mobile</th>
+                                            <th>Role</th>
+                                            <th>Organization</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let user of subDivisionUsers; let i = index">
+                                            <td>{{i + 1}}</td>
+                                            <td>{{user?.name}}</td>
+                                            <td>{{user?.emailAddress}}</td>
+                                            <td>{{user?.mobileNumber}}</td>
+                                            <td>{{user?.roleInfo?.name}}</td>
+                                            <td>{{user?.subdivisionInfo?.name}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div style="border-bottom: 1px solid #ced4da ; margin-top: -12px;"></div>
+
+
+
+                            </div>
+                        </div>
+
+
+                    </mat-tab>
+
+
+
+                </mat-tab-group>
+            </div>
+        </div>
+    </div>

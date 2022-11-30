@@ -1,0 +1,79 @@
+<div class="country-container mt-3">
+    <div class="container-fluid">
+      <div class="card card-custom example example-compact gutter-b">
+        <div class="card-header">
+          <div class="card-title">
+              <div class="row">
+                  <div class="col-md-5"><h3 class="card-label">Profile</h3></div>
+                  <div class="col-md-4"></div> 
+                  <div class="col-md-3 text-right card-label"><a class="text-dark" routerLink="/settings/Changepassword">
+                    <i  class="fa fa-edit" aria-hidden="true"></i> Change Password</a></div>
+              </div>
+            <!-- <h3 class="card-label font-weight-bold">Profile</h3> -->
+          </div>
+         <div class="card-body">
+            <form [formGroup]="profileForm" (ngSubmit)="editProfile()">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>
+                                Name
+                            </label>
+                            <input type="text" class="form-control" formControlName="name" readonly>
+        
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>
+                                Email
+                            </label>
+                            <input type="email" class="form-control" formControlName="email" readonly >
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>
+                                Mobile Number
+                            </label>
+                            <input type="number" class="form-control" formControlName="mobile_number" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>
+                                Role
+                            </label>
+                            <input type="text" class="form-control" formControlName="role" readonly >
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>
+                                Sub Division
+                            </label>
+                            <input type="text" class="form-control" formControlName="subdivision" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>
+                                Organization
+                            </label>
+                            <input type="text" class="form-control" formControlName="subdivisionName" readonly>
+                        </div>
+                    </div>
+                </div>
+            <!-- <div style="text-align: right;">
+                <button  type="button" class="btn btn-primary mt-3" (click)="editProfile()">Edit</button>
+            </div> -->
+        </form>
+         </div>
+        </div>
+    </div>
+  </div> 
+  
+  
+</div>
+
+  

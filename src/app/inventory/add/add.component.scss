@@ -1,0 +1,18 @@
+.body{
+    margin:1rem;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+  }
+  .buttons button {
+    background-color: #00c9d1 !important;
+    color: #fff;
+    border: #00c9d1 !important;
+    margin-right: 10px;
+    margin-top: 15px;
+    line-height: 30px;
+    border-radius: 0.25rem;
+    font-size: 15px;
+  }  

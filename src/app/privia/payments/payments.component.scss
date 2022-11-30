@@ -1,0 +1,65 @@
+.body{
+    margin:1rem;
+    .patient-heading h3 {
+        color: rgba(31,32,34,.5);
+        margin: 0 0 1.42857rem;
+        font-size: 2rem;
+        width: 100%;
+        margin-top: 20px;
+    }
+    table{
+        width:100%;
+        th{
+            background-color: lightgray;
+            // color:white;
+        }
+
+        td{
+            background: hsla(0,0%,92.2%,.3);
+
+            .icon1 {
+                background: #000;
+                color: #fff;
+                padding: 8px;
+                border-radius: 25px;
+                margin-right: 10px;
+            }
+
+            .icon2 {
+                background: #ed5564;
+                color: #fff;
+                padding: 8px;
+                border-radius: 25px;
+                margin-right: 10px;
+            }
+
+            .icon3 {
+                background: #2759fa;
+                color: #fff;
+                padding: 8px;
+                border-radius: 25px;
+                margin-right: 10px;
+            }
+
+        }
+
+        td .number{
+            font-size: 12px;
+            color: blue;
+        }
+        
+        .actions:hover {
+            cursor: pointer;
+        }
+    }
+}
+
+.add-doctor{
+    float: right;
+    bottom: 0;
+    position: sticky;
+    cursor: pointer;
+    span{
+        font-size: 4rem;
+    }
+}

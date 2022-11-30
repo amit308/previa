@@ -1,0 +1,37 @@
+<div>
+    <div  class="mb-5">
+        <form [formGroup]="bulkPatientForm">
+            <!-- <h3 class="mb-5">Upload Bulk Tests</h3> -->
+            <div class="d-flex justify-content-between">
+                <h1 mat-dialog-title>
+                    Upload Bulk Tests
+                  </h1>
+              <div class="button">
+                <a
+                  class="btn btn-xs btn-icon btn-hover-primary"
+                  href="javascript:void(0)"
+                  (click)="onClose()"
+                  >X</a>
+              </div>
+            </div>
+            <label>Excel File:</label>
+            <div class="input-group mb-3">
+
+                <input type="file" (click)="fileUploaded()" class="form-control field" (change)="onFileChange($event)" accept=".csv,.xls,.xlsx" placeholder="Excel File"
+                    formControlName="file" aria-label="Username" aria-describedby="basic-addon1">
+            </div>
+        <p class="text-danger"> {{this.errormessage}}</p>
+
+        </form>
+    </div>
+    <div class="row buttons">
+        <div class="col-lg-6 cancel">
+            <button type="button" (click)="onClose()" class="btn btn-danger">Cancel</button>
+        </div>
+        <div class="col-lg-6 add-doctor text-end">
+            <button type="button" (click)="onSubmit()"
+                class="btn btn-primary">Upload</button>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,26 @@
+
+h2{
+    color: black;
+    font-weight: 300;
+    margin-bottom: 0px;
+  }
+  
+.button-alignment{
+  float: right;
+  cursor: pointer;
+  
+}
+
+
+b {
+  font-size: 18px;
+}
+.example-card{
+  border: 1px solid #ad9f9f;
+}
+::ng-deep {
+  input[type=date].form-control, input[type=time].form-control, input[type=datetime-local].form-control, input[type=month].form-control {
+   
+    text-transform: uppercase !important;
+  }
+  }

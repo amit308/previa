@@ -1,0 +1,42 @@
+.demo-chart {
+    height: 400px;
+  }
+
+.body{
+    margin:1rem;
+   mat-card .material-icons{
+      font-size: 3rem;
+     color: rgba(51, 108, 251, 0.5);
+    }
+    h6{
+        font-size: 1rem;
+    font-weight: 500;
+    }
+    .count{
+        font-size: 20px;
+        color: rgb(51, 108, 251);
+        line-height: 0.1rem;
+    }
+    .charts{
+        margin-top: 2rem;
+    }
+}
+
+mat-card{
+    height: 5rem;
+    box-shadow: 0 18px 24px rgba(0,0,0,.12) !important;
+    background: rgb(251, 251, 251);
+    border-radius: 6px;
+}
+
+table{
+    width:100%;
+    th{
+        background-color: rgba(31,32,34,.1);
+        color:black;
+       
+    }
+}
+.phone{
+    font-size: 12px;
+}

@@ -1,0 +1,142 @@
+.body{
+    margin:1rem;
+    .test-heading{
+        // display: flex;
+        // justify-content: space-between;
+        // margin-bottom: 10px;
+         h3 {
+        color: rgba(31,32,34,.5);
+        // margin: 0 0 1.42857rem;
+        font-size: 2rem;
+        width: 100%;
+        margin-top: 20px;
+        
+    }
+}
+.departments{
+    label{
+        font-weight: 500;
+    }
+    .search-label{
+        margin-top: 14px;
+    }
+    .btn-group{
+        text-align: end;
+        display: flow-root;
+       .btn{
+           background-color: #437289;
+           color: white;
+           margin-right: 10px;
+         }
+      }
+      .applicable{
+          border: 1px solid lightgray;
+        //   padding: 10px;
+      }
+    }
+    
+
+    
+}
+.mat-icons{
+    display: flex;
+    mat-icon {
+        // margin-top: 4px;
+        font-size: 25px;
+        background: #437289;
+        color: #fff;
+        font-weight: bold;
+        margin-left: 9px;
+    }
+}
+.refresh-button{
+    
+    .mat-icon{
+        height: 17px !important;
+        width: 17px !important;
+    }
+  .refresh{
+    font-size: 17px;
+    background: #437289;
+    color: #fff;
+    font-weight: bold;
+    margin-left: 9px;
+
+  }
+}
+mat-icon {
+    cursor: pointer;
+    // margin-top: 4px;
+    // font-size: 25px;
+    // background: #437289;
+    // color: #fff;
+    // font-weight: bold;
+    // margin-left: 9px;
+}
+
+::ng-deep{
+    .mat-tab-label:focus:not(.mat-tab-disabled) {
+        opacity: 1;
+        background: #437289 !important;
+        color: white !important;
+    }
+}
+.search-doctor {
+    position: relative;
+    margin-top: 28px;
+  }
+  
+  .search{
+    position: absolute;
+    top: 8px;
+    left: 6px;
+  }
+  
+  .search-doctor input {
+    padding: 0px 33px;
+  }
+  .resulttype{
+      border: 1px solid lightgray;
+  }
+  .checkbox{
+      border: 1px solid lightgray;
+      margin-top: 28px;
+  }
+// mat-card{
+//     margin-top: 10px;
+//     padding: 10px;
+//     border: 1px solid lightgray;
+// }
+
+.Detailed-table{
+    margin-top: 4rem;
+    .header{
+    //  width: 80%;
+     background-color: #a09e9e;
+     height: 2rem;
+     color: white;
+     text-align: center;
+    }
+}
+
+.custom-form-control {
+    border: none;
+    background: none;
+    border-bottom: solid 1px #ccc;
+    &:focus {
+        border: none !important;
+        border-bottom: solid 1px #ccc !important;
+        box-shadow: none !important;
+    }
+}
+
+.clear-icon {
+    position: absolute;
+    left: 170px;
+    font-size: 18px;
+    top: 6px;
+}
+
+.full-width-previous-test {
+    width: 60%;
+}

@@ -1,0 +1,53 @@
+.body{
+    margin:1rem;
+    .patient-heading h3 {
+        color: rgba(31,32,34,.5);
+        margin: 0 0 1.42857rem;
+        font-size: 2rem;
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    input, textarea{
+        height: calc(1.5em + 0.75rem + 2px);
+       outline: none;
+      border:1px solid #ced4da;
+      border-radius: 0.25rem;
+      width:100%
+
+    }
+
+    mat-select{
+        height: calc(1.5em + 0.75rem + 2px);
+        outline: none;
+       border:1px solid #ced4da;
+       border-radius: 0.25rem;
+    }
+
+    .check{
+        padding-left: 1rem;
+        margin-top: 1rem;
+    }
+
+    .mat-table{
+        margin-top: 1rem;
+    }
+
+    .buttons button {
+        font-size: 0.5rem;
+    }
+
+    .b-buttons{
+        margin-top: 1rem;
+        float: right;
+        button{
+            margin-right: 0.2rem;
+            font-size: 0.5rem;
+        }
+    }
+}
+
+
+table {
+    width: 100%;
+  }

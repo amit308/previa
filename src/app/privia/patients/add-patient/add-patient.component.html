@@ -1,0 +1,96 @@
+<div>
+    <div class="doctor-fields" *ngIf="selectDailog === 'add'">
+        <h3>Add Patients</h3>
+        <form [formGroup]="patientForm" >
+        <div class="input-group mb-3 row">
+            <div class="col-lg-2">
+                <img src="./../../../assets/salman-khan-1584090953.jpg" alt="Avatar" class="avatar">
+            </div>
+            <div>
+                <input type="file" class="form-control file-input" placeholder="link" formControlName="image" aria-label="Username"
+                aria-describedby="basic-addon1" #fileinput>
+                <button type="button" (click)="fileinput.click()" class="btn btn-primary">select image</button>
+            </div>
+        </div>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control field" placeholder="Patient Name" formControlName="name" aria-label="Username"
+                aria-describedby="basic-addon1">
+        </div>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control field" placeholder="Email" formControlName="emailAddress" aria-label="Username"
+                aria-describedby="basic-addon1">
+        </div>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control field" placeholder="Mobile Number" formControlName="mobileNumber" aria-label="Username"
+                aria-describedby="basic-addon1">
+        </div>
+        <div class="row">
+            <div class="input-group mb-3 col-lg-6">
+                <!-- <input type="text" class="form-control field" placeholder="Gender" formControlName="gender" aria-label="Username"
+                    aria-describedby="basic-addon1"> -->
+                    <select class="form-control field" formControlName="gender">
+                        <option value="" disabled>Select Gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="others">Others</option>
+                    </select> 
+            </div>
+            <div class="input-group mb-3 col-lg-6">
+                <input type="number" class="form-control field" placeholder="Age" formControlName="age" aria-label="Username"
+                    aria-describedby="basic-addon1">
+            </div>
+        </div>
+        <div class="input-group mb-3">
+            <textarea class="form-control field" formControlName="address" aria-label="With textarea" placeholder="Address"></textarea>
+        </div>
+        <div class="input-group mb-3">
+            <!-- <input type="text" class="form-control field" placeholder="gender" formControlName="" aria-label="Username"
+                    aria-describedby="basic-addon1"> -->
+            <select class="form-control field" formControlName="tests">
+                <option value="" disabled>Select Tests</option>
+                <option value="ecg">ECG</option>
+                <option value="mri">MRI</option>
+            </select>        
+        </div>
+        
+    </form>
+    </div>
+
+    <div *ngIf="selectDailog === 'addbulk'" class="mb-5">
+        <form [formGroup]="bulkPatientForm" >
+        <!-- <h3 class="mb-5">Upload Patients in Bulk</h3> -->
+        <div class="d-flex justify-content-between">
+            <h1 mat-dialog-title>
+                Upload Patients in Bulk
+              </h1>
+          <div class="button">
+            <a
+              class="btn btn-xs btn-icon btn-hover-primary"
+              href="javascript:void(0)"
+              (click)="onClose()"
+              >X</a>
+          </div>
+        </div>
+        <label>Excel File:</label>
+        <div class="input-group mb-3">
+            
+            <input type="file" class="form-control field" (click)="fileUpload()" (change)="onFileChange($event)" placeholder="Excel File" formControlName="file" aria-label="Username"
+                aria-describedby="basic-addon1" accept=".xl*" >
+                <!-- <div *ngIf="submitted && f.file.errors" class="invalid-feedback">
+                    <div *ngIf="f.file.errors.required"> File is required</div>
+                  </div> -->
+                  
+        </div>
+        <p class="text-danger"> {{this.errormessage1}}</p>
+    </form>
+    </div>
+    <div class="row buttons">
+        <div class="col-lg-6 cancel">
+            <button type="button" (click)="onClose()" class="btn btn-danger">Cancel</button>
+        </div>
+        <div class="col-lg-6 add-doctor">
+            <button type="button" (click)="onSubmit()" class="btn btn-primary">{{ selectDailog == 'add' ? 'Add patient' : 'Upload' }}</button>
+        </div>
+    </div>
+
+</div>

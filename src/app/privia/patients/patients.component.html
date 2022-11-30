@@ -1,0 +1,764 @@
+<div class="country-container mt-3">
+  <div class="container-fluid">
+    <div class="card card-custom example example-compact gutter-b">
+      <div class="card-header">
+        <!-- <div class="row "> -->
+        <!-- <div class="col-12"> -->
+
+        <!-- </div> -->
+
+        <div class="row">
+          <!-- <div class="col-md-12"> -->
+          <h2>PATIENTS LIST</h2>
+          <div>
+            <input
+              type="text"
+              class="patients-date"
+              ngxDaterangepickerMd
+              placeholder="Select Date Range"
+              (change)="changePatientsDate()"
+              [ranges]="ranges"
+              [showCustomRangeLabel]="true"
+              [showCancel]="true"
+              [locale]="{ applyLabel: 'ok', format: 'DD-MM-YYYY' }"
+              [(ngModel)]="selectedPatientsDate"
+            />
+            <mat-icon
+              matDatepickerToggleIcon
+              class="clear-icon"
+              (click)="clearDate()"
+              >clear</mat-icon
+            >
+          </div>
+          &nbsp;
+          <!-- <input class="date-picker date_content mt-2" [(ngModel)]="selectedPatientsDate"
+                            type="date" (change)="changePatientsDate()" />
+                        <mat-icon matDatepickerToggleIcon class="clear-icon" (click)="clearDate()">clear</mat-icon> -->
+          <!-- <button class="btn btnGroup ml-3" (click)="assignToLab(assignToLabModel)" [disabled]="checkedLabPatients.length == 0">
+                            AssignToLab
+                        </button> -->
+
+          <input
+            type="search"
+            style="width: 230px"
+            placeholder="Search By Name/PID/BatchId"
+            class="select_vaccine"
+            [(ngModel)]="searchValue"
+            (input)="searchPatients()"
+          />&nbsp;
+
+          <select
+            class="select_vaccine"
+            (change)="changePatientsType()"
+            [(ngModel)]="selectedCategory"
+          >
+            <option value="null" disabled="true" [selected]="true">
+              Select Referrer
+            </option>
+            <option value="" selected>All</option>
+            <option *ngFor="let item of categories$" value="{{ item._id }}">
+              {{ item.name }} - {{ item.category }}
+            </option></select
+          >&nbsp;
+
+          <!-- <select class="select_vaccine " (change)="changePatientsType()" [(ngModel)]="patientTestStatus">
+                            <option value="" disabled selected>Select Tests Status</option>
+                            <option value="all">All Patients</option>
+                            <option value="completed"> Completed </option>
+                            <option value="AwaitingSampleTechnician"> AwaitingSampleTechnician </option>
+                            <option value="AssignedToTechnician"> AssignedToTechnician </option>
+                            <option value="CollectedByTechnician"> CollectedByTechnician </option>
+                            <option value="SampleAssignedToRider"> SampleAssignedToRider </option>
+                            <option value="CollectedByRider"> CollectedByRider </option>
+                            <option value="DeliveredByRider"> DeliveredByRider </option>
+                            <option value="AwaitingForSampleReceive"> AwaitingForSampleReceive </option>
+                            <option value="SampleReceived"> SampleReceived </option>
+                        </select>&nbsp; -->
+          <!-- <select
+                        class="select_vaccine "
+                        [(ngModel)]="selectedOrganization"
+                        (change)="changeOrganization()"
+                      >
+                        <option hidden value="" selected disabled>
+                          Select Organization
+                        </option>
+                        <option
+                          *ngFor="let subInfo of subDivisions"
+                          [value]="subInfo._id"
+                        >
+                          {{ subInfo?.name }}
+                        </option>
+                      </select>&nbsp; -->
+          <!-- <input type="search" placeholder="Search By Referrer" class="select_vaccine"
+                        [(ngModel)]="searchReferrerValue" (input)="searchByReferrer()">&nbsp; -->
+
+          <button
+            class="btn btnGroup"
+            (click)="openDownloadReportModel(downloadTestReport)"
+            [disabled]="checkedLabPatients.length == 0"
+          >
+            Download Report
+          </button>
+          <!-- </div> -->
+          <!-- </div> -->
+          <!-- </div> -->
+          <!-- <div class="row"> -->
+          <div class="col-md-12">
+            <section class="example-section mt-2">
+              <div class="card">
+                <div class="card-body">
+                  <mat-radio-group
+                    aria-label="Select an option"
+                    (change)="changePatientsType()"
+                    [(ngModel)]="patientTestStatus"
+                  >
+                    <div class="row flags">
+                      <!-- <div class="col-md-3 "> -->
+                      <!-- <div class="form-check form-check-inline"> -->
+                      <div class="all">
+                        <!-- <span>Pending</span> -->
+
+                        <mat-radio-button value="all">
+                          <span class="material-icons">flag</span>
+                          All Patients
+                        </mat-radio-button>
+                      </div>
+                      <div class="SampleRepeat">
+                        <mat-radio-button value="SampleRepeat">
+                          <span class="material-icons">flag</span>SampleRepeat
+                        </mat-radio-button>
+                      </div>
+                      <div class="IsolationRepeat">
+                        <mat-radio-button value="IsolationRepeat">
+                          <span class="material-icons">flag</span
+                          >IsolationRepeat
+                        </mat-radio-button>
+                      </div>
+                      <!-- </div> -->
+                      <!-- <div class="col-md-3">  -->
+                      <div class="completed">
+                        <mat-radio-button value="completed">
+                          <span class="material-icons">flag</span>Completed
+                        </mat-radio-button>
+                      </div>
+
+                      <!-- </div> -->
+                      <!-- <div class="col-md-4"> -->
+                      <div class="AwaitingSampleTechnician">
+                        <mat-radio-button value="AwaitingSampleTechnician">
+                          <span class="material-icons">flag</span
+                          >AwaitingSampleTechnician
+                        </mat-radio-button>
+                      </div>
+                      <!-- </div>
+                                <div class="col-md-4">  -->
+                      <div class="AssignedToTechnician">
+                        <mat-radio-button value="AssignedToTechnician"
+                          ><span class="material-icons">flag</span
+                          >AssignedToTechnician
+                        </mat-radio-button>
+                      </div>
+                      <!-- </div> -->
+                      <!-- </div> -->
+                      <!-- <div class="row">
+                                <div class="col-md-3">  -->
+                      <div class="CollectedByTechnician">
+                        <mat-radio-button value="CollectedByTechnician">
+                          <span class="material-icons">flag</span
+                          >CollectedByTechnician
+                        </mat-radio-button>
+                      </div>
+                      <!-- </div> -->
+                      <!-- <div class="col-md-3"> -->
+                      <!-- <div class="SampleAssignedToRider">
+                        <mat-radio-button value="SampleAssignedToRider">
+                          <span class="material-icons">flag</span
+                          >AssignedToRider
+                        </mat-radio-button>
+                      </div> -->
+                      <!-- </div>
+                                <div class="col-md-2"> -->
+                      <!-- <div class="CollectedByRider">
+                        <mat-radio-button value="CollectedByRider"
+                          ><span class="material-icons">flag</span
+                          >CollectedByRider
+                        </mat-radio-button>
+                      </div> -->
+                      <!-- </div> -->
+                      <!-- <div class="col-md-3"> -->
+                      <!-- <div class="DeliveredByRider">
+                        <mat-radio-button value="DeliveredByRider">
+                          <span class="material-icons">flag</span
+                          >DeliveredByRider
+                        </mat-radio-button>
+                      </div> -->
+                      <!-- </div> -->
+                      <!-- </div> -->
+                      <!-- <div class="row"> -->
+                      <!-- <div class="col-md-2"> -->
+                      <!-- <div class="AwaitingForSampleReceive">
+                        <mat-radio-button value="AwaitingForSampleReceive">
+                          <span class="material-icons">flag</span
+                          >AwaitingForReceive
+                        </mat-radio-button>
+                      </div> -->
+                      <!-- </div> -->
+                      <!-- <div class="col-md-3"> -->
+                      <!-- <div class="SampleReceived">
+                        <mat-radio-button value="SampleReceived">
+                          <span class="material-icons">flag</span>SampleReceived
+                        </mat-radio-button>
+                      </div> -->
+                      <!-- </div> -->
+                    </div>
+                    <!-- </div> -->
+                  </mat-radio-group>
+                </div>
+              </div>
+            </section>
+          </div>
+          <!-- </div> -->
+        </div>
+      </div>
+      <div class="card-body">
+        <!-- <div class="card bg-light" (change)="changePatientsType()" [(ngModel)]="patientTestStatus">
+                            <div class="card-body">
+                              
+                                <div class="card p1-3 table-responsive example-container mat-elevation-z8"> -->
+        <!-- <div class="col-md-12"> -->
+        <!-- </div> -->
+        <!-- </div> -->
+        <!-- </div> -->
+
+        <div class="mx-auto" *ngIf="patientDetails?.length === 0">
+          No Data Found
+        </div>
+        <div
+          class="table-responsive example-container mat-elevation-z8"
+          *ngIf="patientDetails?.length > 0"
+        >
+          <table class="table table-hover text-center">
+            <thead>
+              <tr>
+                <th>S.No</th>
+                <th>
+                  <input
+                    type="checkbox"
+                    [checked]="checkAllPatients"
+                    (click)="selectAllPatientsToLab($event, patientDetails)"
+                  />
+                </th>
+                <th (click)="sortEvent('createdAt')">
+                  Created Date
+                  <i
+                    class="fa fa-chevron-up"
+                    *ngIf="sortDirection === 'ASC' && sortvalue === 'createdAt'"
+                  ></i>
+                  <i
+                    class="fa fa-chevron-down"
+                    *ngIf="
+                      sortDirection === 'DASC' && sortvalue === 'createdAt'
+                    "
+                  ></i>
+                </th>
+                <th (click)="sortEvent('pid')">
+                  PID
+                  <i
+                    class="fa fa-chevron-up"
+                    *ngIf="sortDirection === 'ASC' && sortvalue === 'pid'"
+                  ></i>
+                  <i
+                    class="fa fa-chevron-down"
+                    *ngIf="sortDirection === 'DASC' && sortvalue === 'pid'"
+                  ></i>
+                </th>
+                <th (click)="sortEvent('pid')">
+                  Batch ID
+                  <i
+                    class="fa fa-chevron-up"
+                    *ngIf="sortDirection === 'ASC' && sortvalue === 'bid'"
+                  ></i>
+                  <i
+                    class="fa fa-chevron-down"
+                    *ngIf="sortDirection === 'DASC' && sortvalue === 'bid'"
+                  ></i>
+                </th>
+
+                <th (click)="sortEvent('name')">
+                  Name
+                  <i
+                    class="fa fa-chevron-up"
+                    *ngIf="sortDirection === 'ASC' && sortvalue === 'name'"
+                  ></i>
+                  <i
+                    class="fa fa-chevron-down"
+                    *ngIf="sortDirection === 'DASC' && sortvalue === 'name'"
+                  ></i>
+                </th>
+                <!-- <th (click)="sortEvent('emailAddress')">Email
+                                    <i class="fa fa-chevron-up"
+                                        *ngIf="sortDirection === 'ASC' && sortvalue === 'emailAddress'"></i>
+                                    <i class="fa fa-chevron-down"
+                                        *ngIf="sortDirection === 'DASC' && sortvalue === 'emailAddress'"></i>
+                                </th> -->
+                <th (click)="sortEvent('mobileNumber')">
+                  Mobile
+                  <i
+                    class="fa fa-chevron-up"
+                    *ngIf="
+                      sortDirection === 'ASC' && sortvalue === 'mobileNumber'
+                    "
+                  ></i>
+                  <i
+                    class="fa fa-chevron-down"
+                    *ngIf="
+                      sortDirection === 'DASC' && sortvalue === 'mobileNumber'
+                    "
+                  ></i>
+                </th>
+                <!-- <th (click)="sortEvent('gender')">Gender
+                                    <i class="fa fa-chevron-up"
+                                        *ngIf="sortDirection === 'ASC' && sortvalue === 'gender'"></i>
+                                    <i class="fa fa-chevron-down"
+                                        *ngIf="sortDirection === 'DASC' && sortvalue === 'gender'"></i>
+                                </th> -->
+                <th (click)="sortEvent('DOB')">
+                  DOB
+                  <i
+                    class="fa fa-chevron-up"
+                    *ngIf="sortDirection === 'ASC' && sortvalue === 'DOB'"
+                  ></i>
+                  <i
+                    class="fa fa-chevron-down"
+                    *ngIf="sortDirection === 'DASC' && sortvalue === 'DOB'"
+                  ></i>
+                </th>
+                <th>Test Name</th>
+                <th>Referrer</th>
+                <th>Status</th>
+
+                <!-- <th (click)="sortEvent('address')">Address
+                                    <i class="fa fa-chevron-up"
+                                        *ngIf="sortDirection === 'ASC' && sortvalue === 'address'"></i>
+                                    <i class="fa fa-chevron-down"
+                                        *ngIf="sortDirection === 'DASC' && sortvalue === 'address'"></i>
+                                </th> -->
+                <!-- <th  (click)="sortEvent('subdivision')">subdivision
+                                <i class="fa fa-chevron-up" *ngIf="sortDirection === 'ASC' && sortvalue === 'subdivision'" ></i>
+                                <i class="fa fa-chevron-down" *ngIf="sortDirection === 'DASC' && sortvalue === 'subdivision'"></i></th> -->
+                <!-- <th>Tests Status</th> -->
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of patientDetails; let i = index">
+                <td>
+                  {{ i + pageEvent?.pageIndex * pageEvent?.pageSize + 1 }}
+                </td>
+                <td>
+                  <input
+                    type="checkbox"
+                    [checked]="item.isChecked"
+                    (click)="selectPatientToLab($event, item)"
+                  />
+                </td>
+                <td>{{ item.createdAt | date: "dd-MM-yyyy HH:mm a" }}</td>
+                <td>{{ item.pid }}</td>
+                <td>{{ item.bid }}</td>
+                <td>{{ item.name | titlecase }}</td>
+                <!-- <td>{{ item.emailAddress }}</td> -->
+                <td>{{ item.mobileNumber }}</td>
+                <!-- <td>{{ item.gender }}</td> -->
+                <td>{{ item.DOB }}</td>
+                <td>
+                  <p *ngFor="let testItem of item.tests">
+                    {{ testItem?.name }}
+                  </p>
+                </td>
+                <td>
+                  <p *ngFor="let testItem of item.tests">
+                    {{ testItem?.referrer }}
+                  </p>
+                </td>
+                <td *ngIf="patientTestStatus === 'completed'" class="completed">
+                  <span class="material-icons">flag</span>
+                </td>
+                <td
+                  *ngIf="patientTestStatus === 'SampleRepeat'"
+                  class="SampleRepeat"
+                >
+                  <span class="material-icons">flag</span>
+                </td>
+                <td
+                  *ngIf="patientTestStatus === 'IsolationRepeat'"
+                  class="IsolationRepeat"
+                >
+                  <span class="material-icons">flag</span>
+                </td>
+                <td
+                  *ngIf="patientTestStatus === 'AwaitingSampleTechnician'"
+                  class="AwaitingSampleTechnician"
+                >
+                  <span class="material-icons">flag</span>
+                </td>
+                <td *ngIf="patientTestStatus === 'all'">
+                  <div *ngFor="let testItem of item.tests">
+                    <p class="AwaitingSampleTechnician">
+                      <span
+                        *ngIf="testItem.status == 'AwaitingSampleTechnician'"
+                        class="material-icons"
+                        >flag</span
+                      >
+                    </p>
+                    <p class="completed">
+                      <span
+                        *ngIf="testItem.status == 'completed'"
+                        class="material-icons"
+                        >flag</span
+                      >
+                    </p>
+                    <p class="AssignedToTechnician">
+                      <span
+                        *ngIf="testItem.status == 'AssignedToTechnician'"
+                        class="material-icons"
+                        >flag</span
+                      >
+                    </p>
+                    <p class="CollectedByTechnician">
+                      <span
+                        *ngIf="testItem.status == 'CollectedByTechnician'"
+                        class="material-icons"
+                        >flag</span
+                      >
+                    </p>
+                    <p class="SampleAssignedToRider">
+                      <span
+                        *ngIf="testItem.status == 'SampleAssignedToRider'"
+                        class="material-icons"
+                        >flag</span
+                      >
+                    </p>
+                    <p class="CollectedByRider">
+                      <span
+                        *ngIf="testItem.status == 'CollectedByRider'"
+                        class="material-icons"
+                        >flag</span
+                      >
+                    </p>
+
+                    <p class="DeliveredByRider">
+                      <span
+                        *ngIf="testItem.status == 'DeliveredByRider'"
+                        class="material-icons"
+                        >flag</span
+                      >
+                    </p>
+                    <p class="AwaitingForSampleReceive">
+                      <span
+                        *ngIf="testItem.status == 'AwaitingForSampleReceive'"
+                        class="material-icons"
+                        >flag</span
+                      >
+                    </p>
+                    <p class="SampleReceived">
+                      <span
+                        *ngIf="testItem.status == 'SampleReceived'"
+                        class="material-icons"
+                        >flag</span
+                      >
+                    </p>
+                    <p class="SampleRepeat">
+                      <span
+                        *ngIf="testItem.status == 'SampleRepeat'"
+                        class="material-icons"
+                        >flag</span
+                      >
+                    </p>
+                    <p class="IsolationRepeat">
+                      <span
+                        *ngIf="testItem.status == 'IsolationRepeat'"
+                        class="material-icons"
+                        >flag</span
+                      >
+                    </p>
+                  </div>
+                </td>
+
+                <td
+                  *ngIf="patientTestStatus === 'AssignedToTechnician'"
+                  class="AssignedToTechnician"
+                >
+                  <span class="material-icons">flag</span>
+                </td>
+                <td
+                  *ngIf="patientTestStatus === 'CollectedByTechnician'"
+                  class="CollectedByTechnician"
+                >
+                  <span class="material-icons">flag</span>
+                </td>
+                <td
+                  *ngIf="patientTestStatus === 'SampleAssignedToRider'"
+                  class="SampleAssignedToRider"
+                >
+                  <span class="material-icons">flag</span>
+                </td>
+                <td
+                  *ngIf="patientTestStatus === 'CollectedByRider'"
+                  class="CollectedByRider"
+                >
+                  <span class="material-icons">flag</span>
+                </td>
+                <td
+                  *ngIf="patientTestStatus === 'DeliveredByRider'"
+                  class="DeliveredByRider"
+                >
+                  <span class="material-icons">flag</span>
+                </td>
+                <td
+                  *ngIf="patientTestStatus === 'AwaitingForSampleReceive'"
+                  class="AwaitingForSampleReceive"
+                >
+                  <span class="material-icons">flag</span>
+                </td>
+                <td
+                  *ngIf="patientTestStatus === 'SampleReceived'"
+                  class="SampleReceived"
+                >
+                  <span class="material-icons">flag</span>
+                </td>
+                <!-- <td>{{ item.address }}</td> -->
+                <!-- <td>{{ item.subdivision }}</td> -->
+                <!-- <td>{{ item.tests | testsStatus }}</td> -->
+
+                <td>
+                  <mat-icon (click)="editPatients(item)">edit</mat-icon>
+                  <!-- <mat-icon (click)="deleteFrontOffice(item)">delete</mat-icon> -->
+                  <button
+                    class="action-btn"
+                    *ngIf="patientTestStatus == 'completed'"
+                    (click)="openInvoiceModel(sendInvoiceModel, item)"
+                  >
+                    Send Report
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div
+            style="border-bottom: 1px solid #ced4da; margin-top: -12px"
+          ></div>
+          <!-- pagination div starts from here -->
+          <mat-paginator
+            [length]="length"
+            [pageSize]="pageSize"
+            [pageSizeOptions]="pageSizeOptions"
+            (page)="onPageEvent($event)"
+          >
+          </mat-paginator>
+
+          <!-- pagination div ends here -->
+        </div>
+        <!-- </div> -->
+      </div>
+    </div>
+  </div>
+
+  <ng-template #assignToLabModel>
+    <div class="col-md-12 d-flex mb-2">
+      <h3 class="mr-2">Select lab :</h3>
+      <span class="select_option">
+        <select class="form-control" (change)="select_lab($event)">
+          <option [ngValue]="null" selected hidden>Select lab</option>
+          <option *ngFor="let item of labListData" [value]="item._id">
+            {{ item.name }}
+          </option>
+        </select>
+      </span>
+    </div>
+    <div class="text-center">
+      <button class="button-select" [mat-dialog-close]="true" cdkFocusInitial>
+        Close
+      </button>
+      <button
+        class="button-select ml-2"
+        [disabled]="disabled"
+        [ngClass]="{ disabled: disabled }"
+        (click)="submitAssign()"
+      >
+        Assign
+      </button>
+    </div>
+    <ngx-spinner
+      bdColor="rgba(0, 0, 0, 0.8)"
+      size="medium"
+      color="#fff"
+      type="timer"
+      [fullScreen]="true"
+    >
+      <p style="color: white">Loading...</p>
+    </ngx-spinner>
+  </ng-template>
+
+  <ng-template #sendInvoiceModel>
+    <div class="col-md-12 d-flex mt-3 text-center">
+      <h3><b>Are you sure want to send Report ?</b></h3>
+    </div>
+    <mat-radio-group
+      [(ngModel)]="paymentLinkType"
+      name="paymentLinkType"
+      aria-label="Select an option"
+      class="checkbox row"
+    >
+      <!-- <mat-radio-button class="col-lg-4 optionText" value="email">Email
+            </mat-radio-button> -->
+      <mat-radio-button class="col-lg-4 optionText" value="sms"
+        >SMS
+      </mat-radio-button>
+      <mat-radio-button class="col-lg-4 optionText" value="whats_app"
+        >WhatsApp
+      </mat-radio-button>
+    </mat-radio-group>
+
+    <br />
+    <p *ngIf="referedPhoneNumbers.length > 0">Select Mobile Number</p>
+    <mat-radio-group
+      [(ngModel)]="selectedTransaction.mobileNumber"
+      name="selectedTransaction.mobileNumber"
+      aria-label="Select an option"
+      class="checkbox row"
+    >
+      <mat-radio-button
+        class="col-lg-4 optionText"
+        *ngFor="let item of referedPhoneNumbers"
+        value="{{ item }}"
+      >
+        {{ item }}
+      </mat-radio-button>
+    </mat-radio-group>
+
+    <div class="col-md-6 d-flex ml-5">
+      <input
+        class="input"
+        type="email"
+        *ngIf="paymentLinkType == 'email'"
+        name="email"
+        id="email"
+        placeholder="Enter email address"
+        [(ngModel)]="selectedTransaction.emailAddress"
+      />
+    </div>
+    <div class="col-md-6 d-flex mt-2" *ngIf="paymentLinkType != 'email'">
+      <input
+        class="input"
+        type="text"
+        name="email"
+        id="email"
+        placeholder="Enter Mobile Number"
+        [(ngModel)]="selectedTransaction.mobileNumber"
+      />
+    </div>
+    <br />
+    <div class="col-md-6 d-flex text-center">
+      <button
+        class="buttondialoge ml-5"
+        [mat-dialog-close]="true"
+        cdkFocusInitial
+      >
+        No
+      </button>
+      <button
+        class="buttondialoge ml-2"
+        [disabled]="
+          paymentLinkType != 'email'
+            ? !selectedTransaction.mobileNumber
+            : !selectedTransaction.emailAddress
+        "
+        (click)="sendReportPatient()"
+      >
+        Yes
+      </button>
+    </div>
+    <ngx-spinner
+      bdColor="rgba(0, 0, 0, 0.8)"
+      size="medium"
+      color="#fff"
+      type="timer"
+      [fullScreen]="true"
+    >
+      <p style="color: white">Loading...</p>
+    </ngx-spinner>
+  </ng-template>
+
+  <ng-template #downloadTestReport>
+    <mat-dialog-content>
+      <div>
+        <div class="d-flex justify-content-between">
+          <h1 mat-dialog-title>Download Report</h1>
+          <div class="button">
+            <a
+              class="btn btn-xs btn-icon btn-hover-primary btn_close"
+              href="javascript:void(0)"
+              (click)="onClose()"
+              >X</a
+            >
+          </div>
+        </div>
+        <form [formGroup]="templeteForm">
+          <div class="row">
+            <div class="col-md-4 mt-3">
+              <input
+                type="checkBox"
+                name="promotion"
+                id="promotion"
+                [formControl]="templeteForm.controls['promotionPage']"
+              />
+              <label for="promotion">Promotion Page</label>
+            </div>
+            <div class="col-md-6">
+              <mat-form-field class="full-width">
+                <mat-label>Select Header</mat-label>
+                <mat-select
+                  class=""
+                  [formControl]="templeteForm.controls['header_type']"
+                >
+                  <mat-option value="true"> With Header </mat-option>
+                  <mat-option value="false"> Without Header </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row buttons mt-3">
+            <div style="margin: 0 auto">
+              <button
+                class="button-mat"
+                (click)="downloadReport()"
+                [ngClass]="{ btnDisabled: !templeteForm.valid }"
+                [disabled]="!templeteForm.valid"
+              >
+                Download
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </mat-dialog-content>
+    <ngx-spinner
+      bdColor="rgba(0, 0, 0, 0.8)"
+      size="medium"
+      color="#fff"
+      type="timer"
+      [fullScreen]="true"
+    >
+      <p style="color: white">Processing...</p>
+    </ngx-spinner>
+  </ng-template>
+  <ngx-spinner
+    bdColor="rgba(0, 0, 0, 0.8)"
+    size="medium"
+    color="#fff"
+    type="timer"
+    [fullScreen]="true"
+  >
+    <p style="color: white">Loading...</p>
+  </ngx-spinner>
+</div>

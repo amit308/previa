@@ -1,0 +1,89 @@
+<div class="body">
+    <div class="patient-heading">
+        <h3>Branch</h3>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">
+            <label for="usr">Company:</label>
+            <div>
+                <mat-select >
+                    <mat-option value="option1">Option 1</mat-option>
+                    <mat-option value="option2" >Option 2 (disabled)</mat-option>
+                    <mat-option value="option3">Option 3</mat-option>
+                </mat-select>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <label for="usr">Branch name:</label>
+            <div>
+                <input class="autocomplete" type="text" placeholder="branch" aria-label="Number" matInput
+                    [matAutocomplete]="auto">
+                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                    <mat-option>
+                        1
+                    </mat-option>
+                </mat-autocomplete>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <label for="usr">Company name:</label>
+            <div>
+                <input matInput placeholder="company" >
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <label for="usr">Branch type:</label>
+            <div>
+                <mat-select >
+                    <mat-option value="option1">Option 1</mat-option>
+                    <mat-option value="option2" >Option 2 </mat-option>
+                    <mat-option value="option3">Option 3</mat-option>
+                </mat-select>
+            </div>
+        </div>
+        <div class="check row">
+            <div class="col-lg-3">
+                <mat-checkbox class="example-margin" >Sms</mat-checkbox>
+            </div>
+            <div class="col-lg-3">
+                <mat-checkbox class="example-margin" >Email</mat-checkbox>
+            </div>
+            <div class="col-lg-3">
+                <mat-checkbox class="example-margin" >Scheme</mat-checkbox>
+            </div>
+            <div class="col-lg-3">
+                <mat-checkbox class="example-margin" >Token system</mat-checkbox>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-lg-4">
+            <label for="usr">Description</label>
+            <div>
+                <textarea matInput ></textarea>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <label for="usr">Invoice footer</label>
+            <div>
+                <textarea matInput ></textarea>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <label for="usr">Padding code:</label>
+            <div>
+                <input matInput  >
+            </div>
+        </div>
+    </div>
+    <div>
+        <mat-tab-group>
+            <mat-tab label="Address Info"> Address Info </mat-tab>
+            <mat-tab label="Technical Info"> Technical Info </mat-tab>
+            <mat-tab label="Discount Schem"> Discount Schem</mat-tab>
+            <mat-tab label="Working Days"> Working Days</mat-tab>
+          </mat-tab-group>
+    </div>
+  
+</div>

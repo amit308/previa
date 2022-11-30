@@ -1,0 +1,141 @@
+.card-header {
+  display: flex;
+  justify-content: space-between;
+}
+.select_date{
+  border-radius: 5px;
+  line-height: 2.0;
+  z-index: 1000;
+  overflow: auto;
+  text-transform: uppercase;
+}
+
+.btnGroup {
+  background-color: #437289;
+  color: white;
+}
+
+mat-icon {
+  font-size: 18px;
+  cursor: pointer;
+}
+
+::ng-deep {
+  .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+    background-color: #00c9d1 !important;
+  }
+
+  .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+    background-color: #00c9d1 !important;
+  }
+}
+
+.example-card {
+  border: 1px solid #ad9f9f;
+}
+
+.button-alignment {
+  float: right;
+  cursor: pointer;
+
+}
+
+.td-data {
+  padding: 3px;
+}
+
+
+b {
+  font-size: 18px;
+}
+
+::ng-deep {
+
+  input[type=date].form-control,
+  input[type=time].form-control,
+  input[type=datetime-local].form-control,
+  input[type=month].form-control {
+
+    text-transform: uppercase !important;
+  }
+}
+
+.view-btn {
+  width: 125px !important;
+  font-size: 12px;
+  box-shadow: none;
+  outline: none;
+}
+
+.view-btn-2 {
+  width: 60px !important;
+  font-size: 12px;
+  box-shadow: none;
+  outline: none;
+}
+
+.text-color {
+  color: rgba(0, 0, 0, .87);
+
+}
+
+.form-control {
+  width: 50%;
+}
+
+h3 {
+  color: black;
+  font-weight: 600;
+}
+
+.tech-name {
+  font-size: 18px;
+  margin-top: 2px;
+}
+
+.mat-button {
+  box-shadow: none;
+  outline: none;
+}
+
+::ng-deep {
+  .timepicker__header {
+    background-color: #00c9d1 !important;
+  }
+}
+
+.tests-data {
+  display: contents;
+}
+
+.button-select {
+  height: 28px;
+  width: 65px;
+  font-size: 13px;
+  box-shadow: none;
+  outline: none;
+  font-weight: 500;
+  border-radius: 3px;
+
+}
+
+.button-select-view {
+  height: 28px;
+  width: 125px;
+  font-size: 13px;
+  box-shadow: none;
+  outline: none;
+  box-shadow: none;
+  outline: none;
+  font-weight: 500;
+  border-radius: 3px;
+}
+
+.bg-color-green {
+  background-color: #75ac12 !important;
+  color: #fff;
+}
+
+.bg-color-orange {
+  background-color: #eda652 !important;
+}

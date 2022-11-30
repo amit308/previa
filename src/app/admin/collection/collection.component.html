@@ -1,0 +1,1261 @@
+<div class="body">
+    <div class="container-fluid">
+        <mat-tab-group>
+            <!------------------- START AwaitingSampleTechnician AND AssignedToTechnician ----------------------------------------->
+
+            <mat-tab label="Collection">
+                <div class="col-md-12">
+                    <div class="row table">
+                        <div class="registered-1">
+                            <h3>Awaiting Sample/Technician</h3>
+                            <div class="mat-elevation-z8">
+                                <div style="padding: 30px; text-align: center"
+                                    *ngIf="AwaitingSampleTests?.length == 0 || AwaitingSampleTests?.length == undefined">
+                                    No Tests Found
+                                </div>
+                                <div
+                                    *ngIf="AwaitingSampleTests?.length > 0 && AwaitingSampleTests?.length != undefined" class="mb-3">
+                                    <div class="table-responsive ">
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th>S.No
+                                                    </th>
+                                                    <!-- <th (click)="sortEvent('AwaitingSample','patient.pid')">
+                                                        PID
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'AwaitingSample' && sortDirection === 'ASC' && sortvalue === 'patient.pid'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'AwaitingSample' && sortDirection === 'DASC' && sortvalue === 'patient.pid'"></i>
+                                                    </th> -->
+                                                    <th (click)="sortEvent('AwaitingSample','sid')">
+                                                        SID
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'AwaitingSample' && sortDirection === 'ASC' && sortvalue === 'patient.sid'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'AwaitingSample' && sortDirection === 'DASC' && sortvalue === 'patient.sid'"></i>
+                                                    </th>
+                                                    <th (click)="sortEvent('AwaitingSample','createdAt')">
+                                                        Date
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'AwaitingSample' && sortDirection === 'ASC' && sortvalue === 'createdAt'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'AwaitingSample' && sortDirection === 'DASC' && sortvalue === 'createdAt'"></i>
+                                                    </th>
+                                                    <th (click)="sortEvent('AwaitingSample','name')">
+                                                        Patient Name
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'AwaitingSample' && sortDirection === 'ASC' && sortvalue === 'patient.name'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'AwaitingSample' && sortDirection === 'DASC' && sortvalue === 'patient.name'"></i>
+                                                    </th>
+                                                    <!-- <th (click)="sortEvent('AwaitingSample','patient.gender')">
+                                                        Gender
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'AwaitingSample' && sortDirection === 'ASC' && sortvalue === 'patient.gender'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'AwaitingSample' && sortDirection === 'DASC' && sortvalue === 'patient.gender'"></i>
+                                                    </th> -->
+                                                    <th >
+                                                        <!-- (click)="sortEvent('AwaitingSample','test.name')" -->
+                                                        Test Name
+                                                        <!-- <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'AwaitingSample' && sortDirection === 'ASC' && sortvalue === 'test.name'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'AwaitingSample' && sortDirection === 'DASC' && sortvalue === 'test.name'"></i> -->
+                                                    </th>
+                                                    <th class="">
+                                                         <!-- All
+                                                        <mat-checkbox [checked]="false" 
+                                                            class="example-margin "></mat-checkbox> -->
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let item of AwaitingSampleTests; let i = index">
+                                                    <td> {{ i + AwaitingSamplePageEvent?.pageIndex *
+                                                        AwaitingSamplePageEvent?.pageSize + 1 }}</td>
+                                                    <!-- <td> {{item?.patient?.pid}} </td> -->
+                                                    <td> {{item?.sid}} </td>
+                                                    <td> {{item?.createdAt | date: 'dd-MM-yyyy'}} </td>
+                                                    <td> {{item?.patient?.name | titlecase}} </td>
+                                                    <!-- <td> {{item?.patient?.gender}} </td> -->
+                                                    <td> {{item?.test?.testMaster?.name}} </td>
+                                                    <td>
+                                                        <!-- (click)="checkPendingItem(item,$event)" -->
+                                                        <mat-checkbox [checked]="false" (change)="toggle(item,$event,'step1')"
+                                                            class="example-margin"></mat-checkbox>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- pagination div starts from here -->
+                                    <mat-paginator [length]="AwaitingSamplelength" [pageSize]="pageSize"
+                                        [pageSizeOptions]="pageSizeOptions"
+                                        (page)="onPageEventAwaitingSample($event,'AwaitingSample')">
+                                    </mat-paginator>
+
+                                    <!-- pagination div ends here -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="registered-2">
+                            <div class="arrows">
+                                <div>
+                                    <span class="material-icons" (click)="moveToAssignTechnician()"> east </span>
+                                </div>
+                                <div>
+                                    <span class="material-icons" (click)="backToAwatingSampleTechnician()"> west</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="registered-3">
+                            <h3>Samples Assigned To Technician  </h3>
+                            <div class="mat-elevation-z8">
+                                <div style="padding: 30px; text-align: center"
+                                    *ngIf="AssignedToTechnicianTests?.length == 0 || AssignedToTechnicianTests?.length == undefined"  class="mb-3">
+                                    No Tests Found
+                                </div>
+                                <div
+                                    *ngIf="AssignedToTechnicianTests?.length > 0 && AssignedToTechnicianTests?.length != undefined" class="mb-3">
+                                    <div class="table-responsive">
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th>S.No
+                                                    </th>
+                                                    <!-- <th (click)="sortEvent('AssignedToTechnician','patient.pid')">PID
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'AssignedToTechnician' && sortDirection === 'ASC' && sortvalue === 'patient.pid'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'AssignedToTechnician' && sortDirection === 'DASC' && sortvalue === 'patient.pid'"></i>
+                                                    </th> -->
+                                                    <th (click)="sortEvent('AssignedToTechnician','sid')">SID
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'AssignedToTechnician' && sortDirection === 'ASC' && sortvalue === 'sid'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'AssignedToTechnician' && sortDirection === 'DASC' && sortvalue === 'sid'"></i>
+                                                    </th>
+                                                    <th (click)="sortEvent('AssignedToTechnician','createdAt')">Date
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'AssignedToTechnician' && sortDirection === 'ASC' && sortvalue === 'createdAt'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'AssignedToTechnician' && sortDirection === 'DASC' && sortvalue === 'createdAt'"></i>
+                                                    </th>
+                                                    <th (click)="sortEvent('AssignedToTechnician','patient.name')">
+                                                        Patient Name
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'AssignedToTechnician' && sortDirection === 'ASC' && sortvalue === 'patient.name'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'AssignedToTechnician' && sortDirection === 'DASC' && sortvalue === 'patient.name'"></i>
+                                                    </th>
+                                                    <!-- <th (click)="sortEvent('AssignedToTechnician','patient.gender')">
+                                                        Gender
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'AssignedToTechnician' && sortDirection === 'ASC' && sortvalue === 'patient.gender'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'AssignedToTechnician' && sortDirection === 'DASC' && sortvalue === 'patient.gender'"></i>
+                                                    </th> -->
+                                                    <!-- (click)="sortEvent('AssignedToTechnician','test.name')" -->
+                                                    <th (click)="sortEvent('AssignedToTechnician','test.name')">Test
+                                                        Name
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'AssignedToTechnician' && sortDirection === 'ASC' && sortvalue === 'test.name'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'AssignedToTechnician' && sortDirection === 'DASC' && sortvalue === 'test.name'"></i>
+                                                    </th>
+                                                  
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let item of AssignedToTechnicianTests; let i = index">
+                                                    <td> {{ i + AssignedToTechnicianPageEvent?.pageIndex *
+                                                        AssignedToTechnicianPageEvent?.pageSize + 1 }} </td>
+                                                    <!-- <td> {{item?.patient.pid}} </td> -->
+                                                    <td> {{item?.sid}} </td>
+                                                    <td> {{item?.createdAt | date: 'dd-MM-yyyy'}} </td>
+                                                    <td> {{item?.patient?.name}} </td>
+                                                    <!-- <td> {{item?.patient.gender}} </td> -->
+                                                    <td> {{item?.test?.testMaster?.name}} </td>
+                                                    <!-- <td>
+                                                        <mat-checkbox [checked]="false" (change)="toggle(item,$event,'step2')"
+                                                            class="example-margin"></mat-checkbox>
+                                                    </td> -->
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- pagination div starts from here -->
+                                    <mat-paginator [length]="AssignedToTechnicianlength" [pageSize]="pageSize"
+                                        [pageSizeOptions]="pageSizeOptions"
+                                        (page)="onPageEventAssignedToTechnician($event,'AssignedToTechnician')">
+                                    </mat-paginator>
+
+                                    <!-- pagination div ends here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </mat-tab>
+            <!-------------------------- END  AwaitingSampleTechnician AND AssignedToTechnician  ------------------------->
+            <!------------------- START  AssignedToTechnician AND CollectedByTechnician ----------------------------------------->
+
+            <mat-tab label="Technician Collection">
+                <!-- Content 2 -->
+                <div class="col-md-12">
+                    <!-- *ngIf="table == 'recieved'" -->
+                    <div class="row table">
+                        <div class="registered-1">
+                            <h3>Samples Assigned TO Technician</h3>
+                            <div class="mat-elevation-z8">
+                                <div style="padding: 30px; text-align: center"
+                                    *ngIf="AssignedToTechnicianTests?.length == 0 || AssignedToTechnicianTests?.length == undefined">
+                                    No Tests Found
+                                </div>
+                                <div
+                                    *ngIf="AssignedToTechnicianTests?.length > 0 && AssignedToTechnicianTests?.length != undefined"  class="mb-3">
+                                    <div class="table-responsive">
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th>S.No
+                                                    </th>
+                                                    <!-- <th (click)="sortEvent('AssignedToTechnician','patient.pid')">PID
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'AssignedToTechnician' && sortDirection === 'ASC' && sortvalue === 'patient.pid'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'AssignedToTechnician' && sortDirection === 'DASC' && sortvalue === 'patient.pid'"></i>
+                                                    </th> -->
+                                                    <th (click)="sortEvent('AssignedToTechnician','sid')">SID
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'AssignedToTechnician' && sortDirection === 'ASC' && sortvalue === 'sid'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'AssignedToTechnician' && sortDirection === 'DASC' && sortvalue === 'sid'"></i>
+                                                    </th>
+                                                    <th (click)="sortEvent('AssignedToTechnician','createdAt')">Date
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'AssignedToTechnician' && sortDirection === 'ASC' && sortvalue === 'createdAt'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'AssignedToTechnician' && sortDirection === 'DASC' && sortvalue === 'createdAt'"></i>
+                                                    </th>
+                                                    <th (click)="sortEvent('AssignedToTechnician','patient.name')">
+                                                        Patient Name
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'AssignedToTechnician' && sortDirection === 'ASC' && sortvalue === 'patient.name'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'AssignedToTechnician' && sortDirection === 'DASC' && sortvalue === 'patient.name'"></i>
+                                                    </th>
+                                                    <!-- <th (click)="sortEvent('AssignedToTechnician','patient.gender')">
+                                                        Gender
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'AssignedToTechnician' && sortDirection === 'ASC' && sortvalue === 'patient.gender'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'AssignedToTechnician' && sortDirection === 'DASC' && sortvalue === 'patient.gender'"></i>
+                                                    </th> -->
+                                                    <!--  -->
+                                                    <th (click)="sortEvent('AssignedToTechnician','test.name')">Test
+                                                        Name
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'AssignedToTechnician' && sortDirection === 'ASC' && sortvalue === 'test.name'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'AssignedToTechnician' && sortDirection === 'DASC' && sortvalue === 'test.name'"></i>
+                                                    </th>
+                                                    <!-- <th class=""> 
+                                                        All
+                                                        <mat-checkbox [checked]="false" 
+                                                            class="example-margin "></mat-checkbox>
+                                                    </th> -->
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let item of AssignedToTechnicianTests; let i = index">
+                                                    <td> {{ i + AssignedToTechnicianPageEvent?.pageIndex *
+                                                        AssignedToTechnicianPageEvent?.pageSize + 1 }} </td>
+                                                    <!-- <td> {{item?.patient.pid}} </td> -->
+                                                    <td> {{item?.sid}} </td>
+                                                    <td> {{item?.createdAt | date: 'dd-MM-yyyy'}} </td>
+                                                    <td> {{item?.patient?.name}} </td>
+                                                    <!-- <td> {{item?.patient.gender}} </td> -->
+                                                    <td> {{item?.test?.testMaster?.name}} </td>
+                                                    <td>
+                                                        <mat-checkbox [checked]="false" (change)="toggle(item,$event,'step3')"
+                                                            class="example-margin"></mat-checkbox>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- pagination div starts from here -->
+                                    <mat-paginator [length]="AssignedToTechnicianlength" [pageSize]="pageSize"
+                                        [pageSizeOptions]="pageSizeOptions"
+                                        (page)="onPageEventAssignedToTechnician($event,'AssignedToTechnician')">
+                                    </mat-paginator>
+
+                                    <!-- pagination div ends here -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="registered-2">
+                            <div class="arrows">
+                                <div>
+                                    <span class="material-icons" (click)="moveToCollectedTechnician()"> east</span>
+                                </div>
+                                <div>
+                                    <span class="material-icons" (click)="backeToAssignedTechnician()"> west</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="registered-3">
+                            <h3>Samples Collected By Technician</h3>
+                            <div class="mat-elevation-z8">
+                                <div style="padding: 30px; text-align: center"
+                                    *ngIf="CollectedByTechnicianTests?.length == 0 || CollectedByTechnicianTests?.length == undefined">
+                                    No Tests Found
+                                </div>
+                                <div
+                                    *ngIf="CollectedByTechnicianTests?.length > 0 && CollectedByTechnicianTests?.length != undefined"  class="mb-3">
+                                    <div class="table-responsive">
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th>S.No
+                                                    </th>
+                                                    <!-- <th (click)="sortEvent('CollectedByTechnician','patient.pid')">PID
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'CollectedByTechnician' && sortDirection === 'ASC' && sortvalue === 'patient.pid'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'CollectedByTechnician' && sortDirection === 'DASC' && sortvalue === 'patient.pid'"></i>
+                                                    </th> -->
+                                                    <th (click)="sortEvent('CollectedByTechnician','sid')">SID
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'CollectedByTechnician' && sortDirection === 'ASC' && sortvalue === 'sid'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'CollectedByTechnician' && sortDirection === 'DASC' && sortvalue === 'sid'"></i>
+                                                    </th>
+                                                    <th (click)="sortEvent('CollectedByTechnician','createdAt')">Date
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'CollectedByTechnician' && sortDirection === 'ASC' && sortvalue === 'createdAt'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'CollectedByTechnician' && sortDirection === 'DASC' && sortvalue === 'createdAt'"></i>
+                                                    </th>
+                                                    <th (click)="sortEvent('CollectedByTechnician','patient.name')">
+                                                        Patient Name
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'CollectedByTechnician' && sortDirection === 'ASC' && sortvalue === 'patient.name'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'collected' && sortDirection === 'DASC' && sortvalue === 'patient.name'"></i>
+                                                    </th>
+                                                    <!-- <th (click)="sortEvent('CollectedByTechnician','patient.gender')">
+                                                        Gender
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'CollectedByTechnician' && sortDirection === 'ASC' && sortvalue === 'patient.gender'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'CollectedByTechnician' && sortDirection === 'DASC' && sortvalue === 'patient.gender'"></i>
+                                                    </th> -->
+                                                    <th (click)="sortEvent('CollectedByTechnician','test.name')">Test
+                                                        Name
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'CollectedByTechnician' && sortDirection === 'ASC' && sortvalue === 'test.name'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'CollectedByTechnician' && sortDirection === 'DASC' && sortvalue === 'test.name'"></i>
+                                                    </th>
+                                                    <!-- <th class="">
+                                                         All
+                                                        <mat-checkbox [checked]="false" 
+                                                            class="example-margin "></mat-checkbox>
+                                                    </th> -->
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let item of CollectedByTechnicianTests; let i = index">
+                                                    <td>{{ i + CollectedByTechnicianPageEvent?.pageIndex *
+                                                        CollectedByTechnicianPageEvent?.pageSize + 1 }} </td>
+                                                    <!-- <td> {{item?.patient.pid}} </td> -->
+                                                    <td> {{item?.sid}} </td>
+                                                    <td> {{item?.createdAt | date: 'dd-MM-yyyy'}} </td>
+                                                    <td> {{item?.patient?.name | titlecase}} </td>
+                                                    <!-- <td> {{item?.patient.gender}} </td> -->
+                                                    <td> {{item?.test?.testMaster?.name}} </td>
+                                                    <!-- <td>
+                                                        <mat-checkbox [checked]="false" (change)="toggle(item,$event,'step4')"
+                                                            class="example-margin"></mat-checkbox>
+                                                    </td> -->
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- pagination div starts from here -->
+                                    <mat-paginator [length]="CollectedByTechnicianlength" [pageSize]="pageSize"
+                                        [pageSizeOptions]="pageSizeOptions"
+                                        (page)="onPageEventCollectedByTechnician($event,'CollectedByTechnician')">
+                                    </mat-paginator>
+
+                                    <!-- pagination div ends here -->
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </mat-tab>
+            <!-------------------------- END  AssignedToTechnician AND CollectedByTechnician ------------------------->
+            <!------------------- START  CollectedByTechnician AND SampleAssignedToRider ----------------------------------------->
+            <mat-tab label="Rider Assign Collection">
+                <!-- Content 2 -->
+                <div class="col-md-12">
+                    <!-- *ngIf="table == 'recieved'" -->
+                    <div class="row table">
+                        <div class="registered-1">
+                            <h3>Samples Collected By Technician</h3>
+                            <div class="mat-elevation-z8">
+                                <div style="padding: 30px; text-align: center"
+                                    *ngIf="CollectedByTechnicianTests?.length == 0 || CollectedByTechnicianTests?.length == undefined"  class="mb-3">
+                                    No Tests Found
+                                </div>
+                                <div
+                                    *ngIf="CollectedByTechnicianTests?.length > 0 && CollectedByTechnicianTests?.length != undefined"  class="mb-3">
+                                    <div class="table-responsive">
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th>S.No
+                                                    </th>
+                                                    <!-- <th (click)="sortEvent('CollectedByTechnician','patient.pid')">PID
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'CollectedByTechnician' && sortDirection === 'ASC' && sortvalue === 'patient.pid'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'CollectedByTechnician' && sortDirection === 'DASC' && sortvalue === 'patient.pid'"></i>
+                                                    </th> -->
+                                                    <th (click)="sortEvent('CollectedByTechnician','sid')">SID
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'CollectedByTechnician' && sortDirection === 'ASC' && sortvalue === 'sid'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'CollectedByTechnician' && sortDirection === 'DASC' && sortvalue === 'sid'"></i>
+                                                    </th>
+                                                    <th (click)="sortEvent('CollectedByTechnician','createdAt')">Date
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'CollectedByTechnician' && sortDirection === 'ASC' && sortvalue === 'createdAt'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'CollectedByTechnician' && sortDirection === 'DASC' && sortvalue === 'createdAt'"></i>
+                                                    </th>
+                                                    <th (click)="sortEvent('CollectedByTechnician','patient.name')">
+                                                        Patient Name
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'CollectedByTechnician' && sortDirection === 'ASC' && sortvalue === 'patient.name'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'CollectedByTechnician' && sortDirection === 'DASC' && sortvalue === 'patient.name'"></i>
+                                                    </th>
+                                                    <!-- <th (click)="sortEvent('CollectedByTechnician','riderInfo.name')">
+                                                        Rider Name
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'CollectedByTechnician' && sortDirection === 'ASC' && sortvalue === 'riderInfo.name'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'CollectedByTechnician' && sortDirection === 'DASC' && sortvalue === 'riderInfo.name'"></i>
+                                                    </th> -->
+                                                    <!-- <th (click)="sortEvent('CollectedByTechnician','patient.gender')">
+                                                        Gender
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'CollectedByTechnician' && sortDirection === 'ASC' && sortvalue === 'patient.gender'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'CollectedByTechnician' && sortDirection === 'DASC' && sortvalue === 'patient.gender'"></i>
+                                                    </th> -->
+                                                    <th (click)="sortEvent('CollectedByTechnician','test.name')">Test
+                                                        Name
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'CollectedByTechnician' && sortDirection === 'ASC' && sortvalue === 'test.name'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'CollectedByTechnician' && sortDirection === 'DASC' && sortvalue === 'test.name'"></i>
+                                                    </th>
+                                                    <th class=""> 
+                                                        <!-- All
+                                                        <mat-checkbox [checked]="false" 
+                                                            class="example-margin "></mat-checkbox> -->
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let item of CollectedByTechnicianTests; let i = index">
+                                                    <td>{{ i + CollectedByTechnicianPageEvent?.pageIndex *
+                                                        CollectedByTechnicianPageEvent?.pageSize + 1 }} </td>
+                                                    <!-- <td> {{item?.patient.pid}} </td> -->
+                                                    <td> {{item?.sid}} </td>
+                                                    <td> {{item?.createdAt | date: 'dd-MM-yyyy'}} </td>
+                                                    <td> {{item?.patient?.name | titlecase}} </td>
+                                                    <!-- <td> {{item?.riderInfo?.name}} </td> -->
+                                                    <!-- <td> {{item?.patient.gender}} </td> -->
+                                                    <td> {{item?.test?.testMaster?.name}} </td>
+                                                    <!-- <td>
+                                                        <mat-checkbox [checked]="false" (change)="toggle(item,$event)"
+                                                            class="example-margin"></mat-checkbox>
+                                                    </td> -->
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- pagination div starts from here -->
+                                    <mat-paginator [length]="CollectedByTechnicianlength" [pageSize]="pageSize"
+                                        [pageSizeOptions]="pageSizeOptions"
+                                        (page)="onPageEventCollectedByTechnician($event,'collected')">
+                                    </mat-paginator>
+
+                                    <!-- pagination div ends here -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="registered-2">
+                            <div class="arrows">
+                                <div>
+                                    <!-- <span class="material-icons" (click)="collectedToRiderCollected()"> east</span> -->
+                                </div>
+                                <div>
+                                    <!-- <span class="material-icons" (click)="pendingToCollected()"> west</span> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="registered-3">
+                            <h3>Samples Assigned To Rider</h3>
+                            <div class="mat-elevation-z8">
+                                <div style="padding: 30px; text-align: center"
+                                    *ngIf="SampleAssignedToRiderTests?.length == 0 || SampleAssignedToRiderTests?.length == undefined"  class="mb-3">
+                                    No Tests Found
+                                </div>
+                                <div
+                                    *ngIf="SampleAssignedToRiderTests?.length > 0 && SampleAssignedToRiderTests?.length != undefined"  class="mb-3">
+                                    <div class="table-responsive">
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th>S.No
+                                                    </th>
+                                                    <!-- <th (click)="sortEvent('SampleAssignedToRider','patient.pid')">
+                                                        PID
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'SampleAssignedToRider' && sortDirection === 'ASC' && sortvalue === 'patient.pid'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'SampleAssignedToRider' && sortDirection === 'DASC' && sortvalue === 'patient.pid'"></i>
+                                                    </th> -->
+                                                    <th (click)="sortEvent('SampleAssignedToRider','sid')">
+                                                        SID
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'SampleAssignedToRider' && sortDirection === 'ASC' && sortvalue === 'sid'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'SampleAssignedToRider' && sortDirection === 'DASC' && sortvalue === 'sid'"></i>
+                                                    </th>
+                                                    <th (click)="sortEvent('SampleAssignedToRider','createdAt')">
+                                                        Date
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'SampleAssignedToRider' && sortDirection === 'ASC' && sortvalue === 'createdAt'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'SampleAssignedToRider' && sortDirection === 'DASC' && sortvalue === 'createdAt'"></i>
+                                                    </th>
+                                                    <th (click)="sortEvent('SampleAssignedToRider','patient.name')">
+                                                        Patient Name
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'SampleAssignedToRider' && sortDirection === 'ASC' && sortvalue === 'patient.name'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'SampleAssignedToRider' && sortDirection === 'DASC' && sortvalue === 'patient.name'"></i>
+                                                    </th>
+                                                    <th (click)="sortEvent('SampleAssignedToRider','riderInfo.name')">
+                                                        Rider Name
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'SampleAssignedToRider' && sortDirection === 'ASC' && sortvalue === 'riderInfo.name'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'SampleAssignedToRider' && sortDirection === 'DASC' && sortvalue === 'riderInfo.name'"></i>
+                                                    </th>
+                                                    <!-- <th (click)="sortEvent('SampleAssignedToRider','patient.gender')">
+                                                        Gender
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'SampleAssignedToRider' && sortDirection === 'ASC' && sortvalue === 'patient.gender'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'SampleAssignedToRider' && sortDirection === 'DASC' && sortvalue === 'patient.gender'"></i>
+                                                    </th> -->
+                                                    <th (click)="sortEvent('SampleAssignedToRider','test.name')">
+                                                        Test Name
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'SampleAssignedToRider' && sortDirection === 'ASC' && sortvalue === 'test.name'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'SampleAssignedToRider' && sortDirection === 'DASC' && sortvalue === 'test.name'"></i>
+                                                    </th>
+                                                    <th class=""> 
+                                                        <!-- All
+                                                        <mat-checkbox [checked]="false" 
+                                                            class="example-margin "></mat-checkbox> -->
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let item of SampleAssignedToRiderTests; let i = index">
+                                                    <td> {{ i + SampleAssignedToRiderPageEvent?.pageIndex *
+                                                        SampleAssignedToRiderPageEvent?.pageSize + 1 }} </td>
+                                                    <!-- <td> {{item?.patient.pid}} </td> -->
+                                                    <td> {{item?.sid}} </td>
+                                                    <td> {{item?.createdAt | date: 'dd-MM-yyyy'}} </td>
+                                                    <td> {{item?.patient?.name | titlecase}} </td>
+                                                    <td> {{item?.riderInfo?.name | titlecase}} </td>
+                                                    <!-- <td> {{item?.patient.gender}} </td> -->
+                                                    <td> {{item?.test?.testMaster?.name}} </td>
+                                                    <!-- <td>
+                                                        <mat-checkbox [checked]="false" (change)="toggle(item,$event)"
+                                                            class="example-margin"></mat-checkbox>
+                                                    </td> -->
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- pagination div starts from here -->
+                                    <mat-paginator [length]="SampleAssignedToRiderlength" [pageSize]="pageSize"
+                                        [pageSizeOptions]="pageSizeOptions"
+                                        (page)="onPageEventSampleAssignedToRider($event,'SampleAssignedToRider')">
+                                    </mat-paginator>
+
+                                    <!-- pagination div ends here -->
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </mat-tab>
+
+            <!-------------------------- END  CollectedByTechnician AND SampleAssignedToRider ------------------------->
+            <!------------------- START  SampleAssignedToRider AND CollectedByRider ----------------------------------------->
+            <mat-tab label="Rider Collected Collection">
+                <!-- Content 2 -->
+                <div class="col-md-12">
+                    <!-- *ngIf="table == 'recieved'" -->
+                    <div class="row table">
+                        <div class="registered-1">
+                            <h3>Samples Assigned To Rider</h3>
+                            <div class="mat-elevation-z8">
+                                <div style="padding: 30px; text-align: center; margin-bottom:10px;"
+                                    *ngIf="SampleAssignedToRiderTests?.length == 0 || SampleAssignedToRiderTests?.length == undefined">
+                                    No Tests Found
+                                </div>
+                                <div
+                                    *ngIf="SampleAssignedToRiderTests?.length > 0 && SampleAssignedToRiderTests?.length != undefined"  class="mb-3">
+                                    <div class="table-responsive">
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th>S.No
+                                                    </th>
+                                                    <!-- <th (click)="sortEvent('SampleAssignedToRider','patient.pid')">
+                                                        PID
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'SampleAssignedToRider' && sortDirection === 'ASC' && sortvalue === 'patient.pid'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'SampleAssignedToRider' && sortDirection === 'DASC' && sortvalue === 'patient.pid'"></i>
+                                                    </th> -->
+                                                    <th (click)="sortEvent('SampleAssignedToRider','sid')">
+                                                        SID
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'SampleAssignedToRider' && sortDirection === 'ASC' && sortvalue === 'sid'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'SampleAssignedToRider' && sortDirection === 'DASC' && sortvalue === 'sid'"></i>
+                                                    </th>
+                                                    <th (click)="sortEvent('SampleAssignedToRider','createdAt')">
+                                                        Date
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'SampleAssignedToRider' && sortDirection === 'ASC' && sortvalue === 'createdAt'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'SampleAssignedToRider' && sortDirection === 'DASC' && sortvalue === 'createdAt'"></i>
+                                                    </th>
+                                                    <th (click)="sortEvent('SampleAssignedToRider','patient.name')">
+                                                        Patient Name
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'SampleAssignedToRider' && sortDirection === 'ASC' && sortvalue === 'patient.name'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'SampleAssignedToRider' && sortDirection === 'DASC' && sortvalue === 'patient.name'"></i>
+                                                    </th>
+                                                    <th (click)="sortEvent('SampleAssignedToRider','riderInfo.name')">
+                                                        Rider Name
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'SampleAssignedToRider' && sortDirection === 'ASC' && sortvalue === 'riderInfo.name'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'SampleAssignedToRider' && sortDirection === 'DASC' && sortvalue === 'riderInfo.name'"></i>
+                                                    </th>
+                                                    <!-- <th (click)="sortEvent('SampleAssignedToRider','patient.gender')">
+                                                        Gender
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'SampleAssignedToRider' && sortDirection === 'ASC' && sortvalue === 'patient.gender'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'SampleAssignedToRider' && sortDirection === 'DASC' && sortvalue === 'patient.gender'"></i>
+                                                    </th> -->
+                                                    <th (click)="sortEvent('SampleAssignedToRider','test.name')">
+                                                        Test Name
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'SampleAssignedToRider' && sortDirection === 'ASC' && sortvalue === 'test.name'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'SampleAssignedToRider' && sortDirection === 'DASC' && sortvalue === 'test.name'"></i>
+                                                    </th>
+                                                    <th class=""> 
+                                                        <!-- All
+                                                        <mat-checkbox [checked]="false" 
+                                                            class="example-margin "></mat-checkbox> -->
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let item of SampleAssignedToRiderTests; let i = index">
+                                                    <td> {{ i + SampleAssignedToRiderPageEvent?.pageIndex *
+                                                        SampleAssignedToRiderPageEvent?.pageSize + 1 }} </td>
+                                                    <!-- <td> {{item?.patient.pid}} </td> -->
+                                                    <td> {{item?.sid}} </td>
+                                                    <td> {{item?.createdAt | date: 'dd-MM-yyyy'}} </td>
+                                                    <td> {{item?.patient?.name | titlecase}} </td>
+                                                    <td> {{item?.riderInfo?.name | titlecase}} </td>
+                                                    <!-- <td> {{item?.patient.gender}} </td> -->
+                                                    <td> {{item?.test?.testMaster?.name}} </td>
+                                                    <!-- <td>
+                                                        <mat-checkbox [checked]="false" (change)="toggle(item,$event)"
+                                                            class="example-margin"></mat-checkbox>
+                                                    </td> -->
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- pagination div starts from here -->
+                                    <mat-paginator [length]="SampleAssignedToRiderlength" [pageSize]="pageSize"
+                                        [pageSizeOptions]="pageSizeOptions"
+                                        (page)="onPageEventSampleAssignedToRider($event,'rider_collected')">
+                                    </mat-paginator>
+
+                                    <!-- pagination div ends here -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="registered-2">
+                            <div class="arrows">
+                                <div>
+                                    <!-- <span class="material-icons" (click)="riderCollectedToReceived()"> east</span> -->
+                                </div>
+                                <div>
+                                    <!-- <span class="material-icons" (click)="pendingToRiderCollected()"> west</span> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="registered-3">
+                            <h3>Samples Collected By Rider  </h3>
+                            <div class="mat-elevation-z8">
+                                <div style="padding: 30px; text-align: center"
+                                    *ngIf="CollectedByRiderTests?.length == 0 || CollectedByRiderTests?.length == undefined" class="mb-3">
+                                    No Tests Found
+                                </div>
+                                <div
+                                    *ngIf="CollectedByRiderTests?.length > 0 && CollectedByRiderTests?.length != undefined"  class="mb-3">
+                                    <div class="table-responsive">
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th>S.No
+                                                    </th>
+                                                    <!-- <th (click)="sortEvent('CollectedByRider','patient.pid')">PID
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'CollectedByRider' && sortDirection === 'ASC' && sortvalue === 'patient.pid'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'CollectedByRider' && sortDirection === 'DASC' && sortvalue === 'patient.pid'"></i>
+                                                    </th> -->
+                                                    <th (click)="sortEvent('CollectedByRider','sid')">SID
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'CollectedByRider' && sortDirection === 'ASC' && sortvalue === 'sid'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'CollectedByRider' && sortDirection === 'DASC' && sortvalue === 'sid'"></i>
+                                                    </th>
+                                                    <th (click)="sortEvent('CollectedByRider','createdAt')">Date
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'CollectedByRider' && sortDirection === 'ASC' && sortvalue === 'createdAt'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'CollectedByRider' && sortDirection === 'DASC' && sortvalue === 'createdAt'"></i>
+                                                    </th>
+                                                    <th (click)="sortEvent('CollectedByRider','patient.name')">Patient
+                                                        Name
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'CollectedByRider' && sortDirection === 'ASC' && sortvalue === 'patient.name'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'CollectedByRider' && sortDirection === 'DASC' && sortvalue === 'patient.name'"></i>
+                                                    </th>
+                                                    <th (click)="sortEvent('CollectedByRider','riderInfo.name')">Rider
+                                                        Name
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'CollectedByRider' && sortDirection === 'ASC' && sortvalue === 'riderInfo.name'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'CollectedByRider' && sortDirection === 'DASC' && sortvalue === 'riderInfo.name'"></i>
+                                                    </th>
+                                                    <!-- <th (click)="sortEvent('CollectedByRider','patient.gender')">Gender
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'CollectedByRider' && sortDirection === 'ASC' && sortvalue === 'patient.gender'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'CollectedByRider' && sortDirection === 'DASC' && sortvalue === 'patient.gender'"></i>
+                                                    </th> -->
+                                                    <th (click)="sortEvent('CollectedByRider','test.name')">Test Name
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'CollectedByRider' && sortDirection === 'ASC' && sortvalue === 'test.name'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'CollectedByRider' && sortDirection === 'DASC' && sortvalue === 'test.name'"></i>
+                                                    </th>
+                                                    <th class=""> 
+                                                        <!-- All
+                                                        <mat-checkbox [checked]="false" 
+                                                            class="example-margin "></mat-checkbox> -->
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let item of CollectedByRiderTests; let i = index">
+                                                    <td> {{ i + CollectedByRiderPageEvent?.pageIndex *
+                                                        CollectedByRiderPageEvent?.pageSize + 1 }} </td>
+                                                    <!-- <td> {{item?.patient.pid}} </td> -->
+                                                    <td> {{item?.sid}} </td>
+                                                    <td> {{item?.createdAt | date: 'dd-MM-yyyy'}} </td>
+                                                    <td> {{item?.patient?.name | titlecase}} </td>
+                                                    <td> {{item?.riderInfo?.name | titlecase}} </td>
+                                                    <!-- <td> {{item?.patient.gender}} </td> -->
+                                                    <td> {{item?.test?.testMaster?.name}} </td>
+                                                    <!-- <td>
+                                                        <mat-checkbox [checked]="false" (change)="toggle(item,$event)"
+                                                            class="example-margin"></mat-checkbox>
+                                                    </td> -->
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- pagination div starts from here -->
+                                    <mat-paginator [length]="CollectedByRiderlength" [pageSize]="pageSize"
+                                        [pageSizeOptions]="pageSizeOptions"
+                                        (page)="onPageEventCollectedByRider($event,'CollectedByRider')">
+                                    </mat-paginator>
+
+                                    <!-- pagination div ends here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </mat-tab>
+            <!-------------------------- END  SampleAssignedToRider AND CollectedByRider ------------------------->
+            <!------------------- START  CollectedByRider AND DeliveredByRider ----------------------------------------->
+            <mat-tab label="Rider Delivered Collection">
+                <div class="col-md-12">
+                    <div class="row table">
+                        <div class="registered-1">
+                            <h3>Samples Collected By Rider</h3>
+                            <div class="mat-elevation-z8">
+                                <div style="padding: 30px; text-align: center"
+                                    *ngIf="CollectedByRiderTests?.length == 0 || CollectedByRiderTests?.length == undefined" class="mb-3">
+                                    No Tests Found
+                                </div>
+                                <div
+                                    *ngIf="CollectedByRiderTests?.length > 0 && CollectedByRiderTests?.length != undefined"  class="mb-3">
+                                    <div class="table-responsive">
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th>S.No
+                                                    </th>
+                                                    <!-- <th (click)="sortEvent('CollectedByRider','patient.pid')">PID
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'CollectedByRider' && sortDirection === 'ASC' && sortvalue === 'patient.pid'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'CollectedByRider' && sortDirection === 'DASC' && sortvalue === 'patient.pid'"></i>
+                                                    </th> -->
+                                                    <th (click)="sortEvent('CollectedByRider','sid')">SID
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'CollectedByRider' && sortDirection === 'ASC' && sortvalue === 'sid'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'CollectedByRider' && sortDirection === 'DASC' && sortvalue === 'sid'"></i>
+                                                    </th>
+                                                    <th (click)="sortEvent('CollectedByRider','createdAt')">Date
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'CollectedByRider' && sortDirection === 'ASC' && sortvalue === 'createdAt'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'CollectedByRider' && sortDirection === 'DASC' && sortvalue === 'createdAt'"></i>
+                                                    </th>
+                                                    <th (click)="sortEvent('CollectedByRider','patient.name')">Patient
+                                                        Name
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'CollectedByRider' && sortDirection === 'ASC' && sortvalue === 'patient.name'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'CollectedByRider' && sortDirection === 'DASC' && sortvalue === 'patient.name'"></i>
+                                                    </th>
+                                                    <th (click)="sortEvent('CollectedByRider','riderInfo.name')">Rider
+                                                        Name
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'CollectedByRider' && sortDirection === 'ASC' && sortvalue === 'riderInfo.name'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'CollectedByRider' && sortDirection === 'DASC' && sortvalue === 'riderInfo.name'"></i>
+                                                    </th>
+                                                    <!-- <th (click)="sortEvent('CollectedByRider','patient.gender')">Gender
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'CollectedByRider' && sortDirection === 'ASC' && sortvalue === 'patient.gender'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'CollectedByRider' && sortDirection === 'DASC' && sortvalue === 'patient.gender'"></i>
+                                                    </th> -->
+                                                    <th (click)="sortEvent('CollectedByRider','test.name')">Test Name
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'CollectedByRider' && sortDirection === 'ASC' && sortvalue === 'test.name'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'CollectedByRider' && sortDirection === 'DASC' && sortvalue === 'test.name'"></i>
+                                                    </th>
+                                                    <th class=""> 
+                                                        <!-- All
+                                                        <mat-checkbox [checked]="false" 
+                                                            class="example-margin "></mat-checkbox> -->
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let item of CollectedByRiderTests; let i = index">
+                                                    <td> {{ i + CollectedByRiderPageEvent?.pageIndex *
+                                                        CollectedByRiderPageEvent?.pageSize + 1 }} </td>
+                                                    <!-- <td> {{item?.patient.pid}} </td> -->
+                                                    <td> {{item?.sid}} </td>
+                                                    <td> {{item?.createdAt | date: 'dd-MM-yyyy'}} </td>
+                                                    <td> {{item?.patient?.name | titlecase}} </td>
+                                                    <td> {{item?.riderInfo?.name | titlecase}} </td>
+                                                    <!-- <td> {{item?.patient.gender}} </td> -->
+                                                    <td> {{item?.test?.testMaster?.name}} </td>
+                                                    <!-- <td>
+                                                        <mat-checkbox [checked]="false" (change)="toggle(item,$event)"
+                                                            class="example-margin"></mat-checkbox>
+                                                    </td> -->
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- pagination div starts from here -->
+                                    <mat-paginator [length]="CollectedByRiderlength" [pageSize]="pageSize"
+                                        [pageSizeOptions]="pageSizeOptions"
+                                        (page)="onPageEventCollectedByRider($event,'CollectedByRider')">
+                                    </mat-paginator>
+
+                                    <!-- pagination div ends here -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="registered-2">
+                            <div class="arrows">
+                                <div>
+                                    <!-- <span class="material-icons" (click)="riderCollectedToReceived()"> east</span> -->
+                                </div>
+                                <div>
+                                    <!-- <span class="material-icons" (click)="pendingToRiderCollected()"> west</span> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="registered-3">
+                            <h3>Rider Delivered Samples</h3>
+                            <div class="mat-elevation-z8">
+                                <div style="padding: 30px; text-align: center"
+                                    *ngIf="DeliveredByRiderTests?.length == 0 || DeliveredByRiderTests?.length == undefined" class="mb-3">
+                                    No Tests Found
+                                </div>
+                                <div
+                                    *ngIf="DeliveredByRiderTests?.length > 0 && DeliveredByRiderTests?.length != undefined"  class="mb-3">
+                                    <div class="table-responsive">
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th>S.No
+                                                    </th>
+                                                    <!-- <th (click)="sortEvent('DeliveredByRider','patient.pid')">PID
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'DeliveredByRider' && sortDirection === 'ASC' && sortvalue === 'patient.pid'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'DeliveredByRider' && sortDirection === 'DASC' && sortvalue === 'patient.pid'"></i>
+                                                    </th> -->
+                                                    <th (click)="sortEvent('DeliveredByRider','sid')">SID
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'DeliveredByRider' && sortDirection === 'ASC' && sortvalue === 'sid'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'DeliveredByRider' && sortDirection === 'DASC' && sortvalue === 'sid'"></i>
+                                                    </th>
+                                                    <th (click)="sortEvent('DeliveredByRider','createdAt')">Date
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'DeliveredByRider' && sortDirection === 'ASC' && sortvalue === 'createdAt'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'DeliveredByRider' && sortDirection === 'DASC' && sortvalue === 'createdAt'"></i>
+                                                    </th>
+                                                    <th (click)="sortEvent('DeliveredByRider','patient.name')">Patient
+                                                        Name
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'DeliveredByRider' && sortDirection === 'ASC' && sortvalue === 'patient.name'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'DeliveredByRider' && sortDirection === 'DASC' && sortvalue === 'patient.name'"></i>
+                                                    </th>
+                                                    <th (click)="sortEvent('DeliveredByRider','riderInfo.name')">Rider
+                                                        Name
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'DeliveredByRider' && sortDirection === 'ASC' && sortvalue === 'riderInfo.name'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'DeliveredByRider' && sortDirection === 'DASC' && sortvalue === 'riderInfo.name'"></i>
+                                                    </th>
+                                                    <!-- <th (click)="sortEvent('DeliveredByRider','patient.gender')">Gender
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'DeliveredByRider' && sortDirection === 'ASC' && sortvalue === 'patient.gender'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'DeliveredByRider' && sortDirection === 'DASC' && sortvalue === 'patient.gender'"></i>
+                                                    </th> -->
+                                                    <th (click)="sortEvent('DeliveredByRider','test.name')">Test Name
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'DeliveredByRider' && sortDirection === 'ASC' && sortvalue === 'test.name'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'DeliveredByRider' && sortDirection === 'DASC' && sortvalue === 'test.name'"></i>
+                                                    </th>
+                                                    <th class=""> 
+                                                        <!-- All
+                                                        <mat-checkbox [checked]="false" 
+                                                            class="example-margin "></mat-checkbox> -->
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let item of DeliveredByRiderTests; let i = index">
+                                                    <td> {{ i + DeliveredByRiderPageEvent?.pageIndex *
+                                                        DeliveredByRiderPageEvent?.pageSize + 1 }} </td>
+                                                    <!-- <td> {{item?.patient.pid}} </td> -->
+                                                    <td> {{item?.sid}} </td>
+                                                    <td> {{item?.createdAt | date: 'dd-MM-yyyy'}} </td>
+                                                    <td> {{item?.patient?.name | titlecase}} </td>
+                                                    <td> {{item?.riderInfo?.name | titlecase}} </td>
+                                                    <!-- <td> {{item?.patient.gender}} </td> -->
+                                                    <td> {{item?.test?.testMaster?.name}} </td>
+                                                    <!-- <td>
+                                                        <mat-checkbox [checked]="false" (change)="toggle(item,$event)"
+                                                            class="example-margin"></mat-checkbox>
+                                                    </td> -->
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- pagination div starts from here -->
+                                    <mat-paginator [length]="DeliveredByRiderlength" [pageSize]="pageSize"
+                                        [pageSizeOptions]="pageSizeOptions"
+                                        (page)="onPageEventDeliveredByRider($event,'CollectedByRider')">
+                                    </mat-paginator>
+
+                                    <!-- pagination div ends here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </mat-tab>
+             <!-------------------------- END  CollectedByRider AND DeliveredByRider ------------------------->
+            <!------------------- START  DeliveredByRider(AwaitingForSampleRecvice) AND SampleReceived ----------------------------------------->
+            <mat-tab label="Sample Received">
+                <div class="col-md-12">
+                    <div class="row table">
+                        <div class="registered-1">
+                            <h3>Awaiting  For Sample Receive</h3>
+                            <div class="mat-elevation-z8">
+                                <div style="padding: 30px; text-align: center"
+                                    *ngIf="DeliveredByRiderTests?.length == 0 || DeliveredByRiderTests?.length == undefined">
+                                    No Tests Found
+                                </div>
+                                <div
+                                    *ngIf="DeliveredByRiderTests?.length > 0 && DeliveredByRiderTests?.length != undefined"  class="mb-3">
+                                    <div class="table-responsive">
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th>S.No
+                                                    </th>
+                                                    <!-- <th (click)="sortEvent('DeliveredByRider','patient.pid')">PID
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'DeliveredByRider' && sortDirection === 'ASC' && sortvalue === 'patient.pid'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'DeliveredByRider' && sortDirection === 'DASC' && sortvalue === 'patient.pid'"></i>
+                                                    </th> -->
+                                                    <th (click)="sortEvent('DeliveredByRider','sid')">SID
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'DeliveredByRider' && sortDirection === 'ASC' && sortvalue === 'sid'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'DeliveredByRider' && sortDirection === 'DASC' && sortvalue === 'sid'"></i>
+                                                    </th>
+                                                    <th (click)="sortEvent('DeliveredByRider','createdAt')">Date
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'DeliveredByRider' && sortDirection === 'ASC' && sortvalue === 'createdAt'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'DeliveredByRider' && sortDirection === 'DASC' && sortvalue === 'createdAt'"></i>
+                                                    </th>
+                                                    <th (click)="sortEvent('DeliveredByRider','patient.name')">Patient
+                                                        Name
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'DeliveredByRider' && sortDirection === 'ASC' && sortvalue === 'patient.name'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'DeliveredByRider' && sortDirection === 'DASC' && sortvalue === 'patient.name'"></i>
+                                                    </th>
+                                                    <th (click)="sortEvent('DeliveredByRider','riderInfo.name')">Rider
+                                                        Name
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'DeliveredByRider' && sortDirection === 'ASC' && sortvalue === 'riderInfo.name'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'DeliveredByRider' && sortDirection === 'DASC' && sortvalue === 'riderInfo.name'"></i>
+                                                    </th>
+                                                    <!-- <th (click)="sortEvent('DeliveredByRider','patient.gender')">Gender
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'DeliveredByRider' && sortDirection === 'ASC' && sortvalue === 'patient.gender'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'DeliveredByRider' && sortDirection === 'DASC' && sortvalue === 'patient.gender'"></i>
+                                                    </th> -->
+                                                    <th (click)="sortEvent('DeliveredByRider','test.name')">Test Name
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'DeliveredByRider' && sortDirection === 'ASC' && sortvalue === 'test.name'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'DeliveredByRider' && sortDirection === 'DASC' && sortvalue === 'test.name'"></i>
+                                                    </th>
+                                                    <th class=""> 
+                                                        <!-- All
+                                                        <mat-checkbox [checked]="false" 
+                                                            class="example-margin "></mat-checkbox> -->
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let item of DeliveredByRiderTests; let i = index">
+                                                    <td> {{ i + DeliveredByRiderPageEvent?.pageIndex *
+                                                        DeliveredByRiderPageEvent?.pageSize + 1 }} </td>
+                                                    <!-- <td> {{item?.patient.pid}} </td> -->
+                                                    <td> {{item?.sid}} </td>
+                                                    <td> {{item?.createdAt | date: 'dd-MM-yyyy'}} </td>
+                                                    <td> {{item?.patient?.name | titlecase}} </td>
+                                                    <td> {{item?.riderInfo?.name | titlecase}} </td>
+                                                    <!-- <td> {{item?.patient.gender}} </td> -->
+                                                    <td> {{item?.test?.testMaster?.name}} </td>
+                                                    <td>
+                                                        <mat-checkbox [checked]="false" (change)="toggle(item,$event,'step5')"
+                                                            class="example-margin"></mat-checkbox>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- pagination div starts from here -->
+                                    <mat-paginator [length]="DeliveredByRiderlength" [pageSize]="pageSize"
+                                        [pageSizeOptions]="pageSizeOptions"
+                                        (page)="onPageEventDeliveredByRider($event,'CollectedByRider')">
+                                    </mat-paginator>
+
+                                    <!-- pagination div ends here -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="registered-2">
+                            <div class="arrows">
+                                <div>
+                                    <span class="material-icons" (click)="moveToSampleRecived()"> east</span>
+                                </div>
+                                <div>
+                                    <span class="material-icons" (click)="backToAwatingSampleRecive()"> west</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="registered-3">
+                            <h3>Sample Received</h3>
+                            <div class="mat-elevation-z8">
+                                <div style="padding: 30px; text-align: center"
+                                    *ngIf="SampleRecivedTests?.length == 0 || SampleRecivedTests?.length == undefined">
+                                    No Tests Found
+                                </div>
+                                <div
+                                    *ngIf="SampleRecivedTests?.length > 0 && SampleRecivedTests?.length != undefined"  class="mb-3">
+                                    <div class="table-responsive">
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th>S.No
+                                                    </th>
+                                                    <!-- <th (click)="sortEvent('SampleReceived','patient.pid')">PID
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'SampleReceived' && sortDirection === 'ASC' && sortvalue === 'patient.pid'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'SampleReceived' && sortDirection === 'DASC' && sortvalue === 'patient.pid'"></i>
+                                                    </th> -->
+                                                    <th (click)="sortEvent('SampleReceived','sid')">SID
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'SampleReceived' && sortDirection === 'ASC' && sortvalue === 'sid'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'SampleReceived' && sortDirection === 'DASC' && sortvalue === 'sid'"></i>
+                                                    </th>
+                                                    <th (click)="sortEvent('SampleReceived','createdAt')">Date
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'SampleReceived' && sortDirection === 'ASC' && sortvalue === 'createdAt'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'SampleReceived' && sortDirection === 'DASC' && sortvalue === 'createdAt'"></i>
+                                                    </th>
+                                                    <th (click)="sortEvent('SampleReceived','patient.name')">Patient
+                                                        Name
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'SampleReceived' && sortDirection === 'ASC' && sortvalue === 'patient.name'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'SampleReceived' && sortDirection === 'DASC' && sortvalue === 'patient.name'"></i>
+                                                    </th>
+                                                    <th (click)="sortEvent('SampleReceived','riderInfo?.name')">Rider 
+                                                        Name
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'SampleReceived' && sortDirection === 'ASC' && sortvalue === 'riderInfo?.name'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'SampleReceived' && sortDirection === 'DASC' && sortvalue === 'riderInfo?.name'"></i>
+                                                    </th>
+                                                    <!-- <th (click)="sortEvent('SampleReceived','patient.gender')">Gender
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'SampleReceived' && sortDirection === 'ASC' && sortvalue === 'patient.gender'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'SampleReceived' && sortDirection === 'DASC' && sortvalue === 'patient.gender'"></i>
+                                                    </th> -->
+                                                    <th (click)="sortEvent('SampleReceived','test.name')">Test Name
+                                                        <i class="fa fa-chevron-up"
+                                                            *ngIf="status === 'SampleReceived' && sortDirection === 'ASC' && sortvalue === 'test.name'"></i>
+                                                        <i class="fa fa-chevron-down"
+                                                            *ngIf="status === 'SampleReceived' && sortDirection === 'DASC' && sortvalue === 'test.name'"></i>
+                                                    </th>
+                                                    <th class=""> 
+                                                        <!-- All
+                                                        <mat-checkbox [checked]="false" 
+                                                            class="example-margin "></mat-checkbox> -->
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let item of SampleRecivedTests; let i = index">
+                                                    <td> {{ i + SampleRecivedPageEvent?.pageIndex *
+                                                        SampleRecivedPageEvent?.pageSize + 1 }} </td>
+                                                    <!-- <td> {{item?.patient.pid}} </td> -->
+                                                    <td> {{item?.sid}} </td>
+                                                    <td> {{item?.createdAt | date: 'dd-MM-yyyy'}} </td>
+                                                    <td> {{item?.patient?.name | titlecase}} </td>
+                                                    <td> {{item?.riderInfo?.name | titlecase}} </td>
+                                                    <!-- <td> {{item?.patient.gender}} </td> -->
+                                                    <td> {{item?.test?.testMaster?.name}} </td>
+                                                    <td>
+                                                        <mat-checkbox [checked]="false" (change)="toggle(item,$event,'step6')"
+                                                            class="example-margin"></mat-checkbox>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- pagination div starts from here -->
+                                    <mat-paginator [length]="SampleRecivedlength" [pageSize]="pageSize"
+                                        [pageSizeOptions]="pageSizeOptions"
+                                        (page)="onPageEventSampleRecived($event,'SampleReceived')">
+                                    </mat-paginator>
+
+                                    <!-- pagination div ends here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </mat-tab>
+
+        </mat-tab-group>
+    </div>
+</div>
+
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="timer" [fullScreen]="true">
+    <p style="color: white">Processing... </p>
+  </ngx-spinner>

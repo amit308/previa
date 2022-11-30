@@ -1,0 +1,81 @@
+<div class="container">
+    <div class="card mt-2">
+        <div class="card-header">
+            <h2>RIDER SELF SLOTS</h2>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <input class="date-picker date_content mt-2" required type="date" [(ngModel)]="selectedDate"
+                        (change)="selectDate()"  onkeydown="return false"/>
+                    <mat-icon matDatepickerToggleIcon class="clear-icon" (click)="clearData()">clear</mat-icon>
+                    <input type="search" placeholder="Search " class="select_vaccine" [(ngModel)]="searchRider"
+                        (input)="searchRiders()">
+                </div>
+
+            </div>
+            <table class="table  table-hover mt-2">
+                <thead>
+                    <tr class="text-center">
+                        <th>SNO</th>
+                        <th>Slot Date</th>
+                        <th>Rider</th>
+                        <th>PickUp</th>
+                        <th>Drop</th>
+                        <th>SamplesCount</th>
+                        <th>Attachments</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="text-center" *ngFor="let Samples of riderSamples;let i=index">
+                        <td>{{ i + pageEvent?.pageIndex * pageEvent?.pageSize + 1 }}</td>
+                        <td>
+                            {{Samples.collectedDate | date : 'dd-MM-yyyy hh:mm a'}}
+                        </td>
+                        <td>
+                            {{Samples.rider.name}}
+                        </td>
+                        <td>
+                            {{Samples.pickupLocation.name}} - {{Samples.pickupLocation.category}}
+                        </td>
+                        <td>
+                            {{Samples.deliveryLocation.name}} - {{Samples.deliveryLocation.category}}
+                        </td>
+                        <td>
+                            {{Samples.samplesCount}}
+                        </td>
+                        <td>
+                            <button type="button" (click)="viewSamples(sampleModel,Samples)"
+                                [class.buttonColorDisabled]="Samples.samplesFiles.length==0"
+                                [disabled]="Samples.samplesFiles.length==0">view
+                                ({{Samples.samplesFiles.length}})</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+        <div style="border-bottom: 1px solid #ced4da ; margin-top: -12px;"></div>
+        <!-- pagination div starts from here -->
+        <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+            (page)="onPageEvent($event)">
+        </mat-paginator>
+        <!-- pagination div ends here -->
+    </div>
+    <ng-template #sampleModel>
+        <mat-dialog-content>
+            <button class="close-icon mb-2" [mat-dialog-close]="true">
+                X
+            </button>
+            <mat-carousel timings="150ms ease-in" [autoplay]="true" color="accent" maxWidth="auto" proportion="95"
+                slides="5" [loop]="true" [hideArrows]="false" [maintainAspectRatio]="false" slideHeight="300px"
+                [useKeyboard]="true" [useMouseWheel]="false" orientation="ltr">
+                <mat-carousel-slide style="height: 216px;" #matCarouselSlide *ngFor="let slide of slides; let i = index"
+                    overlayColor="#00000040" [hideOverlay]="false">
+                    <img class="card-img" [src]="slide.image" alt="Card image cap">
+                </mat-carousel-slide>
+            </mat-carousel>
+        </mat-dialog-content>
+    </ng-template>
+
+</div>

@@ -1,0 +1,145 @@
+.time-picker{
+    height: 35px;
+    margin-top: 0px;
+    width: 50%;
+    margin-left: 5px;
+
+}
+.time_picker2{
+    margin-right: 50px !important;
+}
+::ng-deep {
+.timepicker-button {
+
+    margin-left: 5px !important;
+}
+}
+
+.button-alignment{
+    float: right;
+    cursor: pointer;
+  
+}
+.date{
+    width: 100%;
+}
+
+::ng-deep {
+    input[type=date].form-control, input[type=time].form-control, input[type=datetime-local].form-control, input[type=month].form-control {
+     
+      text-transform: uppercase !important;
+      font-size: 13px !important;
+    }
+    }
+    .check-box {
+        height: 16px;
+        width: 16px;
+    }
+    ::ng-deep {
+    .timepicker__header{
+        background-color: #00c9d1 !important;
+    }
+}
+.time-width{
+    width: 100%;
+}
+
+.border {
+    border: 1px solid #ced4da;
+    
+}
+.address-1 {
+    width: 100%;
+    height: 70px;
+}
+agm-map {
+    height: 300px;
+  }
+  .current-btn {
+    background-color: #fff;
+    border-color: #d8d8d8;
+    // padding: 5px;
+    // font-size: 16px;
+    // position: absolute;
+    // top: 400px;
+    // right: 221px;
+    // z-index: 1;
+    padding: 5px;
+    font-size: 16px;
+    position: absolute;
+    top: 60px;
+    right: 9px;
+    z-index: 1;
+    img{
+        width: 28px;
+        height: 28px;
+    }
+}
+
+
+
+.disabled{
+    background: #a7afab !important;
+    border: 1px solid #a7afab !important;
+}
+
+.disabled:hover{
+    color: #fff !important;
+}
+
+.button-select{
+    font-size: 12px;
+}
+
+.hr_line {
+    border-bottom: 1px solid #a7afab;
+}
+.hr_lines {
+    border-bottom: 1px solid #a7afab;
+    background-color: whitesmoke;
+}
+.title_info{
+    color: black;
+    margin-top: -4px;
+}
+
+.date_title{
+    
+    color: black;
+    margin-bottom: 0px;
+}
+.patients_title {
+    font-size: 18px;
+}
+.test-reg-date {
+    margin-top: -9px;
+}
+.patient_table-body {
+    width: 100%;
+}
+
+.card-table-body {
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 3.5px 1rem;  
+}
+
+input[type="date"]:focus::before,
+input[type="date"]:valid::before {
+content: "";
+}
+.tex-box-width {
+    width: 100%;
+}
+
+.btnDisabled {
+    background: #a7afab !important;
+    border: 1px solid #a7afab !important;
+    color: rgb(27, 27, 27) !important;
+}
+
+.btnDisabledd {
+    background: #00c9d1 !important;
+    border: 1px solid #a7afab !important;
+    color: white !important;
+}

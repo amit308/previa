@@ -1,0 +1,62 @@
+.buttonColorDisabled{
+    background-color: gray !important;
+}
+.card-img{
+    padding: 0%;
+    max-width: 100%;
+    object-fit: scale-down;
+    height: -webkit-fill-available;
+   height: inherit;
+}
+.close-icon{
+    background-color: none;
+    float: right;  
+}
+button{
+    border: none;
+    outline: none;    
+}
+.mat-container {
+    padding: 5px; 
+}
+::ng-deep{
+.mat-dialog-container {
+    padding-top: 8px !important;
+}}
+ .mat-dialog-container {
+    max-width: 10vw !important;
+  }
+.mat-paginator-icon {
+    width: 28px;
+    fill: currentColor;
+    border: none;
+    outline: none;
+}
+.clear-icon {
+    position: absolute;
+    top: 8px;
+    left: 170px; 
+    border: none;
+    outline: none;
+    font-size: 19px;
+}
+.date-picker {
+    text-transform: uppercase;
+    border: none;
+    width: 20%;
+    border-bottom-style: ridge;
+    outline: none;
+}
+.select_vaccine {
+    padding: 0.375rem 0.75rem;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    box-shadow: none;
+    outline: none;
+    float: right;
+}

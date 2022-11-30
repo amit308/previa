@@ -1,0 +1,94 @@
+<div class="body">
+    <div class="patient-heading">
+        <h3>Price Details</h3>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">
+            <label for="usr">Branch:</label>
+            <div>
+                <mat-select>
+                    <mat-option value="option1">Option 1</mat-option>
+                    <mat-option value="option2">Option 2 (disabled)</mat-option>
+                    <mat-option value="option3">Option 3</mat-option>
+                </mat-select>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <label for="usr">Select scheme:</label>
+            <div>
+                <mat-select>
+                    <mat-option value="option1">Option 1</mat-option>
+                    <mat-option value="option2">Option 2 (disabled)</mat-option>
+                    <mat-option value="option3">Option 3</mat-option>
+                </mat-select>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <label for="usr"></label>
+            <div>
+                <mat-radio-group>
+                    <mat-radio-button class="example-margin" value="after">Department</mat-radio-button>
+                    <mat-radio-button class="example-margin" value="before">Package</mat-radio-button>
+                </mat-radio-group>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="row">
+        <div class="col-lg-3">
+            <label for="usr">Inherit From:</label>
+            <div>
+                <mat-select>
+                    <mat-option value="option1">Option 1</mat-option>
+                    <mat-option value="option2">Option 2 (disabled)</mat-option>
+                    <mat-option value="option3">Option 3</mat-option>
+                </mat-select>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <label for="usr">No of times</label>
+            <div>
+                <input matInput>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <label for="usr"></label>
+            <div>
+                <mat-select style="margin-top: 0.3rem;">
+                    <mat-option value="option1">Option 1</mat-option>
+                    <mat-option value="option2">Option 2 (disabled)</mat-option>
+                    <mat-option value="option3">Option 3</mat-option>
+                </mat-select>
+            </div>
+        </div>
+    </div>
+    <div class="b-buttons">
+        <button type="button" class="btn btn-primary">View</button>
+        <button type="button" class="btn btn-primary">Clear</button>
+    </div>
+    <div class="price-table">
+        <div class="header">
+          <h3>Detailed Report</h3>
+        </div>
+        <table>
+            <tr>
+                <td>S.NO</td>
+                <td>TestName/ProfileName</td>
+                <td>MRP Rate</td>
+                <td>Scheme Price</td>
+                <td>
+                    <input matInput>
+                </td>
+                <td>New Scheme Price</td>
+            </tr>
+        </table>
+    </div>
+    <div class="b-buttons">
+        <button type="button" class="btn btn-primary">Export</button>
+        <button type="button" class="btn btn-primary">Update</button>
+        <button type="button" class="btn btn-primary">Clear</button>
+    </div>
+</div>

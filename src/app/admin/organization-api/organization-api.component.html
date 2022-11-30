@@ -1,0 +1,152 @@
+<div class="country-container mt-3">
+    <div class="container-fluid">
+        <div class="card card-custom example example-compact gutter-b">
+            <div class="card-header d-flex">
+                <div class="card-title">
+                    <h2 class="card-label">API</h2>
+                </div>
+                <div class="card-toolbar">
+                    <div >
+                        <button (click)="addApi(apimodel)" class="btn btnGroup">
+                            Add API
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+
+                <div class="table-responsive example-container mat-elevation-z8">
+                    <table class="table table-hover">
+                        <thead class="text-center">
+                            <tr>
+                                <th>S.No</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-center">
+                            <tr>
+                                <td>gvfg</td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div style="border-bottom: 1px solid #ced4da ; margin-top: -12px;"></div>
+                    <!-- pagination div starts from here -->
+                    <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+                        (page)="onPageEvent($event)">
+                    </mat-paginator>
+                    <!-- pagination div ends here -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template #apimodel>
+    <div class="text-center">
+        <div class="d-flex justify-content-between">
+            <h1 mat-dialog-title>
+                API
+            </h1>
+
+            <div class="button">
+                <a class="btn btn-xs btn-icon btn-hover-primary btn_close" href="javascript:void(0)"
+                    (click)="onClose()">X</a>
+            </div>
+        </div>
+
+
+        <form [formGroup]="ApiForm">
+            <div class="row">
+                <div class="col-md-6">
+                    <mat-form-field class="full-width">
+                        <input matInput placeholder="Enter Referal Code" type="text"
+                            [formControl]="ApiForm.controls['referalcode']"
+                            [ngClass]="{ 'is-invalid': submitted && f.referalcode.errors }">
+                    </mat-form-field>
+                    <div *ngIf="submitted && f.referalcode.errors" class="invalid-feedback">
+                        <div *ngIf="f.referalcode.errors.required"> referalcode is required</div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field  class="full-width">
+                        <mat-label>Select Method</mat-label>
+                        <mat-select class=""   >
+                      
+                          <mat-option value="post">
+                            POST
+                          </mat-option>
+                          <mat-option value="put">
+                            PUT
+                          </mat-option>
+                          <mat-option value="get">
+                            GET
+                          </mat-option>
+                          <mat-option value="delete">
+                            DELETE
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    
+                </div>
+                <div class="col-md-12">
+                    <mat-form-field class="full-width">
+                        <input matInput placeholder="Enter URL" [formControl]="ApiForm.controls['url']" type="url"
+                            [ngClass]="{ 'is-invalid': submitted && f.url.errors }">
+                    </mat-form-field>
+                    <div *ngIf="submitted && f.url.errors" class="invalid-feedback">
+                        <div *ngIf="f.url.errors.required"> URL is required</div>
+                    </div>
+                </div>
+                <!-- <div class="col-md-6">
+                    <mat-form-field class="full-width">
+                        <input matInput placeholder="Enter User Name" [formControl]="ApiForm.controls['userName']"
+                            [ngClass]="{ 'is-invalid': submitted && f.userName.errors }">
+                    </mat-form-field>
+                    <div *ngIf="submitted && f.userName.errors" class="invalid-feedback">
+                        <div *ngIf="f.userName.errors.required"> User Name is required</div>
+                    </div>
+                </div> -->
+
+                <!-- <div class="col-md-6">
+                    <mat-form-field class="full-width">
+                        <input matInput placeholder="Enter Password" type="password"
+                            [formControl]="ApiForm.controls['password']"
+                            [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+                    </mat-form-field>
+                    <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                        <div *ngIf="f.password.errors.required"> Password is required</div>
+                    </div>
+                </div> -->
+              <div class="col-md-6"></div>
+                <div class="addRow text-right col-md-6">
+                    <button  class="mat-primary mb-1" mat-raised-button (click)="AddRow()">Add row</button>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Headers</th>
+                                <th>Key</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="text" class="form-control"></td>
+                                <td><input type="text" class="form-control"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div style="margin:0 auto;"><button mat-raised-button class="mat-primary  mb-1"
+                    [ngClass]="{'btnDisabled':!ApiForm.valid}" [disabled]="!ApiForm.valid" (click)="submit()">Submit
+                </button>
+            </div>
+
+
+
+        </form>
+    </div>
+</ng-template>

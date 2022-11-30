@@ -1,0 +1,188 @@
+<div class="country-container mt-3">
+  <div class="container-fluid">
+    <div class="card card-custom example example-compact gutter-b">
+      <div class="card-header ">
+        <div class="card-title">
+          <h2 class="card-label">VACCINATION</h2>
+        </div>
+
+        <div class="card-toolbar btn-width">
+          <div class="example-tools justify-content-centerr">
+            <!-- <button  class="btn btnGroup" (click)="openUploadVaccineModel(addBulkDialogVaccine)">
+                Upload Patients in Bulk
+              </button> -->
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+
+        <div class="row mt-2">
+          <div class="col-md-4">
+
+            <!-- <mat-form-field>
+                      <input #datepickerInput class="mat-datepicker-input" (change)="changeVaccinatedDate()"
+                      matInput [matDatepicker]="picker" [(ngModel)]="date" placeholder="Choose a date">
+                      <mat-icon matDatepickerToggleIcon (click)="clearDate($event)">clear</mat-icon>
+                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>  -->
+
+            <!-- <input type="date" class="select_options"> -->
+            <!-- <input class="select_options" [ngModel]="vaccinatedDate | date:'yyyy-MM-dd'"> -->
+            <input class="select_options date-picker date_content mt-2" [ngModel]="vaccinatedDate | date:'yyyy-MM-dd'"
+              (ngModelChange)="vaccinatedDate = $event" type="date" name="vaccinatedDate" onkeydown="return false"
+              (change)="changeVaccinatedDate()" 
+              />
+            <mat-icon matDatepickerToggleIcon (click)="clearDate($event)" class="clear-icon">clear</mat-icon>
+          </div>
+          <div class="col-md-4 ">
+            <select name="select" id="" class="select_vaccine" (change)="changeDose($event)">
+              <option hidden value="" selected disabled>Select Vaccination Type</option>
+              <option value="null">All</option>
+              <option value="1">Vaccination Pending</option>
+              <option value="2">Vaccination Completed</option>
+            </select>
+          </div>
+          <div class="col-md-4 ">
+            <input type="search" placeholder="Search Name" class="select_vaccine" (keyup)="getVaccinePatients($event)">
+          </div>
+        </div>
+        <div class="container-fluid mt-2">
+          <div class="row text-center h-100" *ngIf="vaccineData?.length < 1">
+            <div class="col-md-12 text-center my-auto">
+              <div class="card shadow card-block justify-content-center" style="height: 120px;">
+                <div class="card-body">
+                  No Records Found.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive " *ngIf="vaccineData?.length > 0">
+          <table class="table  table-hover ">
+            <thead>
+              <tr class="text-center">
+                <th>S.No</th>
+                <th (click)="sortEvent('name')">Name
+                  <i class="fa fa-chevron-up" *ngIf="sortDirection === 'ASC' && sortvalue === 'name'"></i>
+                  <i class="fa fa-chevron-down" *ngIf="sortDirection === 'DASC' && sortvalue === 'name'"></i>
+                </th>
+                <th (click)="sortEvent('vaccineName')">Vaccine Name
+                  <i class="fa fa-chevron-up" *ngIf="sortDirection === 'ASC' && sortvalue === 'vaccineName'"></i>
+                  <i class="fa fa-chevron-down" *ngIf="sortDirection === 'DASC' && sortvalue === 'vaccineName'"></i>
+                </th>
+                <th (click)="sortEvent('vaccinatedDate')">Vaccine Date
+                  <i class="fa fa-chevron-up" *ngIf="sortDirection === 'ASC' && sortvalue === 'vaccinatedDate'"></i>
+                  <i class="fa fa-chevron-down" *ngIf="sortDirection === 'DASC' && sortvalue === 'vaccinatedDate'"></i>
+                </th>
+                <th (click)="sortEvent('vaccinationDose')">Vaccine Dose
+                  <i class="fa fa-chevron-up" *ngIf="sortDirection === 'ASC' && sortvalue === 'vaccinationDose'"></i>
+                  <i class="fa fa-chevron-down" *ngIf="sortDirection === 'DASC' && sortvalue === 'vaccinationDose'"></i>
+                </th>
+                <th (click)="sortEvent('noOfPersons')">Vaccine Quantity
+                  <i class="fa fa-chevron-up" *ngIf="sortDirection === 'ASC' && sortvalue === 'noOfPersons'"></i>
+                  <i class="fa fa-chevron-down" *ngIf="sortDirection === 'DASC' && sortvalue === 'noOfPersons'"></i>
+                </th>
+                <th (click)="sortEvent('mobileNumber')">Mobile
+                  <i class="fa fa-chevron-up" *ngIf="sortDirection === 'ASC' && sortvalue === 'mobileNumber'"></i>
+                  <i class="fa fa-chevron-down" *ngIf="sortDirection === 'DASC' && sortvalue === 'mobileNumber'"></i>
+                </th>
+                <th (click)="sortEvent('aadhaar')">Aadhaar Number
+                  <i class="fa fa-chevron-up" *ngIf="sortDirection === 'ASC' && sortvalue === 'aadhaar'"></i>
+                  <i class="fa fa-chevron-down" *ngIf="sortDirection === 'DASC' && sortvalue === 'aadhaar'"></i>
+                </th>
+
+
+                <th (click)="sortEvent('organization')">Organization
+                  <i class="fa fa-chevron-up" *ngIf="sortDirection === 'ASC' && sortvalue === 'organization'"></i>
+                  <i class="fa fa-chevron-down" *ngIf="sortDirection === 'DASC' && sortvalue === 'organization'"></i>
+                </th>
+                <th (click)="sortEvent('isVaccinated')">Status
+                  <i class="fa fa-chevron-up" *ngIf="sortDirection === 'ASC' && sortvalue === 'isVaccinated'"></i>
+                  <i class="fa fa-chevron-down" *ngIf="sortDirection === 'DASC' && sortvalue === 'isVaccinated'"></i>
+                </th>
+
+                <!-- <th>Email</th> -->
+                <!-- <th>organization</th> -->
+                <!-- <th>Address</th> -->
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="text-center" *ngFor="let item of vaccineData ; let i= index;">
+                <td>{{ i + pageEvent?.pageIndex * pageEvent?.pageSize + 1 }}</td>
+                <td>{{item?.name | titlecase}}</td>
+                <td>{{item?.vaccineInfo?.vaccineName}}</td>
+                <td *ngIf="item?.vaccineInfo?.vaccinatedDate">{{item?.vaccineInfo?.vaccinatedDate | date : 'dd-MM-y'}}</td>
+                <td *ngIf="!item?.vaccineInfo?.vaccinatedDate"></td>
+                <td>
+                  <span *ngIf="item?.vaccineInfo?.vaccinationDose == 1"> {{item?.vaccineInfo?.vaccinationDose}}st</span>
+                  <span *ngIf="item?.vaccineInfo?.vaccinationDose == 2"> {{item?.vaccineInfo?.vaccinationDose}}nd</span>
+                </td>
+                <td>{{item?.vaccineInfo?.noOfPersons}}</td>
+                <td>{{item?.mobileNumber}}</td>
+                <td>{{item?.aadhaar}}</td>
+
+                <td>{{item?.organization}}</td>
+                <td>{{item?.vaccineInfo?.isVaccinated == true ? 'Completed' : 'Pending'}}</td>
+                <td> <button class="view-btn" (click)="ViewVaccine(item)">View
+                  </button></td>
+              </tr>
+            </tbody>
+          </table>
+          <div style="border-bottom: 1px solid #ced4da ; margin-top: -12px;"></div>
+          <!-- pagination div starts from here -->
+          <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+            (page)="onPageEvent($event)">
+          </mat-paginator>
+          <!-- pagination div ends here -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<ng-template #addBulkDialogVaccine>
+  <mat-dialog-content>
+    <div>
+      <div class="mb-5">
+        <form>
+          <!-- <h3 class="mb-5">Upload Bulk Tests</h3> -->
+          <div class="d-flex justify-content-between">
+            <h1 mat-dialog-title>
+              Upload Bulk Patients
+            </h1>
+            <div class="button">
+              <a class="btn btn-xs btn-icon btn-hover-primary btn_close" href="javascript:void(0)"
+                (click)="onClose()">X</a>
+            </div>
+          </div>
+          <label>Excel File:</label>
+          <div class="input-group mb-3">
+
+            <input type="file" class="form-control field" accept=".csv,.xls,.xlsx" placeholder="Excel File"
+              aria-label="Username" aria-describedby="basic-addon1">
+          </div>
+        </form>
+      </div>
+      <div class="row buttons">
+        <div class="col-lg-6 cancel">
+          <button (click)="onClose()" class="button-mat">Cancel</button>
+        </div>
+        <div class="col-lg-6 add-doctor text-right">
+          <button class="button-mat">Upload</button>
+        </div>
+      </div>
+
+    </div>
+
+
+  </mat-dialog-content>
+
+  <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="timer" [fullScreen]="true">
+    <p style="color: white">Processing... </p>
+  </ngx-spinner>
+</ng-template>
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "timer" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>

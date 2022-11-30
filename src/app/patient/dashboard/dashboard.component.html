@@ -1,0 +1,88 @@
+<div class="container">
+    <h2>DASHBOARD</h2>
+    <div class="">
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <mat-card class="example-card">
+                    <mat-card-header>
+                        <mat-card-title>Present Tests</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                            the card's content.</p>
+
+                    </mat-card-content>
+                </mat-card>
+            </div>
+            <div class="col-md-4">
+                <mat-card class="example-card">
+                    <mat-card-header>
+                        <mat-card-title>Pending Tests</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                            the card's content.</p>
+
+                    </mat-card-content>
+                </mat-card>
+            </div>
+            <div class="col-md-4">
+                <mat-card class="example-card">
+                    <mat-card-header>
+                        <mat-card-title>Upcoming Tests</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                            the card's content.</p>
+
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="mt-4">
+        <button (click)="openTests(testModal)">click</button>
+    </div> -->
+</div>
+
+
+
+<ng-template #testModal>
+    <div class="row">
+        <div class="col-md-12">
+            <h3 mat-dialog-title><b>NAMES</b></h3>
+        </div>
+    </div>
+
+    <div mat-dialog-content>
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered">
+                <thead>
+                    <tr class="text-center">
+                        <th>Sno</th>
+                        <th>Name</th>
+                        <th>PID</th>
+                        <th>Select Primary</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="text-center">
+                        <td>1</td>
+                        <td>{{userDetails?.name}}</td>
+                        <td>{{userDetails?.pid}}</td>
+                        <td><input type="radio" value="Male" name="gender"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row text-right">
+        <div class="col-lg-12 cancel">
+            <button type="button" (click)="onClose()" class="btn btn-danger size">Close</button>
+        </div>
+        <!-- <div class="col-lg-6 add-doctor text-right">
+            <button type="button" class="btn btn-primary">Upload</button>
+        </div> -->
+    </div>
+</ng-template>

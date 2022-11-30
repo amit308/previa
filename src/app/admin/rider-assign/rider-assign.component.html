@@ -1,0 +1,498 @@
+<mat-card>
+    <mat-card-header>
+        <div class="row w-100">
+            <div class="col-md-3">
+                <h2>RIDER ASSIGN</h2>
+            </div>
+            <div class="col-md-5 d-flex">
+                <div class="mt-2 mr-2">
+                    <h4 class=" rider-font">Select Rider</h4>
+                </div>
+                <div>
+                    <select class="form-control" required (change)="selectedRider($event)">
+                        <option [ngValue]="null" selected hidden>Select Rider</option>
+                        <option value="0">Self Rider</option>
+                        <option *ngFor="let item of riderListData" value="{{item?._id}}">{{ item?.name | titlecase}}</option>
+                    </select>
+
+                </div>
+            </div>
+
+            <div class="col-md-4 d-flex">
+                <div class="mt-1 mr-2">
+                    <h4 class=" rider-font">Rider Assign Date</h4>
+                </div>
+                <div>
+                    <input type="date" [ngModel]="riderDropDate | date:'yyyy-MM-dd'"
+                        (ngModelChange)="riderDropDate = $event" class="form-control riderdate" [min]="minDate"
+                        (change)="dropDate($event)">
+                </div>
+            </div>
+        </div>
+
+
+    </mat-card-header>
+    <mat-card-content>
+        <!-- <mat-horizontal-stepper [linear]="true" #stepper> -->
+        <!-- <ng-container>
+                <mat-step state="files" label="Select Rider" class="mb-3">
+                    <div class="mt-4">
+                        <div class="table-responsive example-container mat-elevation-z8">
+                            <table class="table  table-hover ">
+                                <thead>
+                                    <tr>
+                                        <th>Sno</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Mobile no</th>
+
+                                        <th>Assigned Rides</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of riderListData; let i= index;">
+                                        <td>{{ i + pageEvent?.pageIndex * pageEvent?.pageSize + 1 }}</td>
+                                        <td>{{item.name}}</td>
+                                        <td>{{item.emailAddress}}</td>
+                                        <td>{{item.mobileNumber}}</td>
+
+                                        <td> <button class="button-select"
+                                                (click)="openTests(testModal , item)">View</button></td>
+                                        <td> <button class="button-select" matStepperNext (click)="selectRider(item)"
+                                                [ngClass]="{'dynamicSlelect': item?._id == riderInfo?._id}">Select</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+                                (page)="onPageEvent($event)">
+                            </mat-paginator>
+                        </div>
+
+                        <div class="button-alignment mt-3 d-none">
+                            <button mat-button matStepperNext>Next</button>
+                        </div>
+                    </div>
+
+                </mat-step>
+            </ng-container> -->
+        <!-- <ng-container>
+                <mat-step state="users" label="Assign Rider" class="mb-3"> -->
+        <!-- <div class="row mt-4"> -->
+        <!-- <div class="col-md-2">
+                        </div> -->
+        <!-- <div class="col-md-4 d-flex ">
+                <div class="mt-2 mr-2">
+                    <h4 class=" rider-font">Select Rider</h4>
+                </div>
+                <div>
+                    <select class="form-control" required (change)="selectedRider($event)">
+                        <option [ngValue]="null" selected hidden>Select Rider</option>
+                        <option value="0">Self Rider</option>
+                        <option *ngFor="let item of riderListData" value="{{item?._id}}">{{ item?.name }}</option>
+                    </select>
+                </div>
+
+            </div> -->
+        <!-- <div class="col-md-4 d-flex">
+                
+            </div> -->
+
+        <!-- <div class="col-md-4 d-flex">
+                <div class="mt-1 mr-2">
+                    <h4 class=" rider-font">Rider Assign Date</h4>
+                </div>
+                <div>
+                    <input type="date" [ngModel]="riderDropDate | date:'yyyy-MM-dd'" (ngModelChange)="riderDropDate = $event" class="form-control riderdate" [min]="minDate" (change)="dropDate($event)">
+                </div>
+            </div> -->
+        <!-- <div class="col-md-4 d-flex">
+
+                <div class="mt-1 mr-2">
+                    <h4 class=" rider-font">Sample Collection Date</h4>
+                </div>
+                <div>
+                    <input type="date" [ngModel]="riderDropDate | date:'yyyy-MM-dd'" (ngModelChange)="riderDropDate = $event" class="form-control riderdate" [min]="minDate" (change)="dropDate($event)">
+                </div>
+
+
+            </div> -->
+
+        <!-- </div> -->
+        <div>
+
+            <div class="row mt-2">
+                <div class="col-md-12 col-12">
+                    <div class="form-group">
+                        <!-- <label>Enter address</label> -->
+                        <input type="text" class="form-control" (keydown.enter)="$event.preventDefault()"
+                            placeholder="Search Location" autocorrect="off" autocapitalize="off" spellcheck="off"
+                            type="text" #testsSearch>
+                    </div>
+                </div>
+            </div>
+
+            <div class="position-relative">
+                <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
+                    <ng-container *ngFor="let collectedInfo of collectedPatients">
+                        <agm-marker [latitude]="collectedInfo?.patient?.latitude"
+                            [longitude]="collectedInfo?.patient?.longitude" [iconUrl]="icon"
+                            (markerClick)="selcetTestInMap(collectedInfo)">
+                            <agm-info-window [disableAutoPan]="true" [isOpen]="false">
+                                <p>Patient Name: <b>{{collectedInfo?.patient?.name}}</b> </p>
+                                <p>Test Name: <b *ngFor="let test of collectedInfo?.tests">{{test?.test?.name}}</b> </p>
+                            </agm-info-window>
+                        </agm-marker>
+                    </ng-container>
+                </agm-map>
+                <div class="currentlocation">
+                    <div>
+                        <button class="btn current-btn" (click)="CurrentAddress()">
+                            <img src="assets/images/352557-128.png">
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div>
+            <h3>Address</h3>
+
+            <!-- <div>
+                            <input type="checkbox" class="button-alignment ml-3">
+                        </div> -->
+            <form [formGroup]="testsGroupForm">
+                <div class="card mb-3 p-1" style="background-color: whitesmoke;">
+                    <div class="">
+
+                        <div class="row">
+                            <div class="col-md-5 mt-2">
+                                <div> <button class="button-addgrp button-alignment mb-2" (click)="addGroup()"> Add
+                                        Group</button></div>
+
+                                <div>
+                                    <h4>Rider Sample Pickup Address</h4>
+                                    <input placeholder="Search Nearest Location" (input)="sampleAddress('true')"
+                                        (keydown.enter)="$event.preventDefault()" autocorrect="off" autocapitalize="off"
+                                        spellcheck="off" type="text" class="form-control"
+                                        formControlName="pickUpAddress" #pickUpAddressSearch>
+                                </div>
+                                <div>
+                                    <h4>Select Hospital</h4>
+                                    <select class="form-control" formControlName="hospital"
+                                        (ngModelChange)="hospitalOnChange($event)">
+                                        <option value="" selected>Select Hospital </option>
+                                        <option [ngValue]="hospital" *ngFor="let hospital of hospitals">
+                                            {{hospital?.name}}</option>
+                                    </select>
+
+                                </div>
+                                <div>
+                                    <h4>Rider Sample Drop Address</h4>
+                                    <input placeholder="Search Nearest Location" (input)="sampleAddress('false')"
+                                        (keydown.enter)="$event.preventDefault()" autocorrect="off" autocapitalize="off"
+                                        spellcheck="off" type="text" class="form-control" formControlName="dropAddress"
+                                        #dropAddressSearch>
+
+                                </div>
+                                <div>
+
+                                    <h4>Select Lab</h4>
+                                    <select class="form-control" formControlName="lab"
+                                        (ngModelChange)="labOnChange($event)" [ngClass]="{ 'is-invalid': submitted && l.lab.errors }"
+                                        required>
+                                        <option value="" selected>Select Lab </option>
+                                        <option [ngValue]="lab" *ngFor="let lab of labs">
+                                            {{lab?.name}}
+                                        </option>
+                                    </select>
+
+                                </div>
+                            </div>
+                            <div class="col-md-7">
+                                <ng-container>
+                                    <agm-map [latitude]="testsGroupForm?.value?.pickUpLatitude"
+                                        [longitude]="testsGroupForm?.value?.pickUpLongitude" [zoom]="zoom">
+                                        <agm-marker [latitude]="testsGroupForm?.value?.pickUpLatitude"
+                                            [longitude]="testsGroupForm?.value?.pickUpLongitude"
+                                            [markerDraggable]="true" [iconUrl]=picUpMapIcon
+                                            (dragEnd)="dragPickUpORDropLocationMarker($event,'true')">
+                                        </agm-marker>
+                                        <agm-marker [latitude]="testsGroupForm?.value?.dropLatitude"
+                                            [longitude]="testsGroupForm?.value?.dropLongitude" [markerDraggable]="true"
+                                            [iconUrl]=dropMapIcon
+                                            (dragEnd)="dragPickUpORDropLocationMarker($event,'false')">
+                                        </agm-marker>
+                                    </agm-map>
+                                </ng-container>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </form>
+        </div>
+        <br>
+        <div>
+            <h3>Groups</h3>
+            <div class="card p-1">
+                <div class="" style="display: contents;">
+                    <div class="row" *ngIf="groups?.length > 0">
+                        <div class="col-md-3" *ngFor="let groupInfo of groups; let k = index;">
+                            <div class="card ">
+                                <div class="card-header p-0">
+                                    <div class="row">
+                                        <div class="col-md-2"></div>
+                                        <div class="col-md-6 ">
+                                            <!-- <mat-icon class="edit-btn  mt-1" (click)="editGroup(k)">edit
+                                                        </mat-icon> -->
+                                        </div>
+                                        <div class="col-md-4">
+                                            <mat-icon class="delete_icon_color" class="delete-icon mt-2"
+                                                (click)="deleteGroup(k)">
+                                                delete</mat-icon>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body group_content p-1">
+                                    <div>
+                                        <div class="d-flex mb-0">
+                                            <h4>Hospital Name : </h4>
+                                            <p class="mt-1 ml-1">{{groupInfo?.hospital?.name}}</p>
+                                        </div>
+                                        <div class="d-flex mb-0">
+                                            <h4>Lab Name : </h4>
+                                            <p class="mt-1 ml-1">{{groupInfo?.lab?.name}}</p>
+                                        </div>
+                                        <h4>Rider Sample Pickup Address :</h4>
+                                        <p>{{groupInfo?.pickUpAddress}}</p>
+                                        <h4>Rider Sample Drop Address :</h4>
+                                        <p>{{groupInfo?.dropAddress}}</p>
+                                        <div class="d-flex mt-1">
+                                            <h4>Group Tests </h4>
+
+                                            <button class="view-btn ml-1"
+                                                (click)="openRiderTests(openTestsModal,groupInfo)">view</button>
+                                        </div>
+                                        <!-- <div class="d-flex">
+                                                        <h4>Tests </h4>
+                                                        <p><mat-icon class="view-icon ml-1"  (click)="openRiderTests(openTestsModal)">visibility</mat-icon></p>
+                                                       
+                                                    </div> -->
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="groups?.length == 0" style="text-align: center;">
+                        No Groups Found
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div>
+            <h3>Tests</h3>
+            <div class="card p-1">
+                <div class="" style="display: contents;">
+                    <div class="row" *ngIf="collectedTests?.length > 0">
+
+                        <div class="col-md-3" *ngFor="let collectedTest of collectedTests">
+                            <!-- <div><input type="checkbox" class="mr-2 check-box"> </div> -->
+                            <div class="card mb-2" [ngClass]="{'dynamicSlelect-color': collectedTest?.isCheck == true}">
+
+                                <div class="card-body p-1">
+                                    <div class="d-flex word_break">
+                                        <h5>Patient Name :</h5>
+                                        <p class=" ml-1">{{collectedTest?.patient?.name | titlecase}}</p>
+                                    </div>
+                                    <div class="d-flex word_break">
+                                        <h5>Test Name :</h5>
+                                        <p class=" ml-1">{{collectedTest?.test?.name}}</p>
+                                    </div>
+                                    <div class="d-flex word_break">
+                                        <h5>Sample Collected By :</h5>
+                                        <p class=" ml-1">{{collectedTest.collectedBy.name}} -
+                                            {{collectedTest.collectedBy.role}} </p>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div *ngIf="collectedTests?.length == 0" style="text-align: center;">
+                        No Tests Found
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="button-alignment save_button">
+                <button mat-button class="mr-2" (click)="backToRiders()">Back</button>
+                <!-- <button mat-button matStepperPrevious class="mr-2" (click)="backToRiders()">Back</button> -->
+                <button mat-button (click)="assignToRider()">Save</button>
+                <!-- <button mat-button (click)="stepper.reset(); assignToRider()">Save</button> -->
+
+            </div>
+        </div>
+        <!-- </mat-step>
+            </ng-container>
+        </mat-horizontal-stepper> -->
+    </mat-card-content>
+
+</mat-card>
+
+
+<ng-template #testModal>
+    <div class="row mb-2">
+        <div class="col-md-3">
+            <h2 mat-dialog-title>Rides</h2>
+
+        </div>
+        <div class="col-md-6 d-flex">
+            <h2 class="mr-2"> Select Ride Status</h2>
+            <select class="input mr-3" class="form-control select-dropdown" [(ngModel)]="mySelect"
+                (change)="selectChange($event)">
+                <option *ngFor="let item of statuss" [value]="item.viewName">{{item.viewName}}</option>
+            </select>
+        </div>
+        <div class="col-md-3 d-none">
+            <h2>Date</h2>
+            <input type="date" class="form-control">
+        </div>
+        <div class="col-md-3 d-flex">
+            <h2>Rider Name: <span class="rider_name">{{riderdata?.name}}</span></h2>
+
+        </div>
+    </div>
+    <div *ngIf="riderSlots?.length == 0">
+        No Records Found
+    </div>
+
+    <div mat-dialog-content *ngIf="riderSlots?.length > 0">
+        <div class="row">
+            <div class="col-md-12 col-12 mt-3" *ngFor="let patientInfo of riderSlots">
+                <div>
+                    <mat-card class="example-card mb-2">
+                        <mat-card-header style="background-color: whitesmoke; display: block; padding-left: 12px;">
+
+                            <table class="border-0 w-100 ">
+                                <thead>
+                                    <tr>
+                                        <th>Pickup Address</th>
+                                        <th>Hospital Name</th>
+                                        <th>Drop Address</th>
+                                        <th>Lab Name</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="td-data">{{patientInfo?.pickupLocation?.address}}</td>
+                                        <td class="td-data">{{patientInfo?.labInfo?.name}}</td>
+                                        <td class="td-data">{{patientInfo?.deliveryLocation?.address}}</td>
+                                        <td class="td-data">{{patientInfo?.hosiptalInfo?.name}}</td>
+                                        <td class="td-data">{{patientInfo?.date}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </mat-card-header>
+                        <br>
+                        <mat-card-content>
+                            <mat-accordion>
+
+                                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                                    <mat-expansion-panel-header>
+                                        <mat-panel-title>
+                                            <b>Tests</b>
+                                            <div class="tests-data ml-1">
+                                                (<p *ngFor="let test of patientInfo?.tests" class="text-color mr-1">
+                                                    {{test?.test?.displayName}} ,</p>)
+                                            </div>
+                                        </mat-panel-title>
+
+                                    </mat-expansion-panel-header>
+                                    <div class="row mt-2">
+                                    </div>
+
+                                    <div class="table-responsive details">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr class="text-center">
+                                                    <th>S.No</th>
+                                                    <th>Patient Name</th>
+                                                    <th>Test Name</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                <tr *ngFor="let test of patientInfo?.tests; let k = index"
+                                                    class="text-center">
+                                                    <td>{{k + 1}}</td>
+                                                    <td>{{test?.test?.patientName | titlecase}}</td>
+                                                    <td>{{test?.test?.testName}}</td>
+                                                    <td>{{test?.status}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </mat-expansion-panel>
+
+                            </mat-accordion>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <div mat-dialog-actions class="button-alignment">
+        <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Close</button>
+    </div>
+</ng-template>
+
+<ng-template #openTestsModal>
+    <h3 class="mb-2">Tests</h3>
+    <div class="table-responsive ">
+        <table class=" table table-hover">
+            <thead>
+                <tr>
+                    <th>S.No</th>
+                    <th>Patient Name</th>
+                    <th>Test Name</th>
+                    <th>Sample Collected By</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let groupTest of selectedGroupTest.tests; let i = index">
+
+                    <td>{{i + 1}}</td>
+                    <td> {{groupTest?.patient?.name | titlecase}}</td>
+                    <td>{{groupTest?.test?.name}}</td>
+                    <td>{{groupTest?.collectedBy?.name}} - {{groupTest?.collectedBy?.role}}</td>
+                    <td>
+                        <mat-icon class="delete_icon_color"
+                            (click)="deleteTestFromGroup(selectedGroupTest?.groupId,groupTest)">delete</mat-icon>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="button-alignment">
+            <button class="button-select" [mat-dialog-close]="true" cdkFocusInitial>Close</button>
+        </div>
+    </div>
+</ng-template>
+
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="timer" [fullScreen]="true">
+    <p style="color: white"> assigning... </p>
+</ngx-spinner>

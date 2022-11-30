@@ -1,0 +1,219 @@
+<div class="country-container mt-3">
+  <div class="container-fluid">
+    <div class="card card-custom example example-compact gutter-b">
+      <div class="card-header d-flex">
+        <div class="card-title">
+          <h2 class="card-label">FTP UPLOAD</h2>
+        </div>
+        <div class="card-toolbar">
+          <div class="example-tools justify-content-center">
+            <button (click)="addFtp(ftpmodel)" class="btn btnGroup">
+              Add FTP
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-body">
+
+        <div class="table-responsive example-container mat-elevation-z8">
+          <table class="table table-hover">
+            <thead class="text-center">
+              <tr>
+                <th>S.No</th>
+                <th (click)="sortEvent('company_name')">Company Name
+                  <i class="fa fa-chevron-up" *ngIf="sortDirection === 'ASC' && sortvalue === 'company_name'"></i>
+                  <i class="fa fa-chevron-down" *ngIf="sortDirection === 'DASC' && sortvalue === 'company_name'"></i>
+                </th>
+                <th>Email's
+                </th>
+                <th (click)="sortEvent('folder_path')">Folder Path
+                  <i class="fa fa-chevron-up" *ngIf="sortDirection === 'ASC' && sortvalue === 'folder_path'"></i>
+                  <i class="fa fa-chevron-down" *ngIf="sortDirection === 'DASC' && sortvalue === 'folder_path'"></i>
+                </th>
+
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody class="text-center">
+              <tr *ngFor="let ftp of ftpData; let i = index">
+                <td>{{ i + pageEvent?.pageIndex * pageEvent?.pageSize + 1 }}</td>
+                <td>{{ftp?.company_name | titlecase}}</td>
+                <td *ngIf="ftp?.contactEmails"><p *ngFor="let email of ftp.contactEmails">{{email}}</p></td>
+                <td *ngIf="!ftp?.contactEmails"></td>
+                <td>{{ftp?.folder_path}}</td>
+                <td>
+                  <!-- <mat-icon class="mat_icon_size" (click)="editftp(ftpmodel)">edit</mat-icon> -->
+                  <!-- <mat-icon class="mat_icon_size" (click)="openFtpmodal(uploadFtp,ftp)" matTooltip="Ftp Upload">upload_file</mat-icon>
+                  <mat-icon class="mat_icon_size" (click)="viewFiles(ftp)" matTooltip="Info" >info</mat-icon>               -->
+
+                  <span class="d-flex" style="justify-content: center;">
+                    <button class="button-view " (click)="openFtpmodal(uploadFtp,ftp)">Upload</button> &nbsp;
+                    <button class="button-view" (click)="viewFiles(ftp)">View Files</button>
+                  </span>
+
+
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div style="border-bottom: 1px solid #ced4da ; margin-top: -12px;"></div>
+          <!-- pagination div starts from here -->
+          <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+            (page)="onPageEvent($event)">
+          </mat-paginator>
+          <!-- pagination div ends here -->
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<ng-template #ftpmodel>
+  <div class="text-center">
+    <div class="d-flex justify-content-between">
+      <h1 mat-dialog-title>
+        {{headerText}} FTP
+      </h1>
+
+      <div class="button">
+        <a class="btn btn-xs btn-icon btn-hover-primary btn_close" href="javascript:void(0)" (click)="onClose()">X</a>
+      </div>
+    </div>
+
+    <div class="card" style=" border: 0px;">
+      <form [formGroup]="ftpForm">
+        <div class="row">
+          <div class="col-md-6">
+            <mat-form-field class="full-width">
+              <input matInput [formControl]="ftpForm.controls['company_name']" placeholder="Enter Company Name"
+                [ngClass]="{ 'is-invalid': submitted && f.company_name.errors }">
+            </mat-form-field>
+            <div *ngIf="submitted && f.company_name.errors" class="invalid-feedback">
+              <div *ngIf="f.company_name.errors.required"> Company Name is required</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field class="full-width">
+              <input matInput [formControl]="ftpForm.controls['host']" placeholder="Enter Host Name"
+                [ngClass]="{ 'is-invalid': submitted && f.host.errors }">
+            </mat-form-field>
+            <div *ngIf="submitted && f.host.errors" class="invalid-feedback">
+              <div *ngIf="f.host.errors.required"> Host Name is required</div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <mat-form-field class="full-width">
+              <input matInput [formControl]="ftpForm.controls['port']" placeholder="Enter Port No" type="number"
+                [ngClass]="{ 'is-invalid': submitted && f.port.errors }">
+            </mat-form-field>
+            <div *ngIf="submitted && f.port.errors" class="invalid-feedback">
+              <div *ngIf="f.port.errors.required">Port No is required</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field class="full-width">
+              <input matInput [formControl]="ftpForm.controls['userName']" placeholder="Enter User Name"
+                [ngClass]="{ 'is-invalid': submitted && f.userName.errors }">
+            </mat-form-field>
+            <div *ngIf="submitted && f.userName.errors" class="invalid-feedback">
+              <div *ngIf="f.userName.errors.required">User Name is required</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field class="full-width">
+              <input matInput [formControl]="ftpForm.controls['password']" placeholder="Enter Password" type="password"
+                [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+            </mat-form-field>
+            <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+              <div *ngIf="f.password.errors.required">Password is required</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field class="full-width">
+              <input matInput [formControl]="ftpForm.controls['emails']" placeholder="Enter email's" type="emails"
+                [ngClass]="{ 'is-invalid': submitted && f.emails.errors }">
+            </mat-form-field>
+            <div *ngIf="submitted && f.emails.errors" class="invalid-feedback">
+              <div *ngIf="f.emails.errors.required">Email's is required</div>
+            </div>
+          </div>
+        <div class="col-md-6"></div>
+        <div class="col-md-6">
+          <p class="text-danger text-left ">Note: Email should be (,) separated</p>
+
+        </div>
+
+          <div class="col-md-12">
+            <div class="form-group">
+              <textarea name="" id="" cols="5" rows="5" matInput class="text-box" formControlName="folder_path"
+                placeholder="Enter Folder Path..."
+                [ngClass]="{ 'is-invalid': submitted && f.folder_path.errors }"></textarea>
+            </div>
+            <div *ngIf="submitted && f.folder_path.errors" class="invalid-feedback">
+              <div *ngIf="f.folder_path.errors.required">Folder Path is required</div>
+            </div>
+          </div>
+          <div style="margin:0 auto;"><button mat-raised-button class="mat-primary  mb-1"
+              [ngClass]="{'btnDisabled':!ftpForm.valid}" [disabled]="!ftpForm.valid" (click)="submit()">Submit
+            </button></div>
+
+        </div>
+
+      </form>
+    </div>
+
+  </div>
+</ng-template>
+
+
+<ng-template #uploadFtp>
+  <mat-dialog-content>
+    <div>
+      <form [formGroup]="ftpFileUploadForm">
+
+        <div class="mb-5">
+          <!-- <h3 class="mb-5">Upload Bulk Tests</h3> -->
+          <div class="d-flex justify-content-between">
+            <h1 mat-dialog-title>
+              FTP Upload
+            </h1>
+            <div class="button">
+              <a class="btn btn-xs btn-icon btn-hover-primary btn_close" href="javascript:void(0)"
+                (click)="onClose()">X</a>
+            </div>
+          </div>
+          <label>Excel File:</label>
+          <div class="input-group mb-3">
+
+            <input type="file" class="form-control field" (click)="clearError()"
+              [formControl]="ftpFileUploadForm.controls['file_name']" accept=".csv,.xls,.xlsx" placeholder="Excel File"
+              aria-label="file_name" aria-describedby="basic-addon1" (change)="fileUploading($event)"
+              [ngClass]="{ 'is-invalid': issubmitted && g.file_name.errors }">
+          </div>
+          <p class="text-danger"> {{this.errormessage1}}</p>
+        </div>
+        <div class="row buttons">
+          <div class="col-lg-6 cancel">
+            <button class="button-select" (click)="onClose()">Cancel</button>
+          </div>
+          <div class="col-lg-6 add-doctor text-right">
+            <button class="button-select" [ngClass]="{'btnDisabled':!ftpFileUploadForm.valid}"
+              [disabled]="!ftpFileUploadForm.valid" (click)="ftpFileSubmit()">Upload</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </mat-dialog-content>
+</ng-template>
+
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="timer" [fullScreen]="true">
+  <p style="color: white">Processing... </p>
+</ngx-spinner>

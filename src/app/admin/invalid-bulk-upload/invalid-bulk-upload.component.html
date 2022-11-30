@@ -1,0 +1,85 @@
+<div class="country-container mt-3">
+    <div class="container-fluid">
+        <div class="card card-custom example example-compact gutter-b">
+            <div class="card-header">
+                <div class="card-title">
+                    <h2 class="card-label">INVALID BULK UPLOADS</h2>
+                </div>
+                <!-- <div class="card-toolbar">
+            <div class="example-tools justify-content-centerr">
+              <button (click)="addLab()" class="btn btnGroup">
+                Add Lab User
+              </button>
+            </div>
+          </div> -->
+            </div>
+            <div class="card-body">
+
+                <div class="">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr class="text-center">
+                                <th>S.NO</th>
+                                <th>Created Date</th>
+                                <th>Batch ID</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="text-center" *ngFor="let item of bulkUploadData let i= index">
+                                <td>{{i+1}}</td>
+                                <td>{{item?.patients.length > 0 ? (item?.patients[0]?.createdAt  | date : 'dd-MM-yyyy h:mm a') : ''}}</td>
+                                <td>{{item?._id}}</td>
+
+                                <td><button class="button-select"
+                                        (click)="sampleFileDownload(item?.patients,item?._id)">Download
+                                        ({{item?.patients.length}})</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div style="border-bottom: 1px solid #ced4da ; margin-top: -12px;"></div>
+
+                    <!-- pagination div starts from here -->
+                    <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+                        (page)="onPageEvent($event)">
+                    </mat-paginator>
+
+                    <!-- pagination div ends here -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="d-none">
+    <table id="patient-invalid-records">
+        <tr>
+            <th>SL NO</th>
+            <th>NAME</th>
+            <th>AGE</th>
+            <th>Gender</th>
+            <th>Mobile</th>
+            <th>Address</th>
+            <th>ADHAR CARD</th>
+            <th>LOCATION</th>
+            <th>Reference Code</th>
+
+        </tr>
+        <tr *ngFor="let item of patientsData; let i=index">
+            <td>{{ i + 1 }}</td>
+            <td>{{item?.name}}</td>
+            <td>{{item?.age}}</td>
+            <td>{{item?.gender}}</td>
+            <td>{{item?.mobileNumber}}</td>
+            <td>{{item?.address}}</td>
+            <td>{{item?.aadhaar}}</td>
+            <td>{{item?.location}}</td>
+            <td>{{item?.referenceCode}}</td>
+
+
+        </tr>
+    </table>
+
+</div>

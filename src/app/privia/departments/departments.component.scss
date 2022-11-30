@@ -1,0 +1,54 @@
+.department-heading h3 {
+    color: rgba(31,32,34,.5);
+    margin: 0 0 1.42857rem;
+    font-size: 2rem;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.card-img img {
+    height: auto;
+    width: 100%;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.department-section mat-card {
+    padding: 0px;
+    border-radius: 8px;
+    margin: 15px 0px;
+    box-shadow: 0 18px 24px rgba(0,0,0,.12);
+}
+
+.department-section mat-card .card-data {
+    padding: 1.42857rem!important;
+}
+
+.card-data h3 {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.card-data p {
+    font-size: 14px;
+    text-align: justify;
+}
+
+.card-data button {
+    color: #fff;
+    background: #437289;
+    padding: 5px 25px;
+    margin: 15px 0px 0px 0px;
+    border: 1px solid #437289;
+    border-radius: 5px;
+}
+
+.add-doctor{
+    float: right;
+    bottom: 0;
+    position: sticky;
+    cursor: pointer;
+    span{
+        font-size: 4rem;
+    }
+}

@@ -1,0 +1,60 @@
+// .btn{
+//     margin-left: 260px;
+// }
+.material-icons{
+    width: 20px;
+    height: 24px;
+    font-size: 18px;
+    
+}
+.select-inventory{
+padding: 0.375rem 0.75rem;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.8;
+    color: #495057;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    box-shadow: none;
+    outline: none;
+  
+}
+::ng-deep .date-picker {
+    
+    width: 220px;
+border-radius: 5px;
+line-height: 2;
+ z-index:2000;
+overflow: visible; 
+// margin-left: 450px
+}
+// .input{
+//     margin-left: 180px;
+// }
+// .date-picker{
+// //    line-height: 2.3;
+//     //  width: 120%;
+//     border: none;
+//     outline: none;
+//     border-bottom: 1px solid;
+//     text-transform: uppercase;
+//     // bottom: 7px;
+// }
+// .date-picker {
+//     text-transform: uppercase;
+//     border: none;
+//     width: 20%;
+//     border-bottom: 1px solid;
+//     outline: none;
+// }
+.clear-icon{
+    left:210px;
+    position: absolute;
+    top: 8px;
+    font-size: 20px;
+    // margin-left:950px
+}
+// .date_content {
+//     position: relative;
+// }

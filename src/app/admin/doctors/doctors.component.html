@@ -1,0 +1,74 @@
+<!-- <div class="doctors-profile">
+    <h4 class="ml-3">DOCTORS</h4>
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-lg-4 mb-4" *ngFor="let item of doctorsProfile">
+                    <mat-card>
+                        <div class="contact">
+                            <div class="img-box">
+                                <img  src="{{ item.image }}" height="350" alt="avatar">
+                            </div>
+                            <div class="info-box">
+                                <h4 class="name">{{ item.name }}</h4>
+                                <p class="role">{{ item.specilist }}</p>
+                                <div class="social">
+                                    <a href="#" class="link icofont-instagram"></a>
+                                    <a href="#" class="link icofont-facebook"></a>
+                                    <a href="#" class="link icofont-twitter"></a>
+                                </div> 
+                                <p class="address">795 Folsom Ave, Suite 600 San Francisco, CADGE 94107</p>
+                                <div class="button-box">
+                                    <button type="button" class="ant-btn-primary">
+                                        <span>View profile</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-card>
+            </div>
+        </div>
+    </div>
+    <div class="add-doctor" (click)="addDoctor()">
+        <span class="material-icons">
+            add_circle
+            </span>
+    </div>
+</div> -->
+
+
+
+<section class="department-section">
+    <div class="container">
+        <div class="department-heading">
+            <h2 class="card-label">DOCTORS</h2>
+        </div>
+
+        <div class="col-md-12 p-0">
+            <div class="row">
+                <div class="col-md-4"  *ngFor="let item of doctorsProfile">
+                    <mat-card>
+                        <div class="card-img">
+                            <img  src="{{ item.image }}" height="350" alt="avatar">
+                        </div>
+                        <div class="card-data">
+                            <h4 class="name">{{ item.name }}</h4>
+                            <p class="role">{{ item.specilist }}</p>
+                            <p class="address">795 Folsom Ave, Suite 600 San Francisco, CADGE 94107</p>
+                            <div class="button-box">
+                                <button type="button" class="ant-btn-primary">
+                                    <span>View profile</span>
+                                </button>
+                            </div>
+                        </div>
+                    </mat-card>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="add-doctor" (click)="addDoctor()">
+        <span class="material-icons">
+            add_circle
+            </span>
+    </div>
+</section>
+

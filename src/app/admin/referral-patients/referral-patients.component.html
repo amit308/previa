@@ -1,0 +1,78 @@
+<div class="country-container mt-3">
+    <div class="container-fluid">
+        <div class="card card-custom example example-compact gutter-b">
+            <div class="card-header">
+              
+                
+                    <div class="card-title">
+                      <h2 class="card-label">REFERRAL PATIENTS</h2>
+                    </div>
+                    <div *ngIf=isShown class="card-toolbar mr-5">
+                        
+                      <div class="example-tools justify-content-centerr">
+                        <mat-form-field floatLabel="always">
+                            <mat-label>Select Referrer</mat-label>
+                            <input type="text"   matInput 
+                              [matAutocomplete]="autoActivityCodes">
+                            <mat-autocomplete autoActiveFirstOption #autoActivityCodes="matAutocomplete">
+                              <mat-option   [value]="">
+                                name
+                              </mat-option>
+                            </mat-autocomplete>
+                          </mat-form-field>
+                      </div>
+                    </div>
+                 
+            </div>
+            <div class="card-body">
+                <div class="table-responsive example-container mat-elevation-z8">
+                    <table class="table table-hover text-center">
+                        <thead class="text-center">
+                            <tr>
+                                <th>S.No</th>
+                                <th>Test Created Date</th>
+                                <th>PID</th>
+                                <th>Name</th>
+                                <th>Gender</th>
+                                <th>Test</th>
+                                <th>Status</th>
+                                <th>Result</th>
+                                <th>Mobile</th>
+
+                                <!-- <th>Action</th> -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of referralPatientsData; let i=index">
+                                <td>{{ i +  pageEvent?.pageIndex * pageEvent?.pageSize + 1 }}</td>
+                                <td>{{item?.patient?.createdAt | date:'dd-MM-yyyy'}}</td>
+                                <td>{{item?.patient?.pid}}</td>
+                                <td>{{item?.patient?.name | titlecase}}</td>
+                                <td>{{item?.patient?.gender}}</td>
+                                <td>{{item?.test?.displayName}}</td>
+                                <td>{{item?.status}}</td>
+                                <td>{{item?.value}}</td>
+                                <td>{{item?.patient?.mobileNumber}}</td>
+
+                                <!-- <td>
+                                    <mat-icon>edit</mat-icon>
+                                </td> -->
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div style="border-bottom: 1px solid #ced4da ; margin-top: -12px;"></div>
+
+                    <!-- pagination div starts from here -->
+                    <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+                        (page)="onPageEvent($event)"  >
+                    </mat-paginator>
+                    <!-- pagination div ends here -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="timer" [fullScreen]="true">
+    <p style="color: white">Processing... </p>
+  </ngx-spinner>

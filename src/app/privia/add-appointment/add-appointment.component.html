@@ -1,0 +1,57 @@
+<div>
+    <div class="doctor-fields">
+        <h3>Add Appointment</h3>
+        <div class="input-group mb-3 row">
+            <div class="col-lg-2">
+                <img src="./../../../assets/salman-khan-1584090953.jpg" alt="Avatar" class="avatar">
+            </div>
+            <div>
+                <input type="file" class="form-control file-input" placeholder="link" aria-label="Username"
+                aria-describedby="basic-addon1" #fileinput>
+                <button type="button" (click)="fileinput.click()" class="btn btn-primary">select image</button>
+            </div>
+        </div>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control field" placeholder="first name" aria-label="Username"
+                aria-describedby="basic-addon1">
+        </div>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control field" placeholder="last name" aria-label="Username"
+                aria-describedby="basic-addon1">
+        </div>
+        <div class="row">
+            <div class="input-group mb-3 col-lg-6">
+                <input type="text" class="form-control field" placeholder="speciality" aria-label="Username"
+                    aria-describedby="basic-addon1">
+            </div>
+            <div class="input-group mb-3 col-lg-6">
+                <input type="text" class="form-control field" placeholder="gender" aria-label="Username"
+                    aria-describedby="basic-addon1">
+            </div>
+        </div>
+        <div class="input-group mb-3">
+            <textarea class="form-control field" aria-label="With textarea" placeholder="Address"></textarea>
+        </div>
+    </div>
+    <div>
+        <h3>Add social network</h3>
+        <div class="row">
+            <div class="input-group mb-3 col-lg-6">
+                <input type="text" class="form-control field" placeholder="icon class" aria-label="Username"
+                    aria-describedby="basic-addon1">
+            </div>
+            <div class="input-group mb-3 col-lg-6">
+                <input type="text" class="form-control field" placeholder="link" aria-label="Username"
+                    aria-describedby="basic-addon1">
+            </div>
+        </div>
+    </div>
+    <div class="row buttons">
+        <div class="col-lg-6 cancel">
+            <button type="button" class="btn btn-danger">Cancel</button>
+        </div>
+        <div class="col-lg-6 add-doctor">
+            <button type="button" class="btn btn-primary">Add doctor</button>
+        </div>
+    </div>
+</div>

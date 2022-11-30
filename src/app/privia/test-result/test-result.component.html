@@ -1,0 +1,776 @@
+<div class="body">
+  <div class="row">
+    <div class="col-lg-3">
+      <h2 class="card-label">TEST RESULT</h2>
+    </div>
+    <div class="col-lg-9">
+      <div class="row">
+        <div class="col-lg-6"></div>
+        <div class="col-lg-3 text-right">
+          <select class="input mt-1" class="form-control">
+            <option value="" disabled selected>Select Portal</option>
+            <option></option>
+          </select>
+        </div>
+        <div class="col-lg-3 text-right">
+          <button class="p-2 mt-0 mb-2 upload-btn" (click)="uploadResults()">
+            Upload Tests in Bulk
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card p-4">
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="row">
+          <div class="col-lg-4">
+            <label for="usr">Branch:</label>
+            <select class="form-control">
+              <option>--select--</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+            </select>
+          </div>
+          <div class="col-lg-4">
+            <label for="usr">Date:</label>
+            <input type="date" class="form-control" />
+          </div>
+          <div class="col-lg-4 searchform">
+            <div>
+              <label for="usr">Search By Name or PID:</label>
+            </div>
+            <mat-form-field class="example-full-width">
+              <input
+                class="search"
+                type="text"
+                aria-label="Number"
+                matInput
+                [formControl]="search"
+                (keyup)="getpatients($event)"
+                [matAutocomplete]="auto"
+              />
+              <mat-autocomplete
+                autoActiveFirstOption
+                #auto="matAutocomplete"
+                (optionSelected)="onFileChange($event.option.value)"
+              >
+                <mat-option *ngFor="let option of options" [value]="option.pid">
+                  {{ option?.name }} {{ option?.mobileNumber }}
+                  {{ option?.pid }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4">
+            <label for="usr">Patient:</label>
+            <input
+              type="text"
+              class="form-control"
+              [value]="patientDetailsData?.name"
+            />
+          </div>
+          <div class="col-lg-4">
+            <label for="usr">Organization:</label>
+            <select class="form-control">
+              <option>--select--</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+            </select>
+          </div>
+          <div class="col-lg-4">
+            <label for="usr" hidden>none</label>
+            <button
+              mat-raised-button
+              class="mt-4 upload-btn"
+              (click)="submit()"
+            >
+              Submit
+            </button>
+          </div>
+          <!-- <div class="col-lg-4">
+                        <label for="usr">&nbsp;</label>
+                        <input type="text" class="form-control">
+                    </div> -->
+        </div>
+        <div class="row d-none">
+          <div class="col-lg-4">
+            <label for="usr">Organization:</label>
+            <select class="form-control">
+              <option>--select--</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+            </select>
+          </div>
+          <div class="col-lg-4">
+            <label for="usr">&nbsp;</label>
+            <input type="text" class="form-control" />
+          </div>
+          <div class="col-lg-4">
+            <div class="form-group">
+              <label class="search-label">&nbsp;</label>
+              <input
+                type="search"
+                class="form-control"
+                placeholder="Search..."
+              />
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <button mat-raised-button (click)="submit()">Submit</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="row flags">
+          <div class="col-lg-3 pending">
+            <span class="material-icons">emoji_flags</span>
+            <span>Pending</span>
+          </div>
+          <div class="col-lg-3 completed">
+            <span class="material-icons"> emoji_flags </span>
+            <span>Completed</span>
+          </div>
+          <div class="col-lg-3 authorized">
+            <span class="material-icons"> emoji_flags </span>
+            <span>Authorized</span>
+          </div>
+          <div class="col-lg-3 printed">
+            <span class="material-icons"> emoji_flags </span>
+            <span>Printed</span>
+          </div>
+          <div class="col-lg-3 dispatched">
+            <span class="material-icons"> emoji_flags </span>
+            <span>Dispatched</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!testDetails?.isReferralPatient">
+      <mat-tab-group>
+        <mat-tab label="Test Result">
+          <div class="table-responsive example-container mat-elevation-z8">
+            <!-- <table class="table d-none" >
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Test</th>
+                                    <th>Result/Remarks</th>
+                                    <th>flag</th>
+                                    <th>unit</th>
+                                    <th>Reference Range</th>
+                                    <th>comments</th>
+                                    <th>Updated Time</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let element of testDetails">
+                                    <td>
+                                        <mat-checkbox class="example-margin"></mat-checkbox>
+                                        <span class="material-icons">
+                                            emoji_flags
+                                        </span>
+                                    </td>
+                                    <td>{{element?.test?.name}}</td>
+                                    <td>
+                                        <div *ngIf="element?.testResult?.resultType!='template'">
+                                            <input type="text" class="form-control p-3" [(ngModel)]="element.value">
+                                        </div>
+                                        <div *ngIf="element?.testResult?.resultType=='template'">
+                                            <button class="btn btn-md px-2" (click)="open(content,element)">View
+                                                Report</button>
+                                        </div>
+                                    </td>
+                                    <td>1</td>
+                                    <td>1</td>
+                                    <td>100</td>
+                                    <td><textarea class="form-control" [(ngModel)]="element.comment"></textarea></td>
+                                    <td>{{element.updatedAt | date:'dd-MM-yyyy HH:mm'}}</td>
+                                    <td class="updateButton"><button mat-raised-button class="mr-2"
+                                            (click)="update(element)">Update</button>
+                                        <button mat-raised-button *ngIf="element.status === 'completed'"
+                                            (click)="printReport(element)">Print Report</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table> -->
+            <table
+              mat-table
+              [dataSource]="dataSource"
+              class="table mat-tableData"
+            >
+              <ng-container matColumnDef="select">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let element">
+                  <mat-checkbox class="example-margin"></mat-checkbox>
+                  <span class="material-icons"> emoji_flags </span>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="test">
+                <th mat-header-cell *matHeaderCellDef>Test</th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element?.test?.testMaster?.name }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="Result/Remarks">
+                <th mat-header-cell *matHeaderCellDef>Result/Remarks</th>
+                <td mat-cell *matCellDef="let element">
+                  <!-- *ngIf="element?.testResult?.resultType!='template'" -->
+                  <div>
+                    <input
+                      type="text"
+                      class="form-control p-3"
+                      [(ngModel)]="element.value"
+                    />
+                  </div>
+                  <!-- <div *ngIf="element?.testResult?.resultType=='template'">
+                                        <button class="btn btn-md px-2" (click)="open(content,element)">View
+                                            Report</button>
+                                    </div> -->
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="flag">
+                <th mat-header-cell *matHeaderCellDef>Flag</th>
+                <td mat-cell *matCellDef="let element">1</td>
+              </ng-container>
+
+              <ng-container matColumnDef="unit">
+                <th mat-header-cell *matHeaderCellDef>Unit</th>
+                <td mat-cell *matCellDef="let element">1</td>
+              </ng-container>
+
+              <ng-container matColumnDef="Reference Range">
+                <th mat-header-cell *matHeaderCellDef>Reference Range</th>
+                <td mat-cell *matCellDef="let element">1</td>
+              </ng-container>
+
+              <ng-container matColumnDef="comments">
+                <th mat-header-cell *matHeaderCellDef>Comments</th>
+                <td mat-cell *matCellDef="let element">
+                  <textarea
+                    class="form-control"
+                    [(ngModel)]="element.comment"
+                  ></textarea>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="templates">
+                <th mat-header-cell *matHeaderCellDef>Templates</th>
+                <td mat-cell *matCellDef="let element">
+                  <mat-form-field class="full-width">
+                    <mat-label>Select Template</mat-label>
+                    <mat-select class="" [(ngModel)]="element.templateId">
+                      <mat-option
+                        *ngFor="let template of element?.testResult?.templates"
+                        [value]="template?._id"
+                      >
+                        {{ template?.templateType }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="Updated Time">
+                <th mat-header-cell *matHeaderCellDef>Updated Time</th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.updatedAt | date: "dd-MM-yyyy HH:mm" }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="option">
+                <th mat-header-cell *matHeaderCellDef>Actions</th>
+                <td mat-cell *matCellDef="let element" class="updateButton1">
+                  <button
+                    mat-raised-button
+                    class="mat-primary2"
+                    class="mr-2"
+                    (click)="update(element)"
+                  >
+                    Update
+                  </button>
+                  <button
+                    mat-raised-button
+                    class="mat-primary1"
+                    *ngIf="element.status === 'completed'"
+                    (click)="printReport(element)"
+                  >
+                    Print Report
+                  </button>
+                  <button
+                    mat-raised-button
+                    class="mat-primary1"
+                    *ngIf="
+                      element.status === 'completed' &&
+                      (element?.testResult?.templates.length > 0 ||
+                        element?.referrerSidNumber)
+                    "
+                    (click)="
+                      openDownloadReportModel(downloadTestReport, element)
+                    "
+                  >
+                    Download Report
+                  </button>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
+          </div>
+        </mat-tab>
+        <mat-tab label="Free Test Results"> Free Test Results </mat-tab>
+        <mat-tab label="Cuture Report">
+          <div class="comments">
+            <div class="fields">
+              <h4>Organism(s) Growth / No Grown:</h4>
+              <select class="form-control">
+                <option>--select--</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+              </select>
+              <mat-icon aria-hidden="false" aria-label="Example add icon"
+                >add</mat-icon
+              >
+            </div>
+            <div class="row cards">
+              <div class="col-lg-6">1</div>
+              <div class="col-lg-6">2</div>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab label="Overall Comments/Clinical">
+          <div class="comments">
+            <div>
+              <label for="usr">Overall comments:</label>
+              <textarea class="form-control"></textarea>
+            </div>
+            <div>
+              <label for="usr">Patient Remarks:</label>
+              <textarea class="form-control"></textarea>
+            </div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+    <div *ngIf="testDetails?.isReferralPatient">
+      <table>
+        <thead>
+          <tr>
+            <th>S.No</th>
+            <th>Test Name</th>
+            <th>Test Info</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody class="text-center">
+          <tr
+            *ngFor="
+              let data of testDetails?.organizationPatientInfo?.description
+                ?.sidResultDetails;
+              let i = index
+            "
+          >
+            <td>{{ i + 1 }}</td>
+            <td>{{ data?.testName }}</td>
+            <td>
+              <button
+                mat-raised-button
+                class="mat-primary1"
+                (click)="openTestObjInfoModel(testObjInfo, data)"
+              >
+                View
+              </button>
+            </td>
+            <td>
+              {{
+                testDetails?.organizationPatientInfo?.description
+                  ?.reportStatusCode == null
+                  ? "AwaitingSample"
+                  : testDetails?.organizationPatientInfo?.description
+                      ?.reportStatusCode == "PE"
+                  ? "Pending"
+                  : testDetails?.organizationPatientInfo?.description
+                      ?.reportStatusCode == "CO"
+                  ? "Completed"
+                  : testDetails?.organizationPatientInfo?.description
+                      ?.reportStatusCode == "AU"
+                  ? "Authorized"
+                  : testDetails?.organizationPatientInfo?.description
+                      ?.reportStatusCode == "PR"
+                  ? "Printed"
+                  : "Dispatched"
+              }}
+            </td>
+            <td>
+              <button
+                mat-raised-button
+                class="mat-primary1"
+                (click)="openDownloadReportModel(downloadTestReport, data)"
+              >
+                DownloadReport
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="printReport">
+  <div class="">
+    <div class="header col-md-12">
+      <div class="row">
+        <div class="col-md-6">
+          <img
+            src="../../../assets/PreviaLogo.png"
+            class="img-responsive img-fluid"
+            style="width: 300px"
+          />
+        </div>
+        <div class="col-md-6 mt-4 text-right address">
+          <h2><b>PREVIA HEALTH</b></h2>
+          <P
+            >3-6-16 & 17, Street No. 19, Himayatnagar, Hyderabad - 500 029Street
+            No. 19, Himayatnagar, Hyderabad - 500 029</P
+          >
+          <P>Email : info@vijayadiagnostic.com</P>
+          <P>www.previaHealth.com</P>
+        </div>
+      </div>
+    </div>
+    <div class="customer-details mt-4">
+      <h3 class="text-center mb-5"><b>LABORATORY TEST REPORT</b></h3>
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="table-responsive">
+              <table class="table">
+                <tr>
+                  <td>Regn Date</td>
+                  <td>
+                    :
+                    {{
+                      TestReportDetails?.createdAt | date: "dd/MM/yyyy HH:mm"
+                    }}
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>Name</td>
+                  <td>
+                    <b>: MRS. {{ patientDetailsData?.name }}</b>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Regn No</td>
+                  <td>
+                    <b>: {{ patientDetailsData?.pid }}</b>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Ref By</td>
+                  <td>: Dr. CGHS ON PAYMENT</td>
+                </tr>
+                <tr>
+                  <td>Sample Type</td>
+                  <td>: Fluoride Plasma</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="table-responsive">
+              <table class="table">
+                <tr>
+                  <td>Sample Collection</td>
+                  <td>
+                    :
+                    {{
+                      TestReportDetails?.sampleCollectedDate
+                        | date: "dd/MM/yyyy HH:mm"
+                    }}
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>Print Date</td>
+                  <td>: 19/11/2020 09:34</td>
+                </tr>
+                <tr>
+                  <td>Age / Sex</td>
+                  <td>
+                    <b
+                      >: {{ calculate(patientDetailsData?.DOB) }} Years /
+                      Female</b
+                    >
+                  </td>
+                </tr>
+                <tr>
+                  <td>Regn Centre</td>
+                  <td>: Yousufguda - 42</td>
+                </tr>
+                <tr>
+                  <td>Ref no.</td>
+                  <td>:</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr />
+    <div class="tests-details">
+      <h3 class="text-center font-weight-bold">
+        {{ TestReportDetails?.test?.name }}
+      </h3>
+      <div *ngIf="TestReportDetails?.testResult?.resultType == 'template'">
+        <!-- {{TestReportDetails?.value}} -->
+        <div [innerHtml]="templateViewContent"></div>
+      </div>
+      <table
+        class="table"
+        *ngIf="TestReportDetails?.testResult?.resultType != 'template'"
+      >
+        <thead>
+          <tr class="font-weight-bold text-decoration">
+            <th>TEST NAME</th>
+            <th>RESULT</th>
+            <th>BIOLOGICAL REFERENCE INTERVAL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="font-weight-bold">
+              {{ TestReportDetails?.test?.name }}
+            </td>
+            <td>: {{ TestReportDetails?.value }}</td>
+            <td>
+              <b>NA</b>
+              <!-- <p>Normal : 70 - 100 mg/dL</p>
+                            <p>Impaired Fasting Glucose : 101 - 125 mg/dL</p>
+                            <p>Diabetes : >/= 126 mg/d</p> -->
+              <!-- <pre>Normal : 70 - 100 mg/dL
+                                Impaired Fasting Glucose : 101 - 125 mg/dL
+                                Diabetes : >/= 126 mg/dL</pre> -->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="comment-details">
+      <div class="font-weight-italic mb-5">Method: Hexokinase</div>
+      <div class="m-top-40">
+        <h6 class="comment"><span> Comments / InterPretation :</span></h6>
+        <p>{{ TestReportDetails?.comment }}</p>
+        <div class="f-13">
+          -ADA Guidelines (2019) are adopted for the evaluation of Diabetic
+          Status.
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-8">
+            <!-- <img class="certified-logo" src="../../certified_laboratory_logo.png" alt=""> -->
+            <p>Certificate # MC - 2657</p>
+          </div>
+          <div class="col-md-4">
+            <h5 class="font-weight-bold">DR.SUDARSHAN</h5>
+            <h5 class="font-weight-bold">CONSULTANT BIOCHEMIST</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template id="modalWidthCustom" #content let-modal>
+  <!-- <div></div> -->
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Report Template</h4>
+    <!-- (click)="modal.dismiss('Cross click')" -->
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="crossClick()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <!-- *ngIf="!docViweEditorFlag" -->
+    <div>
+      <!-- <div><button></button></div> -->
+      <!-- <ngx-doc-viewer [url]="doc" viewer="google" style="width:100%;height:50vh;"></ngx-doc-viewer> -->
+      <div class="text-right">
+        <button class="btn btn-md mb-4" (click)="toggleDisabled()">
+          {{ isDisabled ? "Edit Template" : "Cancel" }}
+        </button>
+      </div>
+      <div class="col-md-12">
+        <div class="border p-3" *ngIf="!editTemplateFlag">
+          <p class="mb-0" [innerHtml]="templateViewContent"></p>
+        </div>
+        <!-- data="templateViewContent" -->
+        <div>
+          <!-- <ckeditor
+            *ngIf="editTemplateFlag"
+            class="customEditorStyles"
+            [editor]="Editor"
+            [(ngModel)]="templateViewContent"
+            [disabled]="isDisabled"
+            (change)="changedTemplateContent($event)"
+          >
+          </ckeditor> -->
+        </div>
+      </div>
+    </div>
+    <!-- <div *ngIf="docViweEditorFlag">
+            <h6>Edit section</h6>
+        </div> -->
+  </div>
+  <div class="modal-footer">
+    <!-- (click)="editDocView()"-->
+    <!-- <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')"> Cancel</button> -->
+    <button
+      *ngIf="editTemplateFlag"
+      type="button"
+      class="btn btn-outline-dark"
+      (click)="saveTemplateEditData('Save click')"
+    >
+      Save changes
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #downloadTestReport>
+  <mat-dialog-content>
+    <div>
+      <div class="d-flex justify-content-between">
+        <h1 mat-dialog-title>Download Report</h1>
+        <div class="button">
+          <a
+            class="btn btn-xs btn-icon btn-hover-primary btn_close"
+            href="javascript:void(0)"
+            (click)="onClose()"
+            >X</a
+          >
+        </div>
+      </div>
+      <form [formGroup]="templeteForm">
+        <div class="row">
+          <div class="col-md-12">
+            <label for="promotion">Promotion Page</label>
+            <input
+              type="checkBox"
+              name="promotion"
+              id="promotion"
+              [formControl]="templeteForm.controls['promotionPage']"
+            />
+          </div>
+
+          <div class="col-md-12">
+            <mat-form-field class="full-width">
+              <mat-label>Select Header</mat-label>
+              <mat-select
+                class=""
+                [formControl]="templeteForm.controls['header_type']"
+              >
+                <mat-option value="true"> With Header </mat-option>
+                <mat-option value="false"> Without Header </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <!-- <div class="col-md-6">
+            <mat-form-field class="full-width">
+                <mat-label>Select Template</mat-label>
+                <mat-select class="" [formControl]="templeteForm.controls['template_type']">
+
+                    <mat-option *ngFor="let template of selectedDownloadTest?.testResult?.templates" value="{{template?._id}}">
+                        {{template?.templateType}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+        </div> -->
+        </div>
+
+        <!-- <div class="d-flex">
+                  <input type="radio">
+                  <p class="radio_info">With Header</p>
+                  <input type="radio">
+                  <p class="radio_info">Without Header</p>
+              </div>
+              
+            <div style="display: contents;">
+                <div class="row">
+                    <div class="col-md-3 d-flex" *ngFor="let template of selectedDownloadTest?.testResult?.templates">
+                        <input class="mt-1" type="radio"  (click)="selectedTestTemplate(template)" (change)="isChecked($event)">
+                        <p>{{template?.templateType}}</p>
+                    </div>
+                   
+                </div>
+            </div>
+           -->
+        <div class="row buttons">
+          <div style="margin: 0 auto">
+            <button
+              class="button-mat"
+              (click)="downloadReport(selectedDownloadTest)"
+              [ngClass]="{ btnDisabled: !templeteForm.valid }"
+              [disabled]="!templeteForm.valid"
+              *ngIf="!testDetails?.isReferralPatient"
+            >
+              Download
+            </button>
+            <button
+              class="button-mat"
+              (click)="
+                downloadReferralTestReport(selectedDownloadTest, testDetails)
+              "
+              [ngClass]="{ btnDisabled: !templeteForm.valid }"
+              [disabled]="!templeteForm.valid"
+              *ngIf="testDetails?.isReferralPatient"
+            >
+              Download
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </mat-dialog-content>
+  <ngx-spinner
+    bdColor="rgba(0, 0, 0, 0.8)"
+    size="medium"
+    color="#fff"
+    type="timer"
+    [fullScreen]="true"
+  >
+    <p style="color: white">Processing...</p>
+  </ngx-spinner>
+</ng-template>
+<ng-template #testObjInfo>
+  <div class="card" style="overflow: auto; height: 90vh">
+    <ngx-json-viewer [json]="selectedTestInfoObj"></ngx-json-viewer>
+  </div>
+</ng-template>
+<ngx-spinner
+  bdColor="rgba(0, 0, 0, 0.8)"
+  size="medium"
+  color="#fff"
+  type="timer"
+  [fullScreen]="true"
+>
+  <p style="color: white">Processing...</p>
+</ngx-spinner>

@@ -1,0 +1,447 @@
+<mat-card>
+  <mat-card-header>
+    <!-- <h2>DD-TECHNICIAN ASSIGN</h2> -->
+    <h2 class="card-label">DD-TECHNICIAN ASSIGN</h2>
+
+  </mat-card-header>
+  <mat-card-content>
+    <mat-horizontal-stepper [linear]="true" #stepper>
+      <mat-step state="files" label="Select DD-Technician">
+        <div>
+          <!-- <form class="example-form">
+            <mat-form-field class="example-full-width">
+              <mat-label>Search DD-Technician</mat-label>
+              <input type="text" [(ngModel)]="technicianControl" [ngModelOptions]="{standalone: true}"
+                placeholder="Search by name  or mobile... " aria-label="Number" (keyup)="getTechnicians($event)"
+                matInput [matAutocomplete]="auto">
+              <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                <mat-option *ngFor="let technician of technicians" [value]="technician"
+                  (click)="selectedTechnicianInfo(technician)" multiple>
+                  {{technician?.name}} {{technician?.mobileNumber}}
+                </mat-option>
+              </mat-autocomplete>
+
+            </mat-form-field>
+          </form> -->
+          <div class="row" *ngIf="false">
+            <div class="col-4">
+              <h3>NAME : {{technicianInfo?.name}}</h3>
+            </div>
+            <div class="col-4">
+              <h3>EMAIL : {{technicianInfo?.emailAddress}}</h3>
+            </div>
+            <div class="col-4">
+              <h3>MOBILE NO : {{technicianInfo?.mobileNumber}}</h3>
+            </div>
+          </div>
+          <div class="container-fluid mt-2">
+            <div class="card card-custom example example-compact gutter-b">
+              <div class="card-header">
+                <div class="card-title">
+                  <h3 class="card-label">DD-Technicians</h3>
+                </div>
+
+              </div>
+              <div class="card-body">
+
+                <div class="table-responsive example-container mat-elevation-z8">
+                  <table class="table  table-hover ">
+                    <thead>
+                      <th>S.No</th>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Mobile</th>
+                      <!-- <th>Address</th> -->
+                      <th>Assigned Patients</th>
+                      <th>Actions</th>
+
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of technicianListData; let i= index;">
+                        <td>{{ i + pageEvent?.pageIndex * pageEvent?.pageSize + 1 }}</td>
+                        <td>{{item.name}}</td>
+                        <td>{{item.emailAddress}}</td>
+                        <td>{{item.mobileNumber}}</td>
+                <td> <button class="button-select-view" (click)="openTests(testModal , item)">View {{item?.technicianSlots | technicianSlotsCounts}}</button></td>
+
+                        <!-- <td> <button class="button-select" (click)="openTests(testModal , item)">View {{item?.technicianSlots | technicianSlotsCounts}}</button></td> -->
+                        <td> <button class="button-select" matStepperNext (click)="selectTechnician(item)"
+                            [ngClass]="{'dynamicSlelect': item?._id == technicianInfo?._id}">Select</button></td>
+
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div style="border-bottom: 1px solid #ced4da ; margin-top: -12px;" ></div>
+
+                  <!-- pagination div starts from here -->
+                  <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+                    (page)="onPageEvent($event)">
+                  </mat-paginator>
+
+                  <!-- pagination div ends here -->
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mt-2 mb-2" *ngIf="false">
+            <h3><b>Assigned patients</b></h3>
+          </div>
+
+          <div class="mt-2" *ngIf="false">
+            <div class="table-responsive details">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Sno</th>
+                    <th>Patient Name</th>
+                    <th>Sample Collection Location</th>
+                    <th>Sample Collection Date</th>
+                    <th>Tests</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let tech of technicianSlots;  let i =index">
+                    <td>{{i + 1}}</td>
+                    <td>{{tech?.patient?.name}}</td>
+                    <td>
+                      {{tech?.location}}
+                    </td>
+
+                    <td>
+                      {{tech?.date | date : 'longDate'}}
+                    </td>
+                    <td>
+                      <button mat-button (click)="openTests(testModal , tech)">View</button>
+                    </td>
+
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="button-alignment mt-3 d-none">
+            <button mat-button matStepperNext [disabled]="!technicianInfo">Next</button>
+          </div>
+        </div>
+
+      </mat-step>
+      <mat-step state="users" label="Add Patients">
+        <h3>DD-TECHNICIAN NAME : <span class="technician_name">{{technicianInfo?.name}}</span> </h3>
+        <form class="example-form">
+          <div class="row ">
+            <div class="col-md-6 col-6 col-lg-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>Search Patients</mat-label>
+                <input type="text" [(ngModel)]="patientControle" [ngModelOptions]="{standalone: true}"
+                  placeholder="Search  By Name or PID" aria-label="Number" matInput (keyup)="getpatients($event)"
+                  [matAutocomplete]="auto1">
+                <!-- (keyup)="checkPin($event)"  -->
+                <mat-autocomplete autoActiveFirstOption #auto1="matAutocomplete"
+                  (optionSelected)="selctedPatient($event.option.value)">
+                  <mat-option *ngFor="let patient of patients" [value]="patient.pid" multiple>
+                    {{patient?.name}} {{patient?.mobileNumber}} {{patient?.pid}}
+                  </mat-option>
+                </mat-autocomplete>
+
+              </mat-form-field>
+            </div>
+            <div class="col-md-6 col-6 col-lg-6">
+              <button class="button-alignment" (click)="addPatient()" mat-button>Add Patient</button>
+            </div>
+          </div>
+
+        </form>
+
+        <form [formGroup]="technicianAssignForm">
+          <div class="row">
+            <div class="col-md-12 col-12" formArrayName="patientsArray" 
+              *ngFor="let patientInfo of technicianAssignForm.get('patientsArray')['controls']; let i = index">
+              <div>
+                <mat-card class="example-card mb-2" [formGroupName]="i">
+                  <mat-card-header>
+
+                    <div class="col-lg-2 col-md-2">
+                      <h3 class="mb-0 font_size">
+                        Patient Name
+                      </h3>
+                      <input type="text" class="form-control" formControlName="name" readonly>
+                    </div>
+
+                    <div class="col-lg-2 col-md-2">
+                      <h3 class="mb-0 font_size">
+                        PID
+                      </h3>
+                      <input type="text" class="form-control" formControlName="pid" readonly>
+                    </div>
+                    <div class="col-lg-3 col-md-3">
+                      <h3 class="mb-0 font_size">
+                        Sample Collection Web Address
+                      </h3>
+                      <textarea matInput class="text-border" placeholder="Enter Web Address..."
+                        formControlName="address"></textarea>
+
+                    </div>
+                    <div class="col-lg-4 col-md-4 ">
+                      <h3 class="mb-0 font_size">Sample Collection Date & Time</h3>
+
+                      <div class="d-flex">
+
+                        <input type="date" class="form-control date mr-2" formControlName="sampleCollectionDate">
+
+                        <input class="time-picker" class="form-control time" [ngxTimepicker]="appendedToInput"
+                          formControlName="sampleCollectionTime" readonly>
+                        <ngx-material-timepicker class="time_picker2" #appendedToInput [appendToInput]="true">
+                        </ngx-material-timepicker>
+
+                      </div>
+                    </div>
+                    <div class="col-lg-1 col-md-1 mt-2">
+                      <mat-icon class="delete_icon_color" class=" button-alignment mr-2" (click)="removePatient(i)">delete</mat-icon>
+                    </div>
+
+                  </mat-card-header>
+                  <br>
+                  <mat-card-content>
+
+                    <mat-accordion>
+
+                      <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                        <mat-expansion-panel-header>
+                          <mat-panel-title>
+                            <!-- <div class="">{{test?.value?.name}} <p *ngIf="test?.value?.tests?.length > 0">(<span
+                              *ngFor="let test of test?.value?.tests ">{{test?.name}}, </span>)
+                          </p>
+                               -->
+                            <!-- </div> -->
+                            <b>Tests</b>
+                            <div class="tests-data ml-2" *ngFor="let test of patientInfo['controls'].patientTestsArray['controls']">&nbsp;(
+                              {{test?.value?.name}} <p *ngIf="test?.value?.tests?.length > 0">(<span
+                                *ngFor="let test of test?.value?.tests" class="text-color mr-1">{{test?.name}}, </span>)</p>)
+                              <!-- (<p *ngFor="let test of test?.value?.tests" class="text-color mr-1">{{test?.name}},</p>) -->
+                            </div>
+                          </mat-panel-title>
+
+                        </mat-expansion-panel-header>
+                        <div class="row mt-2">
+
+                          <div class="col-lg-6">
+
+                            <mat-form-field class="example-full-width">
+                              <mat-label>Search by Tests</mat-label>
+                              <input type="text" [(ngModel)]="testControl" [ngModelOptions]="{standalone: true}"
+                                placeholder="Search Tests" aria-label="Number" matInput (keyup)="getTests($event)"
+                                [matAutocomplete]="auto3">
+                              <mat-autocomplete autoActiveFirstOption #auto3="matAutocomplete"
+                                (optionSelected)="onChangeTestValue($event.option.value , i)">
+                                <mat-option *ngFor="let option of tests" [value]="option">
+                                  {{option?.name}} <b>|</b> {{option?.type}}
+                                </mat-option>
+                              </mat-autocomplete>
+                            </mat-form-field>
+
+                          </div>
+
+                        </div>
+
+                        <div class="table-responsive details">
+                          <table class="table table-bordered">
+                            <thead>
+                              <tr class="text-center">
+                                <th>Sno</th>
+                                <th>Name</th>
+                                <th>Price</th>
+                                <th>Instructions</th>
+                                <th>Technician Comment</th>
+                                <th>Actions</th>
+                              </tr>
+                            </thead>
+                            <tbody formArrayName="patientTestsArray">
+                              <tr
+                                *ngFor="let test of patientInfo['controls'].patientTestsArray['controls'];let j = index"
+                                [formGroupName]="j">
+                                <td class="text-center">{{j + 1}}</td>
+                                <td>{{test?.value?.name}} <p *ngIf="test?.value?.tests?.length > 0">(<span
+                                      *ngFor="let test of test?.value?.tests ">{{test?.name}}, </span>)
+                                  </p>
+                                </td>
+                                <td>{{test?.value?.price}}</td>
+                                <td>
+                                  <textarea matInput class="text-border" formControlName="instructions"></textarea>
+                                </td>
+                                <td><input type="text" class="form-control" formControlName="technicianComment"
+                                    readonly></td>
+                                <td class="text-center color">
+                                  <mat-icon role="img"
+                                    class="mat-icon notranslate  mr-2 material-icons mat-icon-no-color"
+                                    aria-hidden="true" (click)="removeTest(test,i,j)">delete</mat-icon>
+                                </td>
+
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </mat-expansion-panel>
+
+                    </mat-accordion>
+
+                  </mat-card-content>
+                </mat-card>
+              </div>
+            </div>
+
+          </div>
+        </form>
+        <div class="button-alignment mt-3">
+          <button mat-button matStepperPrevious (click)="backToTechnicians()" class="mr-2">Back</button>
+          <button mat-button (click)="stepper.reset(); assignPatients()">Save</button>
+          <!-- stepper.reset(); -->
+        </div>
+      </mat-step>
+
+    </mat-horizontal-stepper>
+  </mat-card-content>
+</mat-card>
+
+
+
+
+<ng-template #testModal>
+  <div class="row m-0">
+    <div class="col-md-3">
+      <h3 mat-dialog-title>Patients</h3>
+    </div>
+    
+    <div class="col-md-5 d-flex">
+      <h3 class="mr-2">Select Status :</h3>
+      <span class="select_option">
+        <select class="input mr-2" class="form-control" [(ngModel)]="mySelect" (change)="selectChange($event)">
+          <option *ngFor="let item of statuss" [value]="item.viewName">{{item.viewName}}</option>
+        </select>
+      </span>
+    </div>
+
+    <div class="col-md-4 text-right">
+      <h3>Technician Name : <span class="technician_name">{{technicianInfo?.name}}</span></h3>
+
+    </div>
+    <!-- <div class="col-md-1"></div> -->
+  </div>
+
+  <div *ngIf="technicianSlots.length == 0">
+    No Records Found
+  </div>
+  <div mat-dialog-content *ngIf="technicianSlots.length > 0">
+    <div class="row">
+      <div class="col-md-12 col-12" *ngFor="let patientInfo of technicianSlots">
+        <div>
+          <mat-card class="example-card mb-2">
+
+            <mat-card-header style="background-color: whitesmoke; display: block; ">
+              <div class="row pl-5 p-2">
+                <table class="border-0 w-100 p-3">
+                  <thead>
+                    <tr class=" ">
+                      <th> Patient Name</th>
+                      <th> PID</th>
+                      <th> Sample Collection Web Address</th>
+                      <th>Sample Collection Date</th>
+                    </tr>
+                  </thead>
+
+
+                  <tbody>
+                    <tr class="">
+                      <td>{{patientInfo?.patient?.name}}</td>
+                      <td>{{patientInfo?.patient?.pid}}</td>
+                      <td>{{patientInfo?.location}}</td>
+                      <td>{{patientInfo?.date}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </mat-card-header>
+            <br>
+            <mat-card-content>
+              <mat-accordion>
+
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      <b class="ml-2">Tests</b>
+                      <div class="d-flex ml-1" *ngIf="!panelOpenState && patientInfo?.tests.length > 0">
+                        (<p *ngFor="let test of patientInfo?.tests" class="text-color mr-1">{{test?.displayName}} ,</p>)
+                      </div>
+                    </mat-panel-title>
+
+                  </mat-expansion-panel-header>
+                  <div class="row mt-2">
+                  </div>
+
+                  <div class="table-responsive details">
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr class="text-center">
+                          <th>Sno</th>
+                          <th>Name</th>
+                          <th>Price</th>
+                          <th>Instructions</th>
+                          <th>Technician Comment</th>
+                          <th>Status</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let test of patientInfo?.tests; let k = index" class="text-center">
+                          <td>{{k + 1}}</td>
+                          <td>{{test?.displayName}}</td>
+                          <td>{{test?.price}}</td>
+                          <td>{{test?.instructions}}</td>
+                          <td>{{test?.technicianComments}}</td>
+                          <td>{{patientInfo?.status}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </mat-expansion-panel>
+
+              </mat-accordion>
+
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+
+    </div>
+    <!-- <div class="mt-2">
+      <div class="table-responsive details">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Sno</th>
+              <th>Test Name</th>
+              <th>Price</th>
+              <th>Test Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let  test  of technicianSlot?.tests;  let m = index">
+              <td>{{m+ 1}}</td>
+              <td>{{test?.name}}</td>
+              <td>{{test?.price}}</td>
+              <td>
+                Pending
+              </td>
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div> -->
+  </div>
+  <div mat-dialog-actions class="button-alignment">
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Close</button>
+  </div>
+</ng-template>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="timer" [fullScreen]="true">
+  <p style="color: white"> assigning... </p>
+</ngx-spinner>

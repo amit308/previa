@@ -1,0 +1,157 @@
+<div class="container-fluid">
+    <div class="body">
+        <div class="test-heading ">
+            <h2>{{ technicianDetails?.action === "add" ? "ADD" : "UPDATE" }} {{ technicianDetails?.role | uppercase}}
+            </h2
+            >
+        </div>
+        <div class="card mt-3  p-3">
+
+            <form [formGroup]="technicianForm">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label>
+                                Name<i class="color-red">*</i>
+                            </label>
+                            <input type="text" class="form-control" placeholder="Enter Name" formControlName="name"
+                                [ngClass]="{ 'is-invalid':l.name.touched  && l.name.errors }" required>
+                            <div *ngIf="l.name.touched  && l.name.errors" class="invalid-feedback">
+                                <div *ngIf="l.name.errors.required">Name is required *</div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                         <div class="form-group">
+                            <label>
+                                Email<i class="color-red">*</i>
+                            </label>
+                            <input type="email" class="form-control" id="input-email" placeholder="Enter Email"
+                                    required formControlName="email"
+                                    [ngClass]="{ 'is-invalid': l.email.touched   && l.email.errors }" required>
+                            <div *ngIf="l.email.touched  && l.email.errors" class="text-danger">
+                                <div *ngIf="l.email.errors.required">Email is required *</div>
+                                <div *ngIf="l.email.errors.email">Email must be a valid email address</div>
+                            </div>
+                        </div> 
+                      
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="">Mobile Number<i class="color-red">*</i></label>
+                            <input class="form-control" formControlName="mobileNumber" placeholder="Enter Mobile Number"
+                            required [ngClass]="{ 'is-invalid':  l.mobileNumber.touched && l.mobileNumber.errors }" max="10" min="10"  pattern="^[0-9]\d{9}$" (keypress)="checkIfNumber($event)">
+                            <!-- <div *ngIf="submitted && l.mobileNumber.errors" class="invalid-feedback"> -->
+                              <!-- <div *ngIf="l.mobileNumber.errors.required">Mobile Number must be a valid Mobile Number</div> -->
+                                     <div *ngIf=" l.mobileNumber.touched && l.mobileNumber.errors" class="text-danger">
+                                <div *ngIf="l.mobileNumber.errors.required"> Mobile number is required *</div>
+                            </div>
+                          <!-- </div> -->
+                        </div>
+                        <!-- <div class="form-group">
+                            <label>
+                                Mobile Number<i class="color-red">*</i>
+                            </label>
+                            <input type="number" class="form-control" id="input-mobileNumber"
+                                placeholder="Enter Mobile Number"  formControlName="mobileNumber" (keypress)="checkIfNumber($event)"
+                                [ngClass]="{ 'is-invalid': l.mobileNumber.touched  && l.mobileNumber.errors }"
+                                max="10" min="10" required pattern="^[6-9]\d{9}$">
+                            <div *ngIf=" l.mobileNumber.touched && l.mobileNumber.errors" class="text-danger">
+                                <div *ngIf="l.mobileNumber.errors.required"> Mobile number is required *</div>
+                            </div>
+                        </div> -->
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label>
+                                Street 
+                            </label>
+                            <input type="text" class="form-control" placeholder="Enter Street" formControlName="street">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label>
+                                City 
+                            </label>
+                            <input type="text" class="form-control" placeholder="Enter City" formControlName="city">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label>
+                                State 
+                            </label>
+                            <input type="text" class="form-control" placeholder="Enter State" formControlName="state">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+
+                        <div class="form-group">
+                            <label for="">Pincode</label>
+                            <input class="form-control" type="number" formControlName="pin"
+
+                            placeholder="Enter your Pincode"          
+                            pattern="^[0-9]\d{5}$" min="6" max="6">
+                          
+                        </div>
+                        <!-- [ngClass]="{ 'is-invalid': l.pin.touched && l.pin.errors }" required -->
+                          <!-- <input class="form-control" formControlName="pin" placeholder="Enter Pincode"
+                            required  [ngClass]="{ 'is-invalid': submitted && l.pin.errors }" max="6" min="6"  pattern="^[0-9]\d{9}$" (keypress)="checkIfNumber($event)">
+                            <div *ngIf="submitted && l.pin.errors" class="invalid-feedback">
+                              <div *ngIf="l.pin.errors.required">Pincode must be a valid Pincode</div>
+                                     <div *ngIf=" l.pin.touched && l.pin.errors" class="text-danger">
+                                <div *ngIf="l.pin.errors.required">Pincode is required *</div>
+                            </div>
+                          </div> -->
+
+                        <!-- <div class="form-group">
+                            <label for="">Pincode</label>
+                            <input class="form-control" formControlName="pin" placeholder="Enter Pincode" max="10" min="10" [ngClass]="{ 'is-invalid': submitted && l.pin.errors }" required>
+                            <div *ngIf="submitted && l.pin.errors" class="invalid-feedback">
+                              <div *ngIf="l.pin.errors.required">Please enter PIN Code</div>
+                          </div>
+                        </div> -->
+              
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label>
+                                Other Kyc 
+                            </label>
+                            <input type="text" class="form-control" placeholder="Enter Other Kyc"
+                                formControlName="country">
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+
+        <div class="mt-3"> 
+             <!-- <mat-icon class="mt-2">upload</mat-icon> -->
+            <input  type="file"  
+              placeholder="Select File "  />
+           
+          
+          </div>
+       
+        <div class="btn-group ">
+            <div>
+                <!-- <button class="btn mr-2" mat-button>Clear</button> -->
+                <button class="btn" [ngClass]="{'btnDisabled':!technicianForm.valid}" [disabled]="!technicianForm.valid"
+                    mat-button (click)="submitTechnician()">Save</button>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="timer" [fullScreen]="true">
+    <p style="color: white">Processing... </p>
+  </ngx-spinner>
+

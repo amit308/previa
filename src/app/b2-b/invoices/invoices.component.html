@@ -1,0 +1,351 @@
+<div class="country-container mt-3">
+  <div class="container-fluid">
+
+    <div class="card card-custom example example-compact gutter-b mt-2">
+      <div class="card-header">
+        <div class="row mt-2">
+          <h2>INVOICES</h2>
+
+          <div class="col md-12">
+            <input class="invoice-date mr-2" type="text" ngxDaterangepickerMd placeholder="Select Date Range"
+              [locale]="{applyLabel: 'ok', format: 'DD-MM-YYYY'}" [(ngModel)]="selectedInvoiceDate" [ranges]="ranges"
+              [showCustomRangeLabel]="true" [showCancel]="true" />
+            <mat-icon matDatepickerToggleIcon (click)="clearDate()" class="clear-icon">clear</mat-icon>
+            <!-- </div> -->
+
+            <!-- <div class="col-md-3 ml-2 mt-2">
+            <input
+              class="date-picker date_content"
+              [(ngModel)]="selectedToDate"
+              type="date"
+            />
+
+            <mat-icon
+              matDatepickerToggleIcon
+              (click)="clearToDate()"
+              class="clear-icon"
+              >clear</mat-icon
+            >
+          </div> -->
+            <!-- <div class="col-md-2 mt-1"> -->
+            <select class="selectInvoice mr-2" [(ngModel)]="selectedOrganization" (change)="changeOrganization()">
+              <option value="">
+                Select Organization
+              </option>
+              <option *ngFor="let subInfo of subDivisions" [value]="subInfo._id">
+                {{ subInfo?.name }}
+              </option>
+            </select>
+            <!-- </div> -->
+
+            <button class="action-btn  " (click)="submit()">Submit</button>
+            <button class="action-btn ml-2" routerLink="create">Add</button>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive example-container mat-elevation-z8 mt-3">
+
+          <table class="table table-hover">
+            <thead>
+              <tr class="text-center">
+                <th>S.NO</th>
+                <th>Invoice Id</th>
+                <th>Invoice Date</th>
+                <th>Organization Name</th>
+                <th>Total Amount</th>
+                <th>Paid Amount</th>
+                <th>Due Amount</th>
+                <th>Status</th>
+                <th>Invoice</th>
+                <th>Payment</th>
+                <th>Action</th>
+
+              </tr>
+            </thead>
+            <tbody *ngIf="b2bInvoices.length > 0">
+              <tr class="text-center" *ngFor="let invoice of b2bInvoices; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ invoice?.invoiceId }}</td>
+                <td>{{ invoice?.createdAt | date: "dd-MM-yyy HH:mm a" }}</td>
+                <td>{{ invoice?.organization?.name }}</td>
+                <td>{{ invoice?.totalAmount || 0 | currency:'INR' }}</td>
+                <td>{{ invoice?.totalAmount - invoice?.dueAmount || 0 | currency:'INR'}}</td>
+                <td>{{ invoice?.dueAmount || 0 | currency:'INR'}}</td>
+                <td>{{invoice?.transactionStatus}}</td>
+                <td>
+                  <button class="action-btn" (click)="downloadInvoice(invoice)">
+                    Download
+                  </button>
+                </td>
+                <td>
+                  <button class="action-btn mt-2" *ngIf="invoice.dueAmount > 0"
+                    (click)="openInvoiceModel(showPaymentDetails, invoice)">
+                    Pay
+                  </button>
+                  <button class="action-btn mt-2" (click)="openInvoiceModel(showTransactionDetails, invoice)">
+                    Transactions
+                  </button>
+                </td>
+                <td>
+                  <button class="action-btn" (click)="openInvoiceModel(sendInvoiceModel, invoice)">
+                    Send Invoice
+                  </button>
+                  <button class="action-btn mt-2" (click)="openInvoiceModel(showInvoiceDetails, invoice)">
+                    View Details
+                  </button>
+
+                </td>
+              </tr>
+            </tbody>
+            <tbody *ngIf="b2bInvoices.length == 0 && noRecordsFlag">
+              <div style="text-align: center;"> No Records Found</div>
+            </tbody>
+          </table>
+          <div style="border-bottom: 1px solid #ced4da; margin-top: -12px"></div>
+          <!-- pagination div starts from here -->
+          <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+            (page)="onPageEvent($event)">
+          </mat-paginator>
+          <!-- pagination div ends here -->
+        </div>
+      </div>
+      <!-- </div> -->
+    </div>
+  </div>
+  <ng-template #sendInvoiceModel>
+
+    <div class="col-md-12 d-flex mt-3 text-center">
+      <h3><b>Are you sure want to send invoice ?</b></h3>
+    </div>
+    <mat-radio-group [(ngModel)]="paymentLinkType" name="paymentLinkType" aria-label="Select an option"
+      class="checkbox row">
+      <mat-radio-button class="col-lg-4 optionText" value="email">Email
+      </mat-radio-button>
+      <mat-radio-button class="col-lg-4 optionText" value="sms">SMS
+      </mat-radio-button>
+      <mat-radio-button class="col-lg-4 optionText" value="whats_app">WhatsApp
+      </mat-radio-button>
+    </mat-radio-group>
+
+    <br />
+
+
+    <div class="col-md-6 d-flex ml-5">
+      <input class="input" type="email" *ngIf="paymentLinkType == 'email'" name="email" id="email"
+        placeholder="Enter email address" [(ngModel)]="selectedInvoice.organization.emailAddress" />
+    </div>
+    <div class="col-md-6 d-flex mt-2" *ngIf="paymentLinkType != 'email'">
+      <input class="input" type="number" name="email" id="email" placeholder="Enter Mobile Number"
+        [(ngModel)]="selectedInvoice.organization.mobileNumber" />
+    </div>
+    <br />
+    <div class="col-md-6 d-flex text-center">
+      <button class="buttondialoge ml-5" [mat-dialog-close]="true" cdkFocusInitial>
+        No
+      </button>
+      <button class="buttondialoge ml-2" [disabled]="
+    paymentLinkType != 'email'
+      ? !selectedInvoice.organization.mobileNumber
+      : !selectedInvoice.organization.emailAddress
+  " (click)="sendInvoice()">
+        Yes
+      </button>
+    </div>
+    <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="timer" [fullScreen]="true">
+      <p style="color: white">Loading...</p>
+    </ngx-spinner>
+  </ng-template>
+
+  <!-- <div class="col-md-12 d-flex mt-3  text-center">
+      <h3><b>Are you sure want to send invoice ?</b></h3>
+
+    </div>
+    <div class="col-md-6 d-flex  ml-5">
+      <input class="input" type="email" name="email" id="email" placeholder="Enter email address"
+        [(ngModel)]="selectedInvoice.organization.emailAddress">
+    </div>
+    <br>
+    <div class=" col-md-6 d-flex text-center">
+      <button class="buttondialoge ml-5" [mat-dialog-close]="true" cdkFocusInitial>No</button>
+      <button class="buttondialoge ml-2" [disabled]="!selectedInvoice.organization.emailAddress"
+        [ngClass]="{ 'disabled': !selectedInvoice.organization?.emailAddress }" (click)="sendInvoice()">Yes</button>
+    </div>
+    <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="timer" [fullScreen]="true">
+      <p style="color: white"> Loading... </p>
+    </ngx-spinner> -->
+
+</div>
+
+<ng-template #showInvoiceDetails>
+  <div class="col-md-12 d-flex mt-3  text-center">
+    <h3><b>Invoice Details</b></h3>
+
+  </div>
+  <div class="col-md-12 d-flex">
+    <div class="table-responsive example-container mt-3" style="height: 30vh;overflow: scroll;">
+      <table class="table table-hover">
+        <thead>
+          <tr class="text-center">
+            <th>S.NO</th>
+            <th>SID</th>
+            <th>Name</th>
+            <th>Qty</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="selectedInvoice.items.length > 0">
+          <tr class="text-center" *ngFor="let invoice of selectedInvoice.items; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ invoice?.sid }}</td>
+            <td>{{ invoice?.name }}</td>
+            <td>{{ invoice?.quantity }}</td>
+            <td>{{ invoice?.price || 0 | currency:'INR' }}</td>
+
+          </tr>
+        </tbody>
+        <tbody *ngIf="selectedInvoice.items.length == 0">
+          <div style="text-align: center;"> No Records Found</div>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <br>
+  <div class=" col-md-6 d-flex text-center">
+    <button class="buttondialoge ml-5" [mat-dialog-close]="true" cdkFocusInitial>Close</button>
+  </div>
+
+</ng-template>
+
+
+<ng-template #showTransactionDetails>
+  <div class="col-md-12 d-flex mt-3  text-center">
+    <h3><b>Transaction Details</b></h3>
+
+  </div>
+  <div class="col-md-12 d-flex">
+    <div class="table-responsive example-container mt-3" style="height: 30vh;overflow: scroll;">
+      <table class="table table-hover">
+        <thead>
+          <tr class="text-center">
+            <th>S.NO</th>
+            <th>Date</th>
+            <th>Amount</th>
+            <th>Details</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="selectedInvoice.transactions.length > 0">
+          <tr class="text-center" *ngFor="let invoice of selectedInvoice.transactions; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ invoice?.createdAt | date }}</td>
+            <td>{{ invoice?.transactionAmount || 0 | currency:'INR' }}</td>
+            <td>{{invoice.details | json}}</td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="selectedInvoice.items.length == 0">
+          <div style="text-align: center;"> No Records Found</div>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <br>
+  <div class=" col-md-6 d-flex text-center">
+    <button class="buttondialoge ml-5" [mat-dialog-close]="true" cdkFocusInitial>Close</button>
+  </div>
+
+</ng-template>
+
+
+<ng-template #showPaymentDetails>
+  <div class="col-md-12 d-flex mt-3  text-center">
+    <h3><b>Payment Details</b></h3>
+
+  </div>
+  <div class="col-md-12" *ngIf="selectedInvoice && selectedInvoice.totalAmount">
+    <div class="card" style="margin-top: 20px;border: 0px;">
+      <div class="row">
+        <div class="col-md-12">
+          <mat-radio-group aria-label="Select an option" class="example-radio-group" [(ngModel)]="selectedPayment"
+            [ngModelOptions]="{standalone: true}">
+            <mat-radio-button class="example-radio-button" style="margin-right: 20px;" [value]="item"
+              *ngFor="let  item of paymentTypes">{{item}}
+            </mat-radio-button>
+
+          </mat-radio-group>
+        </div>
+      </div>
+
+      <div class="ml-2 mb-2" *ngIf="selectedPayment == 'Cheque'" style="margin-top:30px;">
+        <table>
+          <tr>
+            <td> <label for="Cheque no">Cheq No:</label>
+            </td>
+            <td><input name="Cheque no" id="Cheque no" type="number" [(ngModel)]="selectedInvoice.paymentInfo.chequeNo"
+                [ngModelOptions]="{standalone: true}" /></td>
+          </tr>
+          <tr>
+            <td> <label for="Cheque date">Cheq Date:</label>
+            </td>
+            <td><input name="Cheque date" id="Cheque date" type="text"
+                [(ngModel)]="selectedInvoice.paymentInfo.chequeDate" [ngModelOptions]="{standalone: true}" /></td>
+          </tr>
+
+        </table>
+      </div>
+      <!-- </div> -->
+    </div>
+
+    <div class="row mt-4">
+
+      <div class="col md-12">
+        <table>
+          <tr>
+            <td> <label for="Bill Amount">Bill Amount:</label>
+            </td>
+            <td>{{selectedInvoice.totalAmount || 0 | currency:'INR'}}</td>
+            <td>
+              <label for="Discount">Due Amount:</label>
+            </td>
+            <td>
+              {{selectedInvoice.dueAmount || 0 | currency:'INR'}}
+            </td>
+          </tr>
+
+          <tr>
+            <td> <label for="Paid Amount">Payable Amount:</label>
+            </td>
+            <td><input class="input" name="Paid Amount" type="number" [(ngModel)]="selectedInvoice.orderAmount"
+                [ngModelOptions]="{standalone: true}" />
+            </td>
+
+          </tr>
+
+        </table>
+      </div>
+      <div class="col-md-12 mt-2">
+        <table>
+          <tr>
+            <td> <label for="Remarks">Comments: </label>
+            </td>
+            <td>
+              <textarea name="Remarks" style="margin-left: 21px;" [(ngModel)]="selectedInvoice.comments"
+                [ngModelOptions]="{standalone: true}"></textarea>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+
+  </div>
+  <br>
+  <div class=" col-md-6 d-flex text-center">
+    <br />
+    <button type="button" class="btn btn-primary" [disabled]="!selectedInvoice.orderAmount"
+      (click)="addBillingData()">Save</button>
+
+    <button class="buttondialoge ml-5" [mat-dialog-close]="true" cdkFocusInitial>Close</button>
+    <br>
+  </div>
+
+</ng-template>

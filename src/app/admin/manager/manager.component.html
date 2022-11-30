@@ -1,0 +1,504 @@
+<div class="country-container mt-3">
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-body">
+        <mat-tab-group mat-align-tabs="start">
+          <!-- <mat-tab label="LAB ASSIGN" id="tab-group">
+        <div class="card ">
+          <div class="card-body">
+            <div class="row mt-1">
+              <div class="col-md-12">
+              
+                <input class="manager-date" type="text" ngxDaterangepickerMd placeholder="Select Date Range"
+                  (change)="changePatientsDate()" [locale]="{ applyLabel: 'ok', format: 'DD-MM-YYYY' }"
+                  [(ngModel)]="selectedPatientsDate" [ranges]="ranges" [showCustomRangeLabel]="true" [showCancel]="true" />
+                  <mat-icon
+                  matDatepickerToggleIcon
+                  (click)="clearDate()"
+                  class="clear-icon"
+                  >clear</mat-icon
+                >
+               
+                <button style="margin-left: 20px; height:40px ;" class="btn-primary" (click)="upload(addBulkDialog)">
+                  Bulk Upload
+                </button>
+              </div>
+
+
+            </div>
+            <div class="container-fluid mt-3" style="min-height: 50vh;">
+              <div class="mx-auto" *ngIf="patientDetails?.length == 0">
+                No Data Found
+              </div>
+              <div class="table-responsive" *ngIf="patientDetails?.length > 0">
+                <table class="table table-hover">
+                  <thead>
+                    <tr class="text-center">
+                      <th>
+                        <input type="checkbox" [checked]="checkAllPatients"
+                          (click)="selectAllPatientsToLab($event, patientDetails)" />
+                      </th>
+                      <th>S.NO</th>
+                      <th>Created Date</th>
+                      <th>Patient Name</th>
+                      <th>PID</th>
+                      <th>SID</th>
+                      <th>Test Name</th>
+                      <th>Refer By</th>
+                      <th>Lab</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="text-center" *ngFor="let testInfo of patientDetails; let i = index">
+                      <td>
+                        <input type="checkbox" [checked]="testInfo.isChecked"
+                          (click)="selectPatientToLab($event, testInfo)" />
+                      </td>
+                      <td>
+                        {{
+                        i + labPageEvent?.pageIndex * labPageEvent?.pageSize + 1
+                        }}
+                      </td>
+                      <td>
+                        {{ testInfo?.createdAt | date: "dd-MM-yyyy hh:mm a" }}
+                      </td>
+                      <td>{{ testInfo?.patient?.name }}</td>
+                      <td>{{ testInfo?.patient?.pid }}</td>
+                      <td>{{ testInfo?.sid }}</td>
+                      <td>{{ testInfo?.testMasterInfo?.name }}</td>
+                      <td>{{ testInfo?.referInfo?.name }}</td>
+                      <td>{{ testInfo?.labInfo?.name }}</td>
+                       <td></td> -->
+          <!-- <td>
+                        <button class="action-btn" [disabled]="checkedLabPatients.length == 0"
+                          (click)="assignToLab(assignToLabModel)">
+                          Assign
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div style="border-bottom: 1px solid #ced4da; margin-top: -12px"></div> -->
+          <!-- pagination div starts from here -->
+          <!-- <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+                  (page)="onLabAssignPageEvent($event)">
+                </mat-paginator> -->
+          <!-- pagination div ends here -->
+          <!-- </div>
+            </div>
+          </div>
+        </div> -->
+          <!-- </div> -->
+          <!-- <ng-template #addBulkDialog>
+          <mat-dialog-content>
+            <div>
+              <form>
+                <div [formGroup]="bulkUploadForm">
+                  <div class="mb-2">
+                    <div class="d-flex justify-content-between">
+                      <h1 mat-dialog-title>Upload Bulk List</h1>
+                      <div class="button">
+                        <a class="btn btn-xs btn-icon btn-hover-primary btn_close" href="javascript:void(0)"
+                          (click)="clear()">X</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mt-2">
+                    <mat-form-field class="full-width">
+                      <mat-label>Select Organization</mat-label>
+                      <mat-select formControlName="subdivisionID"
+                        (selectionChange)="selectedOrganization($event.value)">
+                        <mat-option *ngFor="let item of organizations" [value]="item?._id">{{ item?.name }} - {{
+                          item?.category }} -
+                          {{ item?.referenceCode }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <p class="text-danger"></p>
+                  </div>
+                  <label>Excel File:</label>
+                  <div class="input-group mb-3">
+                    <input type="file" class="form-control field" accept=".csv,.xls,.xlsx" placeholder="Excel File"
+                      aria-label="Username" aria-describedby="basic-addon1" (change)="onFileChanges($event)" />
+                  </div>
+                  <p class="text-danger"></p>
+                  <p class="text-danger">{{ errormessage1 }}</p>
+                  <br />
+                </div>
+                <div class="row buttons" style="justify-content: center">
+                  <div class="cancel mr-1">
+                    <button (click)="sampleFileDownload()" class="button-mat">
+                      Download Sample File
+                    </button>
+                  </div>
+                  <div class="cancel mr-1">
+                    <button (click)="onClose()" class="button-mat">Cancel</button>
+                  </div>
+                  <div class="">
+                    <button class="button-mat" (click)="onSubmitUpload()">
+                      Upload
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </mat-dialog-content>
+          <! <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="timer" [fullScreen]="true">
+          <p style="color: white">Processing... </p>
+        </ngx-spinner> -->
+          <!-- </ng-template>
+        <ng-template #assignToLabModel>
+          <div class="col-md-12 d-flex mb-2">
+            <p style="text-align: center"><b>Are you sure want to assign ?</b></p>
+          </div>
+          <div class="text-center">
+            <button class="button-select" [mat-dialog-close]="true" cdkFocusInitial>
+              No
+            </button>
+            <button class="button-select ml-2" [disabled]="disabled" [ngClass]="{ disabled: disabled }"
+              (click)="submitAssign()">
+              Yes
+            </button>
+          </div>
+          <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="timer" [fullScreen]="true">
+            <p style="color: white">Loading...</p>
+          </ngx-spinner>
+        </ng-template>
+      </mat-tab> -->
+          <mat-tab label="INVOICES">
+            <div class="card card-custom example example-compact gutter-b">
+              <div class="card-body" style="min-height: 70vh;">
+                <div class="row mt-1" style="margin-top: -0.2rem !important;">
+                  <div class="col-md-12  mt-1">
+                    <!-- <input class="date-picker date_content mt-2" [(ngModel)]="selectedInvoiceDate"
+              type="date" (change)="changeInvoiceDate()" /> -->
+                    <input class="manager-date" type="text" ngxDaterangepickerMd placeholder="Select Date Range"
+                      (change)="changeInvoiceDate()" [locale]="{ applyLabel: 'ok', format: 'DD-MM-YYYY' }"
+                      [(ngModel)]="selectedInvoiceDate" [ranges]="ranges" [showCustomRangeLabel]="true"
+                      [showCancel]="true" />
+
+                    <mat-icon matDatepickerToggleIcon (click)="clearInvoiceDate()" class="clear-icon">clear</mat-icon>
+                    <!-- </div> -->
+                    <!-- <div class="col-md-2 mt-2 mr-4"> -->
+                    <input style="margin-left: 12px;" type="search" placeholder="Search By Name or PID"
+                      class="select_manager" [(ngModel)]="searchTransaction" (input)="onSearchTransaction()" />
+                  </div>
+                </div>
+                <div class="container-fluid mt-3">
+                  <div class="mx-auto" *ngIf="transactions?.length == 0">
+                    No Data Found
+                  </div>
+                  <div class="table-responsive" *ngIf="transactions?.length > 0">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr class="text-center">
+                          <th>S.NO</th>
+                          <th>Invoice ID</th>
+                          <th>Invoice Date</th>
+                          <th>Patient Name</th>
+                          <th>PID</th>
+                          <th>Bill Amount</th>
+                          <th>Other Charges</th>
+                          <th>Total Amount</th>
+                          <th>Paid Amount</th>
+                          <th>Due Amount</th>
+                          <th>Invoice</th>
+                          <th>Action</th>
+                          <th>Payment Link</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr class="text-center" *ngFor="let transInfo of transactions; let i = index">
+                          <td>
+                            {{ i + pageEvent?.pageIndex * pageEvent?.pageSize + 1 }}
+                          </td>
+                          <td>{{ transInfo?.invoiceId }}</td>
+                          <td>{{ transInfo?.invoiceDate }}</td>
+                          <td>{{ transInfo?.patient?.name }}</td>
+                          <td>{{ transInfo?.patient?.pid }}</td>
+                          <td>{{ transInfo?.billAmount || transInfo?.totalAmount - (transInfo?.otherCharges || 0) |
+                            currency:'INR' }}</td>
+                          <td>{{ transInfo?.otherCharges || 0 | currency:'INR'}}</td>
+                          <td>{{ transInfo?.totalAmount | currency:'INR' }}</td>
+                          <td>{{ transInfo?.totalAmount - transInfo?.dueAmount | currency:'INR'}}</td>
+                          <td>{{ transInfo?.dueAmount | currency:'INR' }}</td>
+                          <td>
+                            <button class="action-btn" (click)="downloadInvoice(transInfo)">
+                              Download
+                            </button>
+                          </td>
+                          <td>
+                            <button class="action-btn" (click)="openInvoiceModel(sendInvoiceModel, transInfo)">
+                              Send Invoice
+                            </button>
+                          </td>
+                          <td>
+
+                            <button class="action-btn" *ngIf="transInfo.dueAmount > 0"
+                              (click)="openInvoiceModel(sendPaymentLink, transInfo)">
+                              Send Payment Link
+                            </button>
+                          </td>
+                          <td> <i class="fa fa-eye" *ngIf="transInfo && transInfo.transactions.length > 0"
+                              (click)="openTransactionLog(transationLogModal,transInfo.transactions)"></i> </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div style="border-bottom: 1px solid #ced4da; margin-top: -12px"></div>
+                    <!-- pagination div starts from here -->
+                    <mat-paginator [length]="transactionsLength" [pageSize]="transactionsPageSize"
+                      [pageSizeOptions]="transactionsPageSizeOptions" (page)="onTransactionsPageEvent($event)">
+                    </mat-paginator>
+                    <!-- pagination div ends here -->
+                  </div>
+                </div>
+              </div>
+            </div>
+            <ng-template #sendInvoiceModel>
+              <div class="col-md-12 d-flex mt-3 text-center">
+                <h3><b>Are you sure want to send invoice ?</b></h3>
+              </div>
+              <mat-radio-group [(ngModel)]="paymentLinkType" name="paymentLinkType" aria-label="Select an option"
+                class="checkbox row">
+                <mat-radio-button class="col-lg-4 optionText" value="email">Email
+                </mat-radio-button>
+                <mat-radio-button class="col-lg-4 optionText" value="sms">SMS
+                </mat-radio-button>
+                <mat-radio-button class="col-lg-4 optionText" value="whats_app">WhatsApp
+                </mat-radio-button>
+              </mat-radio-group>
+              <div class="col-md-6 d-flex ml-5">
+                <input class="input" type="email" *ngIf="paymentLinkType == 'email'" name="email" id="email"
+                  placeholder="Enter email address" [(ngModel)]="selectedTransaction.patient.emailAddress"
+                  (input)="checkEmailValidation()" />
+              </div>
+              <div class="col-md-6 d-flex mt-2" *ngIf="paymentLinkType != 'email'">
+                <input class="input" type="number" name="email" id="email" placeholder="Enter Mobile Number"
+                  [(ngModel)]="selectedTransaction.patient.mobileNumber" />
+              </div>
+              <br />
+              <div class="col-md-6 d-flex text-center">
+                <button class="buttondialoge ml-5" [mat-dialog-close]="true" cdkFocusInitial>
+                  No
+                </button>
+                <button class="buttondialoge ml-2" [disabled]="
+            paymentLinkType != 'email'
+              ? !selectedTransaction?.patient?.mobileNumber
+              : !selectedTransaction?.patient?.emailAddress
+          " (click)="sendInvoice()">
+                  Yes
+                </button>
+              </div>
+              <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="timer" [fullScreen]="true">
+                <p style="color: white">Loading...</p>
+              </ngx-spinner>
+            </ng-template>
+
+            <ng-template #sendPaymentLink>
+              <div class="col-md-12 d-flex mt-3 text-center">
+                <h3><b>Payment Link</b></h3>
+              </div>
+              <mat-radio-group [(ngModel)]="paymentLinkType" name="paymentLinkType" aria-label="Select an option"
+                class="checkbox row">
+                <!-- <mat-radio-button class="col-lg-4 optionText" value="email">Email
+      </mat-radio-button> -->
+                <mat-radio-button class="col-lg-4 optionText" value="sms">SMS
+                </mat-radio-button>
+                <mat-radio-button class="col-lg-4 optionText" value="whats_app">WhatsApp
+                </mat-radio-button>
+              </mat-radio-group>
+
+              <div class="col-md-6 d-flex mt-2" *ngIf="paymentLinkType == 'email'">
+                <input class="input" type="email" name="email" id="email" placeholder="Enter Email"
+                  [(ngModel)]="selectedTransaction.patient.emailAddress" />
+              </div>
+
+              <div class="col-md-6 d-flex mt-2" *ngIf="paymentLinkType != 'email'">
+                <input class="input" type="number" name="email" id="email" placeholder="Enter Mobile Number"
+                  [(ngModel)]="selectedTransaction.patient.mobileNumber" />
+              </div>
+              <br />
+              <div class="col-md-6 d-flex text-center">
+                <button class="buttondialoge mt-2" [disabled]="
+            paymentLinkType != 'email'
+              ? !selectedTransaction?.patient?.mobileNumber
+              : !selectedTransaction?.patient?.emailAddress
+          " (click)="createPaymentLink()">
+                  Yes
+                </button>
+
+                <button class="buttondialoge mt-2 ml-2" [mat-dialog-close]="true" cdkFocusInitial>
+                  Close
+                </button>
+              </div>
+              <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="timer" [fullScreen]="true">
+                <p style="color: white">Loading...</p>
+              </ngx-spinner>
+            </ng-template>
+            <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="timer" [fullScreen]="true">
+              <p style="color: white">Loading...</p>
+            </ngx-spinner>
+          </mat-tab>
+          <mat-tab label="PAYMENT TRANSACTIONS">
+            <!-- <div class="container-fluid mt-2"> -->
+              <!-- <div class="mx-auto" *ngIf="transactions?.length == 0">No Data Found</div> -->
+              <!-- <div class="table-responsive"> -->
+              <div class="card">
+                <div class="row mt-1" >
+                  <div class="col-md-12  mt-1 ">
+                    <!-- <input class="date-picker date_content mt-2" [(ngModel)]="selectedInvoiceDate"
+              type="date" (change)="changeInvoiceDate()" /> -->
+                    <input class="payment-date" type="text" ngxDaterangepickerMd placeholder="Select Date Range"
+                       [locale]="{ applyLabel: 'ok', format: 'DD-MM-YYYY' }"
+                      [(ngModel)]="selectedPaymentDate" [ranges]="ranges" [showCustomRangeLabel]="true" (change)="changePaymentDate()"
+                      [showCancel]="true" />
+
+                    <mat-icon style="top: 8px;left: 240px;" matDatepickerToggleIcon (click)="clearPaymentDate()" class="clear-icon">clear</mat-icon>
+                    <!-- </div> -->
+                    <!-- <div class="col-md-2 mt-2 mr-4"> -->
+                    <input style="margin-left: 12px;" type="search" placeholder="Search By Name or PID"
+                      class="select_manager mr-3" [(ngModel)]="searchPayment"  (input)="enterValue()" />
+                      <select class="select_manager"  style="line-height: 2;" (change)="changePayment($event)">
+                        <option hidden value="" selected disabled>Select Payment Type</option>
+                        <option value="cash">Cash</option>
+                        <option value="cheque">Cheque</option>
+                        <option value="payment">Payment Link</option>
+                      </select>
+                  </div>
+                </div>
+                <div class="container-fluid mt-3">
+                <div class="table-responsive">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr class="text-center">
+                        <th>S.NO</th>
+                        <th>SID</th>
+                        <th>Patient Name</th>
+                        <th>Tests</th>
+                        <th>Transaction Date</th>
+                        <th>Transaction Type</th>
+                        <th>Paid Details</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="text-center" *ngFor="let transInfo of paymentTransactions$; let i = index">
+                        <tr class="text-center" *ngFor="let transInfo of paymentTransactions$; let i = index">
+                          <td>{{ i + paymentsPageEvent?.pageIndex * paymentsPageEvent?.pageSize + 1 }}</td>
+                          <td *ngFor="let item of transInfo.invoices"><p *ngFor="let test of item.items">{{test.sid}}</p> </td>
+                          <td *ngFor="let item of transInfo.invoices">{{item.billingAddress.name}}</td>
+                         
+                          <td *ngFor="let item of transInfo.invoices"><p *ngFor="let test of item.items">{{test.name}}</p> </td>
+                          <td>{{transInfo.transactionDate}}</td>
+                          <td>{{transInfo.transactionType}}</td>
+                          <td>
+
+                          <i class="fa fa-eye"
+                            (click)="openPaymentDetailsModel(paymentDetailsDialog,transInfo.details)"></i>
+
+                        </td>
+                        <td>{{transInfo.transactionAmount}}</td>
+                        <td>
+                          {{transInfo.status}}
+                        </td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+
+
+                  <ng-template #paymentDetailsDialog>
+                    <div class="col-md-12 d-flex mt-3 text-center">
+                      <h3><b>Payment Details</b></h3>
+                    </div>
+
+                    <h4 style="white-space: pre;">{{paymentDetailsLog | json}}</h4>
+                    <br />
+                    <div class="col-md-6 d-flex text-center">
+
+
+                      <button class="buttondialoge mt-2 ml-2" [mat-dialog-close]="true" cdkFocusInitial>
+                        Close
+                      </button>
+                    </div>
+                  </ng-template>
+
+                  <div style="border-bottom: 1px solid #ced4da; margin-top: -12px"></div>
+                  <!-- pagination div starts from here -->
+                  <mat-paginator [length]="paymentTransactionCount" [pageSize]="paymentSize"
+                    [pageSizeOptions]="paymentsizeOptions" (page)="onPaymentsPageEvent($event)">
+                  </mat-paginator>
+                </div>
+                </div>
+              </div>
+              <!-- pagination div ends here -->
+            <!-- </div> -->
+            <!-- </div> -->
+            <!-- </div> -->
+            <!-- </div> -->
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </div>
+
+
+
+  <ng-template #transationLogModal>
+    <div class="col-md-12 d-flex mt-3 text-center">
+      <h3><b>Transaction Details</b></h3>
+    </div>
+
+    <div class="table-responsive" style="height: 50vh;overflow:scroll">
+      <table class="table table-hover">
+        <thead>
+          <tr class="text-center">
+            <th>S.NO</th>
+            <th>Transaction Date</th>
+            <th>Transaction Type</th>
+            <th>Paid Details</th>
+            <th>Amount</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="text-center" *ngFor="let transInfo of transactionLog$.reverse(); let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{transInfo.transactionDate}}</td>
+            <td>{{transInfo.transactionType}}</td>
+            <td>
+
+              {{transInfo.details | json}}
+
+            </td>
+            <td>{{transInfo.transactionAmount}}</td>
+            <td>
+              {{transInfo.status}}
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+
+
+
+
+
+    </div>
+    <div class="col-md-6 d-flex text-center">
+
+
+      <button class="buttondialoge mt-2 ml-2" [mat-dialog-close]="true" cdkFocusInitial>
+        Close
+      </button>
+    </div>
+  </ng-template>
+
+
+  <!-- <h1 >LAB ASSIGN</h1> -->
+
+  <!-- <div class="container-fluid">
+    <h1 >TRANSACTIONS</h1> -->

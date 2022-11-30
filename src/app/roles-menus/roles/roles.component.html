@@ -1,0 +1,103 @@
+<div class="country-container mt-3">
+    <div class="container-fluid">
+        <div class="card card-custom example example-compact gutter-b">
+            <div class="card-header">
+                <div class="card-title">
+                    <h2 class="card-label">ROLES</h2>
+                </div>
+                <div class="card-toolbar">
+                    <div class="example-tools justify-content-centerr">
+                        <!-- <button class="btn btnGroup" (click)="addRole(addrolemodal)">
+                            Add Role
+                        </button> -->
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+
+                <div class="">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>S.NO</th>
+                                <th>User Name</th>
+                                <th>Role </th>
+                                <!-- <th>Actions</th> -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Sanjeev</td>
+                                <td>Admin</td>
+                                <!-- <td>
+                                    <mat-icon (click)="editRole(addrolemodal)">edit</mat-icon>
+                                    <mat-icon class="delete_icon_color">delete</mat-icon>
+                                </td> -->
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div style="border-bottom: 1px solid #ced4da ; margin-top: -12px;"></div>
+
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template #addrolemodal>
+    <mat-dialog-content>
+        <div>
+            <form [formGroup]="addRoleForm">
+
+                <div class="mb-3">
+                    <!-- <h3 class="mb-5">Upload Bulk Tests</h3> -->
+                    <div class="d-flex justify-content-between">
+                        <h1 mat-dialog-title>
+                            {{headerText}} ROLE
+                        </h1>
+                        <div class="button">
+                            <a class="btn btn-xs btn-icon btn-hover-primary btn_close" (click)="onClose()"
+                                href="javascript:void(0)">X</a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <mat-form-field class="full-width">
+                                <input matInput placeholder="Enter Role Name"
+                                    [formControl]="addRoleForm.controls['roleName']"
+                                    [ngClass]="{ 'is-invalid': submitted && sinr.roleName.errors }" />
+                            </mat-form-field>
+                            <div *ngIf="submitted && sinr.roleName.errors" class="invalid-feedback">
+                                <div *ngIf="sinr.roleName.errors.required"> Display Name is required</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <mat-form-field class="full-width">
+                                <input matInput [formControl]="addRoleForm.controls['displayName']"
+                                    [ngClass]="{ 'is-invalid': submitted && sinr.displayName.errors }"
+                                    placeholder="Enter Display Name" />
+                            </mat-form-field>
+                            <div *ngIf="submitted && sinr.displayName.errors" class="invalid-feedback">
+                                <div *ngIf="sinr.displayName.errors.required"> Display Name is required</div>
+                            </div>
+                        </div>
+
+                        
+                    </div>
+                </div>
+
+
+
+                <div class="row buttons">
+
+                    <div class="col-lg-12 add-doctor text-center">
+                        <button class="button-select" (click)="submit()">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </mat-dialog-content>
+</ng-template>

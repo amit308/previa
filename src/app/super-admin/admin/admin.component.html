@@ -1,0 +1,62 @@
+<div class="country-container">
+    <div class="container-fluid">
+      <div class="card card-custom example example-compact gutter-b">
+        <div class="card-header">
+          <div class="card-title">
+            <h3 class="card-label">Admin</h3>
+          </div>
+          <div class="card-toolbar">
+            <div class="example-tools justify-content-centerr">
+              <button (click)="addAdmin()" class="btn btnGroup">
+                Add
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive example-container mat-elevation-z8">
+                <table class="table  table-hover ">
+                   <thead>
+                       <tr>
+                        <th >S.no
+                        </th>
+                        <th (click)="sortEvent('name')">Name
+                         <i class="fa fa-chevron-up" *ngIf="sortDirection === 'ASC' && sortvalue === 'name'" ></i>
+                         <i class="fa fa-chevron-down" *ngIf="sortDirection === 'DASC' && sortvalue === 'name'"></i></th>
+                        <th (click)="sortEvent('emailAddress')">Email
+                         <i class="fa fa-chevron-up" *ngIf="sortDirection === 'ASC' && sortvalue === 'emailAddress'" ></i>
+                         <i class="fa fa-chevron-down" *ngIf="sortDirection === 'DASC' && sortvalue === 'emailAddress'"></i></th>
+                        <th (click)="sortEvent('mobileNumber')">Mobile
+                         <i class="fa fa-chevron-up" *ngIf="sortDirection === 'ASC' && sortvalue === 'mobileNumber'" ></i>
+                         <i class="fa fa-chevron-down" *ngIf="sortDirection === 'DASC' && sortvalue === 'mobileNumber'"></i></th>
+                        <th>Action</th>
+                    </tr>
+                   </thead> 
+                   <tbody>
+                       <tr *ngFor="let item of admindetails ; let i=index">
+                           <td>{{ i+1 }}</td>
+                           <td>{{ item.name }}</td>
+                           <td>{{ item.emailAddress }}</td>
+                           <td>{{ item.mobileNumber }}</td>
+                           <td>
+                            <mat-icon (click)="editAdmin(item)">edit</mat-icon>
+                            <mat-icon (click)="deleteAdmin(item)">delete</mat-icon>
+                           </td>
+                       </tr>
+                   </tbody>
+                </table>
+                <!-- pagination div starts from here -->
+                <mat-paginator [length]="length" 
+                              [pageSize]="pageSize" 
+                              [pageSizeOptions]="pageSizeOptions" 
+                              (page)="onPageEvent($event)">
+                </mat-paginator>
+              
+          <!-- pagination div ends here -->
+            </div>
+        </div>
+        </div>
+    </div>
+  </div>
+
+  

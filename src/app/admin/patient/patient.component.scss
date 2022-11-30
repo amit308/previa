@@ -1,0 +1,780 @@
+::ng-deep .modal-dialog {
+  max-width: 60%;
+  width: 60%;
+}
+
+.patient {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  align-items: center;
+  .button-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    button {
+      width: -webkit-fill-available;
+      height: 50px;
+      border-radius: 5px;
+      font-size: 12px;
+      padding: 5px 20px;
+    }
+  }
+}
+
+.btn-primary {
+  border: none !important;
+  outline: none !important;
+}
+.buttn {
+  height: 40px;
+  margin-top: 40px;
+  margin-left: 100px;
+  border-radius: 5px;
+}
+.questForm {
+  .sec {
+    color: white;
+    background-color: #00c9d1;
+  }
+}
+.input {
+  width: 120px;
+}
+.inputbox {
+  padding: 0.375rem 0.75rem;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  box-shadow: none;
+  outline: none;
+}
+
+// .quest{
+//     margin-top: 0.2rem;
+
+// }
+
+// .sub{
+//     margin-top: 1rem;
+// }
+label {
+  font-weight: 500;
+}
+mat-panel-title {
+  font-weight: 600;
+  font-size: large;
+  // color: white;
+}
+// .mat-expansion-panel-header:not([aria-disabled=true]) {
+//     background-color: #437289;
+
+// }
+
+element.style {
+  height: 48px;
+}
+// ::ng-deep{
+//     .mat-expansion-panel .mat-expansion-panel-header.cdk-keyboard-focused:not([aria-disabled=true]), .mat-expansion-panel .mat-expansion-panel-header.cdk-program-focused:not([aria-disabled=true]), .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:hover:not([aria-disabled=true]) {
+//         color: #437289 !important;
+//         mat-panel-title{
+//             font-weight: 600;
+//             color: #437289;
+//         }
+//     }
+// }
+mat-icon {
+  cursor: pointer;
+}
+.addRow {
+  mat-icon {
+    font-size: 20px;
+    text-align: center;
+    background: #437289;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 15px;
+    padding-top: 2px;
+    cursor: pointer;
+  }
+  margin: 9px;
+  padding: 6px;
+  button {
+    border-radius: 5px;
+  }
+}
+
+.deleteTests1 {
+  //   background-color: none !important;
+  background: none;
+  color: black;
+  border-radius: 3px;
+  box-shadow: none;
+  outline: none;
+  height: 30px;
+}
+.deleteTests {
+  //   background-color: none !important;
+  background: none;
+  color: black;
+  border-radius: 3px;
+  box-shadow: none;
+  outline: none;
+}
+.download-rpt {
+  background: none;
+  color: black;
+  border-radius: 3px;
+  box-shadow: none;
+  outline: none;
+  line-height: 11px;
+  font-size: 11px;
+}
+.searchTest {
+  width: 230px;
+}
+.defaultCheckBox {
+  border: 1px solid lightgray;
+  padding: 7px;
+}
+
+.progress-bar-icons {
+  ul {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    // width: 50%;
+    justify-content: space-between;
+    position: relative;
+    margin-bottom: 10px;
+
+    li {
+      list-style-type: none;
+      width: 25%;
+      text-align: center;
+      position: relative;
+      &::before {
+        content: "";
+        position: absolute;
+        border-top: 1px solid #ccc;
+        width: 50%;
+        top: 56px;
+        right: 0;
+      }
+      &::after {
+        content: "";
+        position: absolute;
+        border-top: 1px solid #ccc;
+        width: 50%;
+        top: 56px;
+        left: 3px;
+      }
+      &:last-child {
+        &::before {
+          display: none;
+        }
+      }
+      &:nth-child(1) {
+        &::after {
+          display: none;
+        }
+      }
+      span {
+        display: inline-block;
+        min-height: 45px;
+      }
+      p {
+        background-color: #ccc;
+        height: 22px;
+        width: 22px;
+        list-style-type: none;
+        border-radius: 50%;
+        position: relative;
+        list-style-type: none;
+        margin: auto;
+        z-index: 2;
+        // top: 10px;
+      }
+
+      &:last-child {
+        p {
+          &::before {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}
+.active {
+  &::before {
+    border-top: 1px solid #3699ff !important;
+  }
+  &::after {
+    border-top: 1px solid #3699ff !important;
+  }
+  p {
+    background-color: white !important;
+    border: 4px solid #3699ff;
+    // position: relative;
+    // &::before {
+    //     content: "\f00c";
+    //     font-family: FontAwesome;
+    //     color: #fff;
+    //     position: absolute;
+    // }
+  }
+}
+::ng-deep.mat-tab-label-content {
+  font-weight: bolder;
+  // font-size: 40px !important;
+}
+::ng-deep {
+  .mat-tab-label:focus:not(.mat-tab-disabled) {
+    opacity: 1;
+    background: #437289 !important;
+    color: white !important;
+  }
+}
+.comment {
+  display: flex;
+  justify-content: space-around;
+}
+.search-doctor {
+  position: relative;
+}
+
+.search {
+  position: absolute;
+  top: 8px;
+  left: 6px;
+}
+
+.search-doctor input {
+  padding: 0px 33px;
+}
+.submitButton {
+  button {
+    background-color: #437289;
+    color: #fff;
+  }
+}
+.details {
+  .table th {
+    padding: 11px !important;
+  }
+  .table td {
+    padding: 0px;
+  }
+  .previousdetails {
+    text-align: center;
+    padding: 10px !important;
+    background-color: #437289;
+    color: #fff;
+  }
+  .previousData {
+    td {
+      padding: 10px;
+    }
+  }
+}
+.cardLength {
+  width: 100%;
+  height: 180px;
+  border-radius: 20px !important;
+}
+
+.printident {
+  display: none !important;
+}
+.imagewidth {
+  img {
+    margin-bottom: 10px;
+    max-height: 300px !important;
+  }
+}
+
+@media print {
+  /* invert the display (show/hide) properties of the main */
+  /* aplication component and the printing component       */
+  // .page-break { display: block !important; page-break-before: auto !important; }
+
+  .printident {
+    display: block !important;
+  }
+
+  .registrationform {
+    display: none;
+  }
+}
+.myform {
+  border-bottom: 1px solid;
+}
+//   @media all {
+//     .page-break { display: none; }
+// }
+
+.removeIcon {
+  span {
+    background: #437289;
+    color: white;
+    padding: 5px 12px;
+    border-radius: 25px;
+    font-size: 20px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+}
+
+.qnHeading {
+  background-color: #ddd !important;
+}
+.modal-heading-div {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 15px;
+  .cancel-button {
+    background: none;
+    i {
+      font-size: 20px;
+    }
+  }
+}
+.questionWidth {
+  max-width: 42%;
+}
+/*  questionnaire   */
+.questionnaire {
+  table {
+    .sno {
+      width: 4%;
+    }
+    .question {
+      width: 42%;
+    }
+    .answer {
+      width: 36%;
+    }
+    .optionText {
+      font-size: 11px;
+    }
+  }
+}
+
+.input-with-measure {
+  display: flex;
+  align-items: center;
+  //   input {
+  //     //   max-width: 200px;
+  //   }
+  span {
+    padding-left: 5px;
+  }
+}
+::ng-deep {
+  .checkbox {
+    .mat-checkbox-layout {
+      white-space: inherit;
+    }
+    .mat-radio-label {
+      white-space: inherit;
+      align-items: flex-start;
+    }
+  }
+}
+
+.time {
+  width: 50%;
+}
+.scanButton {
+  float: right;
+  border-radius: 3px;
+}
+.btnDisabled {
+  background: #a7afab !important;
+  border: 1px solid #a7afab !important;
+  color: white !important;
+}
+
+.is-invalid {
+  border: 1px solid #f90628d9 !important;
+}
+
+.qr-scan {
+  display: flex;
+  // -ms-transform: scaleY(1); /* IE 9 */
+  //   transform: scaleY(15);
+  // transform: matrix(0, 0, 0, 0, -200px, -200px);
+  //  transform: translate(0px,-50px);
+}
+// .qr-scan2 {
+//     transform: matrix(1, 0, 0, 1, 254, 334);
+// }
+// .qr-display{
+//     display: flex;
+// }
+.disable-button {
+  :hover {
+    color: darkgrey;
+  }
+}
+
+igx-time-picker {
+  width: 400px;
+}
+::ng-deep {
+  ng-select {
+    width: 100% !important;
+  }
+}
+.paient_repots {
+  height: 300px !important;
+  margin-left: 30px;
+  margin-top: 10px;
+}
+
+::ng-deep .reports-images {
+  width: auto;
+  max-height: 0px;
+  display: contents;
+  margin-left: 10px;
+}
+.input-flex {
+  display: flex;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  ::ng-deep {
+    .ng-select {
+      width: 50% !important;
+    }
+    .ng-select .ng-select-container {
+      border: none;
+      border-right: 1px solid #ccc !important;
+      border-radius: 0;
+    }
+  }
+  .borderRight {
+    border: none;
+    border-right: 1px solid #ccc !important;
+    border-radius: 0;
+  }
+  input {
+    border: none;
+    width: 50%;
+  }
+}
+.visiable {
+  visibility: inherit;
+}
+.visiableNone {
+  visibility: hidden;
+}
+
+::ng-deep {
+  .mat-option-text {
+    display: inline-block;
+    flex-grow: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 13px !important;
+  }
+}
+
+// .sub_package{
+//     margin-bottom: 20px;
+//     margin-left: 0px;
+//     font-weight: bold;
+// }
+
+.border_info {
+  border-bottom: 1px solid #ddd;
+  font-size: 15px;
+}
+
+::ng-deep {
+  .timepicker__header {
+    background-color: #00c9d1 !important;
+  }
+}
+
+::ng-deep ngx-material-timepicker-content {
+  --clock-hand-color: #00c9d1 !important;
+}
+
+::ng-deep {
+  .timepicker-button {
+    margin-left: 5px !important;
+  }
+}
+
+.time_width {
+  width: 15%;
+}
+
+::ng-deep {
+  input[type="date"].form-control,
+  input[type="time"].form-control,
+  input[type="datetime-local"].form-control,
+  input[type="month"].form-control {
+    font-size: 14px !important;
+    text-transform: uppercase !important;
+  }
+}
+.mobileInput {
+  border: 1px solid;
+  height: 39px;
+  margin-top: -18px;
+  border-radius: 5px;
+  border-color: #49505752;
+  padding: 9px;
+}
+// map css
+
+agm-map {
+  height: 250px;
+}
+
+.current-btn {
+  background-color: #fff;
+  border-color: #d8d8d8;
+  padding: 5px;
+  font-size: 16px;
+  position: absolute;
+  top: 21px;
+  right: 9px;
+  z-index: 1;
+  img {
+    width: 28px;
+    height: 29px;
+  }
+}
+
+.test_table {
+  width: 100%;
+}
+.bg_color {
+  background-color: whitesmoke;
+}
+.headings {
+  padding: 10px;
+}
+.title_info {
+  color: black;
+}
+
+.button_bg {
+  background-color: darkgrey !important;
+  color: white !important;
+  border: none !important;
+  font-size: 12px !important;
+}
+.text_info {
+  font-size: 12px !important;
+  // float: right;
+}
+
+.confirm-btn {
+  width: 113px;
+  font-size: 12px;
+  border-radius: 5px;
+  margin-right: 15px;
+}
+.cancel-btn {
+  width: 80px;
+  font-size: 12px;
+  border-radius: 5px;
+}
+.test_data_scrool {
+  overflow-x: auto;
+}
+.border-bottom {
+  border-bottom: 1px solid #dfd6d6;
+  margin-bottom: 8px;
+  margin-left: -24px;
+}
+
+.date-heading-table {
+  width: 20%;
+}
+.dose-heading {
+  width: 10%;
+}
+input[type="date"]:focus::before,
+input[type="date"]:valid::before {
+  content: "";
+}
+.text-border {
+  border: 1px solid #ced4da;
+}
+.header-width {
+  width: 25%;
+}
+.header-width1 {
+  width: 15%;
+}
+.header-width2 {
+  width: 10%;
+}
+
+.select_vaccine {
+  padding: 0.375rem 0.75rem;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  width: 490px;
+}
+.select_vaccine-date {
+  padding: 0.375rem 0.75rem;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  text-transform: uppercase;
+  background-color: #fff;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+}
+
+.vaccine_dose {
+  max-width: 30px !important;
+  text-align: center !important;
+  border: none !important;
+  box-shadow: none;
+  outline: none;
+}
+.vaccine_status {
+  max-width: 90px;
+  border: none;
+  text-align: center;
+  box-shadow: none;
+  outline: none;
+}
+.select_time1 {
+  padding: 0.375rem 0.75rem;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  max-width: 100px;
+}
+
+.select_date {
+  padding: 0.375rem 0.75rem;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  max-width: 155px;
+  text-transform: uppercase;
+}
+
+.buttonColorDisabled {
+  background-color: gray !important;
+}
+.full-width {
+  width: 100%;
+}
+// .ng-star-inserted{
+//     color:red;
+// }
+.button-mat {
+  padding: 5px 11px 5px 11px;
+  font-size: 13px;
+  border-radius: 4px;
+  box-shadow: none;
+  outline: none;
+  margin-right: 0.25rem;
+}
+
+.select_input {
+  padding: 0.375rem 0.75rem;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  box-shadow: none;
+  outline: none;
+}
+.inputfield {
+  padding: 0.375rem 0.75rem;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  box-shadow: none;
+  outline: none;
+}
+.example-radio-group {
+  display: flex;
+  flex-direction: row;
+  margin: 15px 0;
+}
+
+.example-radio-button {
+  margin: 5px;
+}
+.bill-amt {
+  padding: 0.375 rem 0.75 rem;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  // border: 1 px solid #ced4da;
+  border-radius: 0.25 rem;
+  box-shadow: none;
+  outline: none;
+}
+.select_options {
+  width: 40%;
+
+  border: none;
+  outline: none;
+  border-bottom: 1px solid;
+}
+.date-picker {
+  text-transform: uppercase;
+}
+// .card-body{
+//     padding: 0.9rem;
+// }
+.firstCard {
+  padding: 0.6rem !important;
+}
+::ng-deep {
+  .qrcode {
+    margin-top: -11px !important;
+  }
+  .barcode {
+    margin-left: 27px;
+    margin-top: -12px;
+  }
+}
+.fieldtop {
+  margin-top: -24px;
+}
+.textaddress {
+  margin-left: 134px;
+  width: 900px;
+  margin-top: -11px;
+}

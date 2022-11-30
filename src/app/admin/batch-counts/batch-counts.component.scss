@@ -1,0 +1,82 @@
+.date {
+    width: 18%;
+    margin-top: 0px;
+    
+}
+.cursor {
+    cursor: pointer;
+}
+
+.icon-color {
+
+color: #00c9d1
+ }
+
+ .button-alignment {
+    float: right;
+}
+.btn_close{
+    box-shadow: none;
+    outline: none;
+    background-color: #00c9d1 !important;
+    color: white;
+}
+.upload-btn {
+    border-radius: 2px;
+    
+    box-shadow: none;
+    outline: none;
+    font-size: 13px;
+    padding: 2px 8px 2px 8px;
+
+}
+.download-btn {
+    border-radius: 2px;
+    box-shadow: none;
+    outline: none;
+    font-size: 13px;
+    margin-right: 3px;
+    min-width: 105px;
+    padding: 2px 8px 2px 8px;
+}
+.btn_close{
+    box-shadow: none;
+    outline: none;
+    background-color: #00c9d1 !important;
+    color: white;
+}
+.button-mat{
+    padding: 5px 11px 5px 11px;
+    font-size: 13px;
+    border-radius: 4px;
+    box-shadow: none;
+    outline: none;
+}
+
+::ng-deep {
+    input[type=date].form-control, input[type=time].form-control, input[type=datetime-local].form-control, input[type=month].form-control {
+     
+      text-transform: uppercase !important;
+    }
+    }
+
+    .input_width{
+        width: 45%;
+    }
+
+    .mat-datepicker-input {
+        width: 85%;
+      }
+      
+      mat-icon {
+        position: relative;
+        float: right;
+        top: -3px;
+        cursor: pointer;
+        color: rgba(0, 0, 0, 0.54);
+      }
+
+      input[type="date"]:focus::before,
+input[type="date"]:valid::before {
+content: "";
+}
