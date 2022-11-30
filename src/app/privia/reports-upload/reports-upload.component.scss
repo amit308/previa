@@ -1,0 +1,266 @@
+.body{
+    margin:1rem;
+    .patient-heading{
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        
+         h3 {
+        color: rgba(31,32,34,.5);
+        // margin: 0 0 1.42857rem;
+        font-size: 2rem;
+        // width: 100%;
+        // margin-top: 20px;
+        
+    }
+    button{
+        color: #fff;
+        background: #437289;
+        padding: 10px 11px;
+        // padding: 10px 25px;
+        // margin: 15px 0px 0px 0px;
+        border: 1px solid #437289;
+        border-radius: 5px;
+    }
+}
+    table{
+        width:100%;
+        th{
+            background-color: lightgray;
+            // color:white;
+            padding: 6px 13px;
+        }
+
+        td{
+            background: hsla(0,0%,92.2%,.3);
+            padding: 6px 13px;
+
+            .icon1 {
+                background: #000;
+                color: #fff;
+                padding: 8px;
+                border-radius: 25px;
+                margin-right: 10px;
+            }
+
+            .icon2 {
+                background: #ed5564;
+                color: #fff;
+                padding: 8px;
+                border-radius: 25px;
+                margin-right: 10px;
+            }
+
+            .icon3 {
+                background: #2759fa;
+                color: #fff;
+                padding: 8px;
+                border-radius: 25px;
+                margin-right: 10px;
+            }
+
+        }
+
+        td .number{
+            font-size: 12px;
+            color: blue;
+        }
+        
+        .actions:hover {
+            cursor: pointer;
+        }
+    }
+}
+
+img{
+    width:40px;
+    height:40px;
+    border-radius: 50%;
+}
+
+.add-doctor{
+    float: right;
+    bottom: 0;
+    position: sticky;
+    cursor: pointer;
+    span{
+        font-size: 4rem;
+    }
+}
+
+
+.card-header{
+    display: flex;
+    justify-content: space-between;
+}
+.btnGroup{
+    background-color:  #437289;
+    color: white;
+}
+mat-icon{
+    font-size: 18px;
+    cursor: pointer;
+}
+
+
+// **  Drag and Drop //
+
+.nav-item {
+    list-style: none;
+  }
+  
+  .fa-question-circle {
+    color: black;
+    font-size: 30px;
+    padding-right: 20px;
+    padding-top: 5px;
+  }
+  .recepient-container .sign-value {
+    margin-right: 15px;
+    margin-left: 15px;
+  }
+  .recepient-container .sign-value input {
+    width: 40px;
+  }
+  #border {
+    border: 1px solid rgb(187, 187, 187);
+    padding: 5px 10px;
+  }
+  
+  .stylish-input-group .input-group-addon {
+    background: white !important;
+  }
+  .stylish-input-group .form-control {
+    border-right: 0;
+    box-shadow: 0 0 0;
+    border-color: #ccc;
+  }
+  .stylish-input-group button {
+    border: 0;
+    background: transparent;
+  }
+  
+  .sub {
+    padding: 0px !important;
+    margin: 0px !important;
+  }
+  
+  /* <-- hr----> */
+  
+  .separator {
+    display: flex;
+    align-items: center;
+    text-align: center;
+  }
+  .separator::before,
+  .separator::after {
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid #000;
+  }
+  .separator::before {
+    margin-right: 0.25em;
+  }
+  .separator::after {
+    margin-left: 0.25em;
+  }
+  .fa-file {
+    font-size: 30px;
+    padding: 20px;
+    margin: 30px;
+    border: 1px solid rgb(216, 216, 216);
+    border-radius: 50%;
+  }
+  
+  /* pdf-viewer {
+      display: block;
+      height: 200px;
+  } */
+  
+  .next-btn {
+    float: right;
+    margin-right: 105px;
+    max-width: 1000px;
+  }
+  .next-btn{
+    float: right;
+    max-width: 1000px;
+    margin-right: 105px;
+}
+  .next-btn button {
+    padding: 5px 25px;
+    // margin-right: 50px;
+  }
+  .drag-file-wrapper {
+    padding-top: 0px;
+    padding-bottom: 30px;
+  }
+  .delete-group-fields {
+    display: flex;
+    justify-content: flex-end;
+    align-items: end;
+  }
+  .delete-group-fields i {
+    cursor: pointer;
+  }
+  /* ======= Drag and Drop ========== */
+  
+  .uploadfilecontainer {
+    background-image: url("../../../assets/images//upload.png");
+    background-repeat: no-repeat;
+    background-size: 100px;
+    background-position: center;
+    height: 200px;
+    width: 80%;
+    margin: 20px auto;
+    border: 2px dashed #1c8adb;
+    border-radius: 10px;
+  }
+  
+  .uploadfilecontainer:hover {
+    cursor: pointer;
+    background-color: #9ecbec !important;
+    opacity: 0.8;
+  }
+  
+  .files-list {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    margin: 10px auto;
+    background: #ffffff;
+    border: 1px dashed;
+    border-radius: 12px;
+    padding: 5px;
+    color: #1c8adb;
+  }
+  
+  .files-list .delete-file {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  .fa-trash{
+      color: red;
+      font-size: 25px;
+  }
+  .files-list .delete-file {
+    width: 30px;
+    height: 25px;
+    color: red;
+  }
+  .file-list-name p {
+    padding: 5px;
+    margin-bottom: 0px;
+  }
+  
+  .md-form {
+    padding: 15px 0px 0 0;
+  }
+  
+  .validation-text {
+    color: red;
+  }
+
+  // **  Drag and Drop //
+  

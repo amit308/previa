@@ -1,0 +1,88 @@
+<div class="container">
+    <div class="row mt-2">
+        <div class="col-md-6">
+            <h3 mat-dialog-title>{{ riderDetails?.action === "add" ? "ADD" : "UPDATE" }} {{ riderDetails?.role |
+                uppercase}}
+            </h3>
+        </div>
+        <div class="col-md-6 text-right">
+            <div class="button">
+                <a _ngcontent-alh-c8="" class="btn btn-xs btn-icon btn-hover-primary" href="javascript:void(0)"
+                    (click)="onClose()">X</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <form [formGroup]="addRiderForm" (ngSubmit)="submitRider()">
+            <div class="row mb-2">
+                <div class="col-lg-4">
+                    <label for="usr">Name<i class="color-red">*</i></label>
+                    <input type="text" class="form-control" formControlName="name" placeholder=" Enter Name"
+                        [ngClass]="{ 'is-invalid': d.name.touched && d.name.errors }">
+                    <div *ngIf="d.name.touched  && d.name.errors" class="invalid-feedback">
+                        <div *ngIf="d.name.errors.required">Name is required*</div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <label for="usr">Mobile Number<i class="color-red">*</i></label>
+                    <input type="number" class="form-control" id="input-mobileNumber" placeholder="Enter Mobile Number"
+                        formControlName="mobileNumber"
+                        [ngClass]="{ 'is-invalid': d.mobileNumber.touched  && d.mobileNumber.errors }" minlength=10
+                        maxlength=10 required pattern="^[6-9]\d{9}$">
+                    <div *ngIf="d.mobileNumber.touched  && d.mobileNumber.errors" class="invalid-feedback">
+                        <div *ngIf="d.mobileNumber.errors.required">Mobile Numbe is required*</div>
+                    </div>
+                </div>          
+                    <div class="col-lg-4">
+                        <label for="usr">Email<i class="color-red">*</i></label>
+                        <input type="email" class="form-control" formControlName="email" placeholder="name@example.com"
+                            [ngClass]="{ 'is-invalid': d.email.touched && d.email.errors }">
+                        <div *ngIf="d.email.touched  && d.email.errors" class="text-danger">
+                            <div *ngIf="d.email.errors.required">Email is required*</div>
+                            <div *ngIf="d.email.errors.email">Email must be a valid email address</div>
+                        </div>
+                    </div>             
+                   
+                    <!-- <div class="col-lg-6 mt-3">         
+                        <mat-form-field>
+                            <mat-select formControlName="subdivision" placeholder="Organization" multiple (selectionChange)="onOut()" [(ngModel)] = "selectedValues">                          
+                              
+                              <mat-option *ngFor="let sub of subdivision" [value]="sub">
+                                {{sub}}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>                    
+                    </div>
+                    <div class="col-lg-6 mt-3">
+                        <mat-form-field>
+                            <mat-select placeholder="sub division" formControlName="sub_lab_division">
+                                <mat-option value="" disabled selected>Select {{addRiderForm?.value?.subdivision}}</mat-option>
+                                    <mat-option *ngFor="let lab of subLabData" [value]="lab">
+                                            {{lab?.name}}
+                                    </mat-option>
+                            </mat-select>
+                        </mat-form-field>                     
+                    </div> -->
+
+                </div>
+             
+
+            <div class="row">
+                <div class="col-lg-4"></div>
+                <div class="col-lg-4"></div>
+                <div class="col-lg-4 mt-4 text-right">
+                    <button class="btn" [ngClass]="{'btnDisabled':!addRiderForm.valid}" [disabled]="!addRiderForm.valid"
+                        mat-button>{{action}}</button>
+
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+</div>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="timer" [fullScreen]="true">
+    <p style="color: white">Processing... </p>
+  </ngx-spinner>
+

@@ -1,0 +1,52 @@
+.header{
+    background-color:#00c9d1;
+    position: sticky;
+    top: 0;
+    z-index: 9999;
+    height: 55px;
+    .card{
+        border: none;
+    }
+}
+.logout{
+    color: white;
+    font-family: "Mulish", 'sans-serif' !important;
+    font-size: 20px;
+    text-decoration: none !important;
+}
+.user_profile{
+    text-align: right;
+    // float: right;
+    padding-top: 20px;
+    // display: flex;
+    // justify-content: space-around;
+    a{
+        cursor: pointer;
+        font-size: 14px;
+
+    }
+}
+
+span{
+    color: white;
+    margin-top: 1rem;
+    cursor: pointer;
+
+}
+@media print {
+    .header{
+      display: none;
+    }
+  }
+.color-red{
+    color: red;
+}
+.icon-color {
+    color:blue
+}
+
+// .fa {
+   
+//     font: normal normal normal 14px/1  "Mulish", 'sans-serif' !important;
+   
+// }

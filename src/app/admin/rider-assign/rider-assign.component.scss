@@ -1,0 +1,249 @@
+.button-alignment {
+    float: right;
+    cursor: pointer;
+
+}
+
+// h2 {
+//     color: black;
+//     font-weight: 500;
+//     margin-bottom: 0px;
+//     font-size: 16px;
+// }
+.rider{
+    width: 60%;
+}
+
+h3 {
+    margin-bottom: 0px;
+}
+
+.card-top {
+    margin-top: 30px;
+}
+
+.card-data {
+    padding: 0px 30px 15px;
+}
+
+agm-map {
+
+    height: 255px;
+}
+
+input[type="checkbox"] {
+    width: 18px;
+    /*Desired width*/
+    height: 18px;
+    /*Desired height*/
+}
+
+::ng-deep {
+    .agm-map-container-inner {
+        width: inherit;
+        height: inherit;
+        margin-top: 3px !important;
+
+    }
+}
+
+.button-select {
+    height: 28px;
+    width: 65px;
+    box-shadow: none;
+    outline: none;
+    border-radius: 3px;
+
+}
+
+.dynamicSlelect {
+    background-color: rgb(100, 110, 141) !important;
+}
+
+.button-addgrp {
+    height: 28px;
+    width: 73px;
+    font-size: 12px;
+    border-radius: 3px;
+    border: none;
+    outline: none;
+}
+
+.check-box {
+    width: 15px !important;
+    height: 15px !important;
+}
+
+mat-icon {
+    cursor: pointer;
+}
+
+// .view-icon{
+//     font-size: 18px;
+
+// }
+.view-btn {
+    border-radius: 2px;
+    box-shadow: none;
+    outline: none;
+}
+
+.current-btn {
+    background-color: #fff;
+    border-color: #d8d8d8;
+    padding: 5px;
+    font-size: 16px;
+    position: absolute;
+    top: 21px;
+    right: 9px;
+    z-index: 1;
+
+    img {
+        width: 28px;
+        height: 28px;
+    }
+}
+// .riderdate{
+//     width: 97%;
+// }
+.rider-font{
+    font-size: 14px;
+    font-weight: 500;
+}
+.rider_name {
+    font-weight: 200 !important;
+    margin-top: 2px;
+    margin-left: 2px;
+
+}
+
+.select-dropdown {
+    width: 50%;
+}
+
+.example-card {
+    border: 1px solid;
+}
+
+.mat-button {
+    box-shadow: none;
+    outline: none;
+}
+
+h3 {
+    color: black;
+    font-weight: 600;
+}
+
+h4 {
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 0px;
+}
+
+.card-header {
+    padding: 0rem 0.3rem 0.5rem;
+    margin-bottom: 0;
+    background-color: #F3F7FA;
+    border-bottom: 0.0625rem solid rgb(88 149 195 / 5%);
+}
+
+.delete-icon {
+    color: red;
+    font-size: 20px;
+}
+
+.form-check .form-check-sign::before {
+    border: 0.0625rem solid #aaa;
+}
+
+p {
+    font-size: 13px;
+    font-weight: 200;
+    margin-bottom: 0px;
+}
+
+h5 {
+    font-size: 13px;
+    font-weight: 400;
+    margin-bottom: 0px;
+}
+
+.edit-btn {
+    font-size: 20px;
+}
+
+.td-data {
+    padding: 3px;
+}
+
+.dynamicSlelect-color {
+    background-color: skyblue;
+}
+
+.button-view {
+    height: 35px;
+    width: 125px;
+    box-shadow: none;
+    outline: none;
+    border-radius: 3px;
+}
+
+
+
+// .date {
+//     width: 32%;
+// }
+
+
+
+.tests-data {
+    display: contents;
+}
+
+// ::ng-deep {
+//     .timepicker-button {
+
+//         margin-left: 5px !important;
+//     }
+// }
+
+::ng-deep {
+
+    input[type=date].form-control,
+    // input[type=time].form-control,
+    input[type=datetime-local].form-control,
+    input[type=month].form-control {
+font-size: 13px !important;
+        text-transform: uppercase !important;
+    }
+}
+.save_button{
+    margin-top: 2rem !important;
+    margin-bottom: 2rem !important;
+}
+
+input[type="date"]:focus::before,
+input[type="date"]:valid::before {
+content: "";
+}
+.group_content {
+    height: 35vh;
+    overflow-y: auto;
+}
+
+
+
+::-webkit-scrollbar {
+    width: 6px;
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }

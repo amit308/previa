@@ -1,0 +1,45 @@
+table {
+    width: 100%;
+
+    th{
+        background-color: rgba(31,32,34,.1);
+    }
+    td{
+        background: hsla(0,0%,92.2%,.3);;
+    }
+
+    .material-icons{
+        font-size: 12px;
+        color:blue;
+    }
+    .number{
+        color:blue;
+    }
+    .delete{
+      font-size: 1rem;
+      margin-right: 0.3rem;
+      cursor: pointer;
+    }
+    .create{
+        font-size: 1rem;
+        margin-right: 0.3rem;
+        cursor: pointer;
+      }
+
+}
+  
+
+  .body{
+      margin:1rem;
+  }
+
+  .add-doctor{
+    float: right;
+    margin-top: 15rem;
+    position: sticky;
+    cursor: pointer;
+    span{
+        font-size: 4rem;
+    }
+}
+

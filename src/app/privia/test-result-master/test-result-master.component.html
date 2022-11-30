@@ -1,0 +1,1165 @@
+<div class="container-fluid">
+  <div class="body">
+    <div class="test-heading">
+      <h2>TEST RESULT MASTER</h2>
+    </div>
+    <div class="departments">
+      <form [formGroup]="testResultMasterForm">
+        <div class="row">
+          <div class="col-lg-3">
+            <div class="form-group">
+              <!-- <label>Test:</label> -->
+              <div class="">
+                <mat-form-field class="example-full-width" style="width: 100%">
+                  <input
+                    type="text"
+                    placeholder="Search Tests By Name"
+                    aria-label="Number"
+                    matInput
+                    formControlName="testName"
+                    (keyup)="getActualTests($event)"
+                    [matAutocomplete]="auto"
+                  />
+                  <!-- (keyup)="checkPin($event)"  (optionSelected)="onFileChange($event.option.value)"-->
+                  <mat-autocomplete
+                    autoActiveFirstOption
+                    #auto="matAutocomplete"
+                    (optionSelected)="testResultMasterData($event.option.value)"
+                  >
+                    <mat-option
+                      *ngFor="let option of options"
+                      [value]="option.displayName"
+                      multiple
+                    >
+                      {{ option?.displayName }} {{ option?.HIMSCode }}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 d-none">
+            <div class="form-group">
+              <label>Department:</label>
+              <select class="form-control custom-form-control">
+                <option>Select Marketing Excu</option>
+                <option *ngFor="let item of departments" [value]="item._id">
+                  {{ item.name }}
+                </option>
+                <!-- <option>Harish</option>
+                                <option>Sai</option>
+                                <option>Siva</option>
+                                <option>Harish</option> -->
+              </select>
+            </div>
+          </div>
+          <div class="col-lg-3 d-none">
+            <div class="search-doctor">
+              <input
+                type="text"
+                class="form-control"
+                id="inputPassword"
+                placeholder="Search"
+              />
+              <div class="search">
+                <span class="material-icons"> search </span>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 d-none">
+            <div class="form-group">
+              <label>Sub Test:</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="subtest"
+                formControlName="subTest"
+              />
+            </div>
+          </div>
+        </div>
+        <mat-tab-group>
+          <mat-tab label="Test Result Settings">
+            <div class="card mt-3 p-3">
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="form-group resulttype pt-2 pb-2">
+                    <div class="row">
+                      <div class="col-lg-2">
+                        <label class="ml-2">Result Type :</label>
+                      </div>
+                      <div class="col-lg-10">
+                        <mat-radio-group
+                          class=""
+                          aria-label="Select an option"
+                          formControlName="resultType"
+                        >
+                          <mat-radio-button
+                            class="mr-2"
+                            value="{{ item.name }}"
+                            *ngFor="let item of resultTypes"
+                            (change)="showUpload($event)"
+                          >
+                            {{ item.name }}
+                          </mat-radio-button>
+                          <!-- <mat-radio-button class="mr-2" value="2">Calculated
+                                                    </mat-radio-button>
+                                                    <mat-radio-button class="mr-2" value="3">Pick List
+                                                    </mat-radio-button>
+                                                    <mat-radio-button class="mr-2" value="3">No Unit/ref.Value
+                                                    </mat-radio-button>
+                                                    <mat-radio-button class="mr-2" value="3">Culture</mat-radio-button>
+                                                    <mat-radio-button class="mr-2"  [checked]="false"
+                                                        (click)="showUpload()">Template</mat-radio-button>
+                                                    <mat-radio-button class="mr-2" value="3">Heading</mat-radio-button> -->
+                        </mat-radio-group>
+                        <!-- <button *ngIf="showUploadBtnFlag" class="btn btn-md"
+                                                    (click)="uploadFile($event)">
+                                                    Upload File
+                                                </button> -->
+                        <!-- <button *ngIf="showUploadBtnFlag" class="btn btn-md" type="button"
+                                                    (click)="fileInput.click()">
+                                                    <span> Upload File</span>
+                                                    <input #fileInput type="file" (change)="onFileChange($event)"
+                                                        style="display:none;" />
+                                                </button> -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label>Result Unit</label>
+                    <label>
+                      <span
+                        (click)="openInvoiceModel(addMaterialType)"
+                        style="
+                          margin-left: 10px;
+                          font-size: 20px;
+                          cursor: pointer;
+                        "
+                        ><i class="fa fa-plus"></i></span
+                    ></label>
+                    <select class="form-control" formControlName="resultUnit">
+                      <option value="" disabled>Select Type</option>
+                      <option
+                        value="{{ type.unitName }}"
+                        *ngFor="let type of materials"
+                      >
+                        {{ type.unitName }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label>No. Of Decimals</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      formControlName="noOfDecimals"
+                    />
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label>Panic Low</label>
+                    <input class="form-control" formControlName="panicLaw" />
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label>Panic High</label>
+                    <input class="form-control" formControlName="panicHigh" />
+                  </div>
+                </div>
+                <div class="col-lg-8">
+                  <div class="form-group checkbox">
+                    <div class="row pt-1">
+                      <div class="col-md-2 ml-2">
+                        <mat-checkbox
+                          [checked]="true"
+                          formControlName="noResult"
+                          >No Result
+                        </mat-checkbox>
+                      </div>
+                      <div class="col-md-3">
+                        <mat-checkbox
+                          [checked]="true"
+                          formControlName="attachImage"
+                          >Attach Image</mat-checkbox
+                        >
+                      </div>
+                      <div class="col-md-3">
+                        <mat-checkbox
+                          [checked]="true"
+                          formControlName="editReferenceRange"
+                          >Edit Reference Range
+                        </mat-checkbox>
+                      </div>
+                      <div class="col-md-2 ml-2">
+                        <mat-checkbox
+                          [checked]="true"
+                          formControlName="printBlankPage"
+                          >Print black page
+                        </mat-checkbox>
+                      </div>
+                      <div class="col-md-2 ml-2">
+                        <mat-checkbox
+                          [checked]="true"
+                          formControlName="separate"
+                          >Seperate
+                        </mat-checkbox>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="">Reference Range</label>
+                    <textarea
+                      class="form-control"
+                      formControlName="referenceRange"
+                    ></textarea>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="">Notes</label>
+                    <textarea
+                      class="form-control"
+                      formControlName="notes"
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="isShowFormula">
+                <h1 class="mt-3">Formula Structure</h1>
+                <div class="row">
+                  <div class="col-lg-4">
+                    <div class="form-group">
+                      <label for="">Formula Test:</label>
+                      <div class="mat-icons">
+                        <select class="form-control">
+                          <option>Select</option>
+                          <option
+                            value="{{ type.formulaTest }}"
+                            *ngFor="let type of formula"
+                          >
+                            {{ type.formulaTest }}
+                          </option>
+                        </select>
+                        <mat-icon
+                          aria-hidden="false"
+                          class="mt-2"
+                          aria-label="Example add icon"
+                          (click)="openInvoiceModel(addFormulaTest)"
+                          >add
+                        </mat-icon>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-4">
+                    <div class="form-group">
+                      <label>Operator:</label>
+                      <div class="mat-icons">
+                        <select class="form-control">
+                          <option>Select</option>
+                          <option
+                            value="{{ type.operator }}"
+                            *ngFor="let type of operators"
+                          >
+                            {{ type.operator }}
+                          </option>
+                        </select>
+                        <mat-icon
+                          aria-hidden="false"
+                          class="mt-2"
+                          aria-label="Example add icon"
+                          (click)="openInvoiceModel(addOperator)"
+                          >add
+                        </mat-icon>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-4">
+                    <div class="form-group mt-4">
+                      <mat-checkbox>Age</mat-checkbox>
+                    </div>
+                  </div>
+                  <div class="col-lg-4">
+                    <div
+                      class="form-group"
+                      formArrayName="medicalHistory"
+                      *ngFor="
+                        let item of testResultMasterForm.get('medicalHistory')[
+                          'controls'
+                        ];
+                        let i = index
+                      "
+                    >
+                      <label>Value:</label>
+                      <div class="mat-icons">
+                        <input
+                          class="form-control"
+                          [formGroupName]="i"
+                          formControlName="medicine"
+                          placeholder="please enter sub test name"
+                        />
+                        <mat-icon
+                          aria-hidden="false"
+                          class="mt-2"
+                          aria-label="Example add icon"
+                          (click)="addmedicalHistoryItem()"
+                          >add
+                        </mat-icon>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-4">
+                    <div class="form-group">
+                      <label>Formula:</label>
+                      <textarea class="form-control"></textarea>
+                    </div>
+                  </div>
+                  <div class="col-lg-4">
+                    <div class="form-group mt-4">
+                      <div class="row">
+                        <div class="col-lg-1">
+                          <mat-checkbox></mat-checkbox>
+                        </div>
+                        <div class="col-lg-1 refresh-button">
+                          <mat-icon class="mat-icon-rtl-mirror refresh"
+                            >refresh</mat-icon
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-4">
+                    <div class="form-group">
+                      <label>Formula:</label>
+                      <textarea class="form-control"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-2 text-right" *ngIf="showUpdateBtn">
+                <button
+                  class="btn"
+                  mat-button
+                  (click)="updateTestResultSettings()"
+                >
+                  Update Test Result Settings
+                </button>
+              </div>
+            </div>
+          </mat-tab>
+          <mat-tab *ngIf="isshown" label="Possible Test Result">
+            <div class="card p-3 mt-3">
+              <div
+                formArrayName="possibleTestResults"
+                *ngFor="let item of getPossibleFormArray(); let i = index"
+              >
+                <div class="row" style="align-items: center">
+                  <div class="col-md-11 mb-3">
+                    <div class="card">
+                      <div class="card-body">
+                        <div class="row" [formGroupName]="i">
+                          <div class="col-lg-6">
+                            <div class="form-group">
+                              <label for="">Possible Test Result</label>
+                              <textarea
+                                class="form-control"
+                                formControlName="result"
+                              ></textarea>
+                            </div>
+                          </div>
+                          <div class="col-lg-5">
+                            <div class="form-group">
+                              <label for="">Comments</label>
+                              <textarea
+                                class="form-control"
+                                formControlName="comments"
+                              ></textarea>
+                            </div>
+                          </div>
+                          <div class="col-lg-1" *ngIf="i > 0">
+                            <mat-icon
+                              aria-hidden="false"
+                              class="mt-2"
+                              aria-label="Example delete icon"
+                              (click)="removePossibleTestResult(i)"
+                              >delete</mat-icon
+                            >
+                          </div>
+                          <div class="col-lg-4">
+                            <div class="row">
+                              <div class="col-lg-6">
+                                <mat-checkbox formControlName="isAbnormal"
+                                  >Abnormal
+                                </mat-checkbox>
+                              </div>
+                              <div class="col-lg-6">
+                                <mat-checkbox formControlName="isDefault"
+                                  >Default Result
+                                </mat-checkbox>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-1">
+                    <div class="mat-icons">
+                      <mat-icon
+                        aria-hidden="false"
+                        class="mt-2"
+                        aria-label="Example add icon"
+                        (click)="possibleTestResult()"
+                        >add</mat-icon
+                      >
+                      <br />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div
+                  class="row mr-2"
+                  style="float: right"
+                  *ngIf="showUpdateBtn"
+                >
+                  <button
+                    class="btn"
+                    mat-button
+                    (click)="addPossibleTestResults()"
+                  >
+                    Save
+                  </button>
+                </div>
+              </div>
+              <div class="Detailed-table">
+                <div class="header">
+                  <h3>Detailed Report</h3>
+                </div>
+                <div class="table-responsive">
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th>Possible Test Result</th>
+                        <th>Comments</th>
+                        <th>Abnormal</th>
+                        <th>Default Result</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        *ngFor="
+                          let possibleTestResult of testDetails?.possibleTestResults
+                        "
+                      >
+                        <td>{{ possibleTestResult.result }}</td>
+                        <td>{{ possibleTestResult.comments }}</td>
+                        <td>{{ possibleTestResult.isAbnormal }}</td>
+                        <td>{{ possibleTestResult.isDefault }}</td>
+                        <td>
+                          <mat-icon
+                            (click)="
+                              editPossibleTestResult(
+                                content,
+                                possibleTestResult
+                              )
+                            "
+                          >
+                            edit</mat-icon
+                          >
+                        </td>
+                        <td>
+                          <mat-icon
+                            (click)="
+                              deletePossibleTestResult(possibleTestResult)
+                            "
+                          >
+                            delete</mat-icon
+                          >
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <!-- <div class="mt-2 text-right" *ngIf="showUpdateBtn">
+                                <button class="btn" mat-button (click)="updatePossibleTestResults()">Update Possible
+                                    Test Results</button>
+                            </div> -->
+            </div>
+          </mat-tab>
+          <mat-tab
+            *ngIf="isshown1"
+            label="Age-Wise/Gender-Wise Reference Range"
+          >
+            <div class="card mt-3 p-3">
+              <div
+                formArrayName="testResultReferenceRanges"
+                *ngFor="let item of getRefRange(); let i = index"
+              >
+                <div class="row" style="align-items: center">
+                  <div class="col-md-11 mb-3">
+                    <div class="card">
+                      <div class="card-body">
+                        <div class="row" [formGroupName]="i">
+                          <div class="col-lg-12 text-right" *ngIf="i > 0">
+                            <mat-icon
+                              aria-hidden="false"
+                              class="mt-2"
+                              aria-label="Example delete icon"
+                              (click)="removeTestResultRefRange(i)"
+                              >delete</mat-icon
+                            >
+                          </div>
+                          <div class="col-lg-4">
+                            <div class="form-group">
+                              <label for="">Gender:</label>
+                              <div class="resulttype">
+                                <mat-radio-group
+                                  class="ml-2"
+                                  aria-label="Select an option"
+                                  formControlName="gender"
+                                >
+                                  <mat-radio-button
+                                    class="mr-3 mt-2"
+                                    value="male"
+                                    >Male
+                                  </mat-radio-button>
+                                  <mat-radio-button
+                                    class="mr-3 mt-2"
+                                    value="female"
+                                    >Female
+                                  </mat-radio-button>
+                                  <mat-radio-button
+                                    class="mr-3 mt-2"
+                                    value="both"
+                                    >Both
+                                  </mat-radio-button>
+                                </mat-radio-group>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-lg-4">
+                            <div class="form-group">
+                              <label>From Age</label>
+                              <div class="row">
+                                <div class="col-lg-6">
+                                  <input
+                                    type="number"
+                                    class="form-control"
+                                    formControlName="fromAge"
+                                  />
+                                </div>
+                                <div class="col-lg-6">
+                                  <select
+                                    class="form-control"
+                                    formControlName="fromAgeUnit"
+                                  >
+                                    <option value="year">Years</option>
+                                    <option value="month">Months</option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-lg-4">
+                            <div class="form-group">
+                              <label>To Age</label>
+                              <div class="row">
+                                <div class="col-lg-6">
+                                  <input
+                                    type="number"
+                                    class="form-control"
+                                    formControlName="toAge"
+                                  />
+                                </div>
+                                <div class="col-lg-6">
+                                  <select
+                                    class="form-control"
+                                    formControlName="toAgeUnit"
+                                  >
+                                    <option value="year">Years</option>
+                                    <option value="month">Months</option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-lg-4">
+                            <div class="form-group">
+                              <label>From Value</label>
+                              <input
+                                type="number"
+                                class="form-control"
+                                formControlName="fromValue"
+                              />
+                            </div>
+                          </div>
+                          <div class="col-lg-4">
+                            <div class="form-group">
+                              <label>To Value</label>
+                              <input
+                                type="number"
+                                class="form-control"
+                                formControlName="toValue"
+                              />
+                            </div>
+                          </div>
+                          <div class="col-lg-4">
+                            <div class="form-group">
+                              <label for="">Display ref. range</label>
+                              <input
+                                class="form-control"
+                                formControlName="refRange"
+                              />
+                            </div>
+                          </div>
+                          <div class="col-lg-4">
+                            <div class="form-group">
+                              <label for="">Panic Low</label>
+                              <input
+                                type="number"
+                                class="form-control"
+                                formControlName="panicLow"
+                                placeholder="Example:1"
+                              />
+                            </div>
+                          </div>
+                          <div class="col-lg-4">
+                            <div class="form-group">
+                              <label for="">Panic High</label>
+                              <div class="mat-icons">
+                                <input
+                                  type="number"
+                                  class="form-control"
+                                  placeholder="Example:2"
+                                  formControlName="panicHigh"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-1">
+                    <div class="mat-icons">
+                      <mat-icon
+                        aria-hidden="false"
+                        class="mt-2"
+                        (click)="referenceRange()"
+                        aria-label="Example add icon"
+                        >add
+                      </mat-icon>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div
+                  class="row mr-2"
+                  style="float: right"
+                  *ngIf="showUpdateBtn"
+                >
+                  <button
+                    class="btn"
+                    mat-button
+                    (click)="addTestResultRefRanges()"
+                  >
+                    Save
+                  </button>
+                </div>
+              </div>
+              <div class="Detailed-table">
+                <div class="header">
+                  <h3>Detailed Report</h3>
+                </div>
+                <div class="table-responsive">
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th>From Age</th>
+                        <th>To Age</th>
+                        <th>From Value</th>
+                        <th>To Value</th>
+                        <th>Display Value</th>
+                        <th>Panic Low</th>
+                        <th>Panic High</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        *ngFor="
+                          let testResultRefRange of testDetails?.testResultReferenceRanges
+                        "
+                      >
+                        <td>{{ testResultRefRange.fromAge }}</td>
+                        <td>{{ testResultRefRange.toAge }}</td>
+                        <td>{{ testResultRefRange.fromValue }}</td>
+                        <td>{{ testResultRefRange.toValue }}</td>
+                        <td>{{ testResultRefRange.refRange }}</td>
+                        <td>{{ testResultRefRange.panicLow }}</td>
+                        <td>{{ testResultRefRange.panicHigh }}</td>
+                        <td>
+                          <mat-icon
+                            (click)="
+                              editTestResultRefRange(
+                                content1,
+                                testResultRefRange
+                              )
+                            "
+                          >
+                            edit</mat-icon
+                          >
+                        </td>
+                        <td>
+                          <mat-icon
+                            (click)="
+                              deleteTestResultRefRange(testResultRefRange)
+                            "
+                          >
+                            delete</mat-icon
+                          >
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <!-- <div class="mt-2 text-right" *ngIf="showUpdateBtn">
+                                <button class="btn" mat-button (click)="updateTestResultRefRanges()">Update Test Result
+                                    Reference Ranges</button>
+                            </div> -->
+            </div>
+          </mat-tab>
+          <mat-tab *ngIf="isshown2" label="Possible Template List">
+            <div class="card p-3 mt-3">
+              <div class="col-md-12 my-4">
+                <!-- <ckeditor *ngIf="showUploadBtnFlag" formControlName="templateContent"
+                                      [editor]="Editor" (change)="changeEditorContent($event)">
+                                  </ckeditor> -->
+
+                <div class="row" *ngIf="showUploadBtnFlag">
+                  <div class="col-md-5 col-12">
+                    <mat-form-field class="example-full-width">
+                      <mat-label>Template Name</mat-label>
+                      <!-- Ex. Positive / Native Report -->
+                      <input
+                        matInput
+                        required
+                        placeholder=""
+                        name="templateType"
+                        formControlName="templateType"
+                      />
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-5 col-12">
+                    <mat-form-field class="full-width-previous-test">
+                      <mat-label>Select Previous Template</mat-label>
+                      <mat-select
+                        class=""
+                        (selectionChange)="selectPreviousTemplate($event.value)"
+                      >
+                        <mat-option
+                          [value]="templateInfo"
+                          *ngFor="let templateInfo of testResultTemplates$"
+                        >
+                          {{ templateInfo?.templateType }}
+                        </mat-option>
+                      </mat-select>
+                      <mat-icon
+                        matDatepickerToggleIcon
+                        (click)="clearDate()"
+                        class="clear-icon cursor"
+                        >clear
+                      </mat-icon>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="col-md-2 col-12 text-right">
+                    <button mat-button [matMenuTriggerFor]="menu">
+                      Pick Fields
+                    </button>
+                    <!-- <mat-menu #menu="matMenu">
+                      <button
+                        color=""
+                        mat-menu-item
+                        *ngFor="let item of templateTest$"
+                        (click)="copyLabel(item)"
+                      >
+                        <span>{{ item.displayName }}</span>
+                        <mat-icon>file_copy</mat-icon>
+                      </button>
+                    </mat-menu> -->
+                  </div>
+                </div>
+
+                <!-- <quill-editor [styles]="{height: '200px'}" [modules]="modules" formControlName="templateContent"
+                  trackChanges="all" *ngIf="showUploadBtnFlag">
+
+                </quill-editor> -->
+                <!-- <angular-editor [config]="editorConfig"  formControlName="templateContent"  *ngIf="showUploadBtnFlag"></angular-editor> -->
+
+                <!-- [(ngModel)]="mycontent" 
+                #myckeditor="ngModel"
+             -->
+                <ckeditor
+                  name="myckeditor"
+                  required
+                  [config]="ckeConfig"
+                  debounce="500"
+                  (paste)="onPaste($event)"
+                  (change)="onChange($event)"
+                  *ngIf="showUploadBtnFlag"
+                  formControlName="templateContent"
+                >
+                </ckeditor>
+
+                <div *ngIf="showUploadBtnFlag" [innerHTML]="mycontent"></div>
+              </div>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+        <div class="btn-group mt-2">
+          <!-- <button class="btn" mat-button (click)="clearTest()">Clear</button> -->
+          <button
+            *ngIf="!showUpdateBtn"
+            class="btn"
+            mat-button
+            (click)="submit()"
+          >
+            Save
+          </button>
+          <!-- <button *ngIf="showUpdateBtn" class="btn" mat-button (click)="updateData()">Update</button> -->
+        </div>
+        <!-- <button class="btn"   (click)="submit()">SAVE</button> -->
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- modal for update Possible Test Result -->
+
+<ng-template id="modalWidthCustom" #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">
+      Update Possible Test Result
+    </h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div>
+      <form [formGroup]="possibleTestResultUpdateForm">
+        <div class="form-group">
+          <label for="">Possible Test Result</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="editPossibleTestResult"
+          />
+        </div>
+        <div class="form-group">
+          <label for="">Comments</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="editComments"
+          />
+        </div>
+        <div class="form-group">
+          <mat-checkbox formControlName="editIsAbnormal">Abnormal</mat-checkbox>
+        </div>
+        <div class="form-group">
+          <mat-checkbox formControlName="editIsDefault">Default</mat-checkbox>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-dark"
+      (click)="updatePossibleTestResults()"
+    >
+      Save changes
+    </button>
+  </div>
+</ng-template>
+
+<ng-template id="modalWidthCustom" #content1 let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">
+      Update Test Result Reference Range
+    </h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div>
+      <form [formGroup]="testResultRefRangesEditForm">
+        <div class="form-group">
+          <label for="">Gender:</label>
+          <div class="resulttype">
+            <mat-radio-group
+              class=""
+              aria-label="Select an option"
+              formControlName="editGender"
+            >
+              <mat-radio-button class="mr-2" value="male"
+                >Male
+              </mat-radio-button>
+              <mat-radio-button class="mr-2" value="female"
+                >Female
+              </mat-radio-button>
+              <mat-radio-button class="mr-2" value="both"
+                >Both
+              </mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="">From Age</label>
+          <input
+            type="number"
+            class="form-control"
+            formControlName="editFromAge"
+          />
+        </div>
+        <div class="form-group">
+          <label for="">From Age Unit</label>
+          <!-- <input type="text" class="form-control" formControlName="editFromAgeUnit"> -->
+          <select class="form-control" formControlName="editFromAgeUnit">
+            <option value="year">Years</option>
+            <option value="month">Months</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="">To Age</label>
+          <input
+            type="number"
+            class="form-control"
+            formControlName="editToAge"
+          />
+        </div>
+        <div class="form-group">
+          <label for="">To Age Unit</label>
+          <!-- <input type="text" class="form-control" formControlName="editToAgeUnit"> -->
+          <select class="form-control" formControlName="editToAgeUnit">
+            <option value="year">Years</option>
+            <option value="month">Months</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="">From Value</label>
+          <input
+            type="number"
+            class="form-control"
+            formControlName="editFromValue"
+          />
+        </div>
+        <div class="form-group">
+          <label for="">To Value</label>
+          <input
+            type="number"
+            class="form-control"
+            formControlName="editToValue"
+          />
+        </div>
+        <div class="form-group">
+          <label for="">Display Reference Range</label>
+          <input
+            type="number"
+            class="form-control"
+            formControlName="editRefRange"
+          />
+        </div>
+        <div class="form-group">
+          <label for="">Panic Low</label>
+          <input
+            type="number"
+            class="form-control"
+            formControlName="editPanicLow"
+          />
+        </div>
+        <div class="form-group">
+          <label for="">Panic High</label>
+          <input
+            type="number"
+            class="form-control"
+            formControlName="editPanicHigh"
+          />
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-dark"
+      (click)="updateTestResultRefRanges()"
+    >
+      Save changes
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #addMaterialType>
+  <div class="col-md-12 d-flex mt-3 text-center">
+    <h3><b>Result Unit</b></h3>
+  </div>
+
+  <div class="col-md-6 d-flex mt-2">
+    <input
+      class="input"
+      type="text"
+      name="email"
+      id="materialName"
+      placeholder="Enter Result Unit"
+      [(ngModel)]="materialName"
+    />
+  </div>
+
+  <br />
+  <div class="col-md-6 d-flex text-center">
+    <button
+      class="buttondialoge mt-2"
+      [disabled]="!materialName"
+      (click)="createMaterialType()"
+    >
+      Add
+    </button>
+
+    <button
+      class="buttondialoge mt-2 ml-2"
+      [mat-dialog-close]="true"
+      cdkFocusInitial
+    >
+      Close
+    </button>
+  </div>
+  <ngx-spinner
+    bdColor="rgba(0, 0, 0, 0.8)"
+    size="medium"
+    color="#fff"
+    type="timer"
+    [fullScreen]="true"
+  >
+    <p style="color: white">Loading...</p>
+  </ngx-spinner>
+</ng-template>
+
+<ng-template #addFormulaTest>
+  <div class="col-md-12 d-flex mt-3 text-center">
+    <h3><b>Formula Test</b></h3>
+  </div>
+
+  <div class="col-md-6 d-flex mt-2">
+    <input
+      class="input"
+      type="text"
+      name="email"
+      id="formulaTest"
+      placeholder="Enter Formula Test"
+      [(ngModel)]="formulaTest"
+    />
+  </div>
+
+  <br />
+  <div class="col-md-6 d-flex text-center">
+    <button
+      class="buttondialoge mt-2"
+      [disabled]="!formulaTest"
+      (click)="createFormulaTest()"
+    >
+      Add
+    </button>
+
+    <button
+      class="buttondialoge mt-2 ml-2"
+      [mat-dialog-close]="true"
+      cdkFocusInitial
+    >
+      Close
+    </button>
+  </div>
+  <ngx-spinner
+    bdColor="rgba(0, 0, 0, 0.8)"
+    size="medium"
+    color="#fff"
+    type="timer"
+    [fullScreen]="true"
+  >
+    <p style="color: white">Loading...</p>
+  </ngx-spinner>
+</ng-template>
+
+<ng-template #addOperator>
+  <div class="col-md-12 d-flex mt-3 text-center">
+    <h3><b>Opertor</b></h3>
+  </div>
+
+  <div class="col-md-6 d-flex mt-2">
+    <input
+      class="input"
+      type="text"
+      name="email"
+      id="operator"
+      placeholder="Enter Operator"
+      [(ngModel)]="operator"
+    />
+  </div>
+
+  <br />
+  <div class="col-md-6 d-flex text-center">
+    <button
+      class="buttondialoge mt-2"
+      [disabled]="!operator"
+      (click)="createOperator()"
+    >
+      Add
+    </button>
+
+    <button
+      class="buttondialoge mt-2 ml-2"
+      [mat-dialog-close]="true"
+      cdkFocusInitial
+    >
+      Close
+    </button>
+  </div>
+  <ngx-spinner
+    bdColor="rgba(0, 0, 0, 0.8)"
+    size="medium"
+    color="#fff"
+    type="timer"
+    [fullScreen]="true"
+  >
+    <p style="color: white">Loading...</p>
+  </ngx-spinner>
+</ng-template>

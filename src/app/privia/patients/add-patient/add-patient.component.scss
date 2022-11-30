@@ -1,0 +1,48 @@
+.doctor-fields{
+    border-bottom: 1px solid #d2cdcd;
+    .header{
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
+.field {
+    border-radius: 3rem;
+}
+
+.buttons{
+    .cancel button{
+        float: left;
+    }
+    .add-doctor button{
+        float:right;
+    }
+}
+
+.file-input{
+    display: none;
+}
+
+img{
+    width:40px;
+    height:40px;
+    border-radius: 50%;
+}
+
+// button{
+//     background-color: #00c9d1 !important;
+//     color: white;
+// }
+
+.button{
+    a{
+        background-color:  #00c9d1 !important;
+        color: white;
+    }
+}
+
+
+input[type="date"]:focus::before,
+input[type="date"]:valid::before {
+content: "";
+}

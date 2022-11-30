@@ -1,0 +1,101 @@
+.body{
+    margin:1rem;
+    .test-heading h3 {
+        color: rgba(31,32,34,.5);
+        margin: 0 0 1.42857rem;
+        font-size: 2rem;
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    mat-radio-button{
+        margin-right: 0.5rem;
+    }
+
+    .btnGroup{
+        background-color:  #437289;
+        color: white;
+        margin-top: 2rem;
+    }
+
+    .mat-elevation-z8{
+        margin-top: 1rem;
+    }
+    table {
+        width: 100%;
+      }
+}
+.mat-column-question {
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 8% !important;
+    width: 60% !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+    padding-left: 10px;
+    padding-right: 10px;
+  
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  }
+//   'id','code', 'question',  'type','actions'
+  .mat-column-type {
+    flex: 0 0 8% !important;
+    width: 10% !important;
+  }
+  .mat-column-actions {
+    flex: 0 0 8% !important;
+    width: 10% !important;
+  }.mat-column-code {
+    flex: 0 0 8% !important;
+    width: 10% !important;
+  }.mat-column-id {
+    flex: 0 0 8% !important;
+    width: 10% !important;
+  }
+  .toggle{
+    padding-bottom: 30px;
+  }
+  .modal-heading-div{
+    display: flex;
+    justify-content: space-between;
+  }
+  .section{
+    display: flex;
+    mat-icon{
+      margin: 7px;
+     background: #00c9d1 !important;
+     cursor: pointer;
+     color: white;
+     
+    }
+    // justify-content: space-between;
+  }
+  .addButton{
+    margin: 7px;
+    background: #00c9d1 !important;
+    cursor: pointer;
+    color: white;
+  }
+  .cancelButton{
+    position: absolute;
+    top: -18px;
+    right: 0;
+    border-radius: 50%;
+  }
+  .tableheader{
+    background: #00c9d1 !important;
+    color: white;
+  }
+  .material-icons{
+    cursor: pointer;
+  }
+  .heading{
+    background: #00c9d1 !important;
+    color: white;
+    font-size: 20px;
+    padding: 8px 0px;
+  }

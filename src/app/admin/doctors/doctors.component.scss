@@ -1,0 +1,123 @@
+// mat-card {
+//     padding: 0px;
+//     border-radius: 8px;
+//     margin: 15px 0px;
+//     box-shadow: 0 18px 24px rgba(0,0,0,.12);
+// }
+// .contact {
+//     background: #fff;
+//     border-radius: 6px;
+//     // box-shadow: 0 18px 24px rgba(0,0,0,.12);
+//     display: block;
+//     // max-width: 400px;
+//     text-align: center;
+//     transition: box-shadow .2s ease-in-out;
+//     .img-box {
+//         background: rgba(0,0,0,.05);
+//         border-top-left-radius: inherit;
+//         border-top-right-radius: inherit;
+//         overflow: hidden;
+//     }
+//     .info-box {
+//         padding: 16px;
+//         // .name {
+//         //     // margin: 0 0 .71429rem;
+//         // }
+//         .role {
+//             opacity: .6;
+//         }
+//         .social {
+//             display: flex;
+//             justify-content: center;
+//             margin: 0;
+//             .link {
+//                 color: inherit;
+//                 display: block;
+//                 font-size: 17px;
+//                 margin: 7px;
+//             }
+//         }
+//         .button-box {
+//             display: flex;
+//             justify-content: center;
+//             .ant-btn-primary {
+//                 background: #336cfb;
+//                 border-color: #336cfb;
+//                 color: #fff;
+//             }
+//         }
+//     }
+// }
+
+// .add-doctor{
+//     float: right;
+//     bottom: 0;
+//     position: sticky;
+//     cursor: pointer;
+//     span{
+//         font-size: 4rem;
+//     }
+// }
+
+
+.department-heading h3 {
+    color: rgba(31,32,34,.5);
+    margin: 0 0 1.42857rem;
+    font-size: 2rem;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.card-img img {
+    height: auto;
+    width: 100%;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.department-section mat-card {
+    padding: 0px;
+    border-radius: 8px;
+    margin: 15px 0px;
+    box-shadow: 0 18px 24px rgba(0,0,0,.12);
+}
+
+.department-section mat-card .card-data {
+    padding: 1.42857rem!important;
+}
+
+.card-data h3 {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.card-data{
+    text-align: center;
+    h4{
+        text-align: center;
+    }
+     p {
+    font-size: 14px;
+    text-align: center;
+}
+}
+
+.card-data button {
+   
+    color: #fff;
+    background: #437289;
+    padding: 10px 25px;
+    margin: 15px 0px 0px 0px;
+    border: 1px solid #437289;
+    border-radius: 5px;
+}
+
+.add-doctor{
+    float: right;
+    bottom: 0;
+    position: sticky;
+    cursor: pointer;
+    span{
+        font-size: 4rem;
+    }
+}

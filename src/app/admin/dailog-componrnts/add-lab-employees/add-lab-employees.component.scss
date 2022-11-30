@@ -1,0 +1,16 @@
+button{
+    background-color:  #437289;
+    color: white;
+}
+.button{
+    a{
+        background-color:  #437289;
+        color: white;
+    }
+}
+
+
+input[type="date"]:focus::before,
+input[type="date"]:valid::before {
+content: "";
+}

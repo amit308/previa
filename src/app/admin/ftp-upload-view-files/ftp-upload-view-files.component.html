@@ -1,0 +1,104 @@
+<div class="country-container mt-3">
+    <div class="container-fluid">
+        <div class="card card-custom example example-compact gutter-b">
+            <div class="card-header">
+                <div class="row w-100">
+                    <div class="col-md-1">
+                        <!-- <button class="form-control" (click)="backClicked()">Back</button> -->
+                 <mat-icon class="mat_icon_size" (click)="backClicked()" matTooltip="Back">keyboard_backspace</mat-icon>
+
+                    </div>
+                    <div class="col-md-4">
+                        <h2 class="card-label">FTP UPLOADED FILES</h2>
+                    </div>
+                    <div class="col-md-4">
+                        <input class=" date-picker date_content mt-2" [ngModel]="uploadedDate | date:'yyyy-MM-dd'"
+                            (ngModelChange)="uploadedDate = $event" type="date"  onkeydown="return false" name="uploadedDate"
+                            (change)="changeUploadedDate()" />
+                        <mat-icon matDatepickerToggleIcon (click)="clearDate($event)" class="clear-icon cursor">clear
+                        </mat-icon>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="search" placeholder="Search Name" class="select_search"
+                            (keyup)="getFtpData($event)">
+                    </div>
+                   
+                </div>
+            </div>
+            <div class="container-fluid mt-2">
+                <div class="row text-center h-100" *ngIf="ftpFilesData?.length < 1">
+                  <div class="col-md-12 text-center my-auto">
+                    <div class="card shadow card-block justify-content-center" style="height: 120px; margin-bottom: 10px;">
+                      <div class="card-body">
+                        No Records Found.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            <div class="card-body" *ngIf="ftpFilesData?.length > 0">
+                <div class="table-responsive example-container mat-elevation-z8">
+                    <table class="table  table-hover text-center">
+                        <thead>
+                            <tr>
+                                <th>S.No</th>
+                                <th (click)="sortEvent('file_name')">File Name
+                                    <i class="fa fa-chevron-up"
+                                        *ngIf="sortDirection === 'ASC' && sortvalue === 'file_name'"></i>
+                                    <i class="fa fa-chevron-down"
+                                        *ngIf="sortDirection === 'DASC' && sortvalue === 'file_name'"></i>
+                                </th>
+                                <th (click)="sortEvent('name')">Created By
+                                    <i class="fa fa-chevron-up"
+                                        *ngIf="sortDirection === 'ASC' && sortvalue === 'name'"></i>
+                                    <i class="fa fa-chevron-down"
+                                        *ngIf="sortDirection === 'DASC' && sortvalue === 'name'"></i>
+                                </th>
+                                <th (click)="sortEvent('createdAt')">Created Date
+                                    <i class="fa fa-chevron-up"
+                                        *ngIf="sortDirection === 'ASC' && sortvalue === 'createdAt'"></i>
+                                    <i class="fa fa-chevron-down"
+                                        *ngIf="sortDirection === 'DASC' && sortvalue === 'createdAt'"></i>
+                                </th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of ftpFilesData; let i=index">
+                                <td>{{i + 1}}</td>
+                                <td>{{item?.file_name}}</td>
+                                <td>{{item?.createdInfo?.name | titlecase}}</td>
+                                <td>{{item?.createdAt | date: 'MM-dd-yyyy'}}</td>
+                                <td>
+                                    <button class="button-view mr-4" (click)="downloadFtpFile(item)">Download</button>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div style="border-bottom: 1px solid #ced4da ; margin-top: -12px;"></div>
+                    <!-- pagination div starts from here -->
+                    <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+                    (page)="onPageEvent($event)">
+                </mat-paginator>
+
+                    <!-- pagination div ends here -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="timer" [fullScreen]="true">
+    <p style="color: white">Processing... </p>
+</ngx-spinner>

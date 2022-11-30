@@ -1,0 +1,150 @@
+<div class="country-container mt-3">
+    <div class="container-fluid">
+      <div class="card card-custom example example-compact gutter-b">
+        <div class="card-header d-flex">
+          <div class="card-title">
+            <h2 class="card-label">HEADER AND FOOTER</h2>
+          </div>
+          <div class="card-toolbar">
+            <div class="example-tools justify-content-center">
+              <button (click)="addHeaderModal(addHeaderFooter)" class="btn btnGroup">
+                Add
+              </button>
+            </div>
+          </div>
+        </div>  
+  
+        <div class="card-body">
+            <!-- <div class="row">
+                <div class="col-md-12">
+                    Header <img src="assets/images/previa_h.png" class="img_info">
+                    <mat-icon class="mat_icon_size">visibility</mat-icon>
+                    <mat-icon class="mat_icon_size">edit</mat-icon>
+                </div>
+            </div>   -->
+            <div class="text-center">
+                <table class="table table-responsive table-bordered">
+                    <thead>
+                        <tr>
+                            <th>S.No</th>
+                            <th>Name</th>
+                            <th>Image</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let item of headerFooterList; let i = index" >
+                      <!-- *ngIf="item?.attachmentType !== ('promotion')" -->
+                        <tr>
+                            <td>{{i+1}}</td>
+                            <td>{{item?.attachmentType | titlecase}}</td>
+                            <!-- src="{{imageBaseUrl1 + item.attachment}}" -->
+                            <td><img src="{{item.attachment | textEncode}}" height="100%" width="100%"></td>
+                            <td>
+                                <span class="d-flex">
+                                    <!-- <mat-icon class="mat_icon_size" matTooltip="View">visibility</mat-icon> -->
+                                    <mat-icon class="mat_icon_size" (click)="editHeaderFooter(uploadHeaderFooter,item);getHeaderFooter(item)" matTooltip="edit">edit</mat-icon>
+                                    <!-- matTooltip="item?.attachmentType == header ? Edit Footer : Edit Header" -->
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #uploadHeaderFooter>
+    <mat-dialog-content>
+      <div>
+        <form [formGroup]="headerFooterUploadForm">
+  
+        <div class="mb-5">
+            <!-- <h3 class="mb-5">Upload Bulk Tests</h3> -->
+            <div class="d-flex justify-content-between">
+              <h1 mat-dialog-title>
+                {{title}} Update
+              </h1>
+              <div class="button">
+                <a class="btn btn-xs btn-icon btn-hover-primary btn_close" href="javascript:void(0)"
+                  (click)="onClose()">X</a>
+              </div>
+            </div>
+            <label>Upload Image:</label>
+            <div class="input-group mb-3">
+  
+              <input type="file" class="form-control field" (click)="clearError()" [formControl]="headerFooterUploadForm.controls['file_name']" 
+              accept="image/*" placeholder="Image"
+                aria-label="file_name" aria-describedby="basic-addon1" (change)="fileUploading($event)"
+               >
+            </div>
+            <p class="text-danger"> {{this.errormessage1}}</p>
+        </div>
+        <div class="row buttons">
+          <div class="col-lg-6 cancel">
+            <button class="button-select" (click)="onClose()">Cancel</button>
+          </div>
+          <div class="col-lg-6 add-doctor text-right">
+            <button class="button-select" [ngClass]="{'btnDisabled':!headerFooterUploadForm.valid}" [disabled]="!headerFooterUploadForm.valid" (click)="headerFileSubmit()">Upload</button>
+          </div>
+        </div>
+      </form>
+      </div>
+    </mat-dialog-content>
+  </ng-template>
+  
+  
+  
+  <ng-template #addHeaderFooter>
+    <mat-dialog-content>
+      <div>
+        <form [formGroup]="addFooterUploadForm">
+  
+        <div class="mb-5">
+            <!-- <h3 class="mb-5">Upload Bulk Tests</h3> -->
+            <div class="d-flex justify-content-between">
+              <h1 mat-dialog-title>
+                {{title}} Add
+              </h1>
+              <div class="button">
+                <a class="btn btn-xs btn-icon btn-hover-primary btn_close" href="javascript:void(0)"
+                  (click)="onClose()">X</a>
+              </div>
+            </div>
+
+            <mat-form-field class="full-width w-100">
+              <mat-label>Select Attachment Type</mat-label>
+              <mat-select [formControl]="addFooterUploadForm.controls['attachment_type']">  
+                <mat-option value="header">Header</mat-option>
+                <mat-option value="footer">Footer</mat-option>
+              </mat-select>
+  
+            </mat-form-field>
+            <label>Upload Image:</label>
+            <div class="input-group mb-3">
+  
+              <input type="file" class="form-control field" (click)="clearError()" [formControl]="addFooterUploadForm.controls['file_name']" 
+              accept="image/*" placeholder="Image"
+                aria-label="file_name" aria-describedby="basic-addon1" (change)="fileUploading($event)"
+               >
+            </div>
+            <p class="text-danger"> {{this.errormessage1}}</p>
+        </div>
+        <div class="row buttons">
+          <div class="col-lg-6 cancel">
+            <button class="button-select" (click)="onClose()">Cancel</button>
+          </div>
+          <div class="col-lg-6 add-doctor text-right">
+            <button class="button-select" [ngClass]="{'btnDisabled':!addFooterUploadForm.valid}" [disabled]="!addFooterUploadForm.valid" (click)="addSubmit()">Upload</button>
+          </div>
+        </div>
+      </form>
+      </div>
+    </mat-dialog-content>
+  </ng-template>
+  
+
+  
+  
+ 

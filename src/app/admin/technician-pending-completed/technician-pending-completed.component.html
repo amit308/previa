@@ -1,0 +1,218 @@
+<div class="country-container mt-3">
+
+  <div>
+    <div class="container-fluid">
+      <form [formGroup]="technicianForm">
+        <div class="row mt-5">
+
+          <div class="col-md-3 ml-3">
+            <h2>Select Technician</h2>
+            <select class="form-control" formControlName="selected_technician">
+              <option hidden value="" disabled selected>Technicians </option>
+
+              <option value="1" [ngValue]="item?._id" *ngFor="let item of technicianListData ">
+                {{item.name}}</option>
+
+            </select>
+          </div>
+          <div class="col-md-3 d-none">
+            <h2> Date</h2>
+            <input type="date" class="form-control" formControlName="sampleCollectionDate">
+
+          </div>
+          <div class="col-md-3 ">
+            <h2>Select Test Status</h2>
+            <select class="input mr-3" class="form-control" [(ngModel)]="mySelect" (change)="selectChange($event)">
+              <option *ngFor="let item of statuss" [value]="item.viewName">{{item.viewName}}</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+
+          </div>
+        </div>
+      </form>
+      <br>
+      <br>
+      <!-- <div class="row">
+                <div class="col-md-3">
+                    <h1>Patients</h1>
+
+                </div>
+                <div class="col-md-3">
+
+                </div>
+                <div class="col-md-3">
+
+                </div>
+                <div class="col-md-3">
+                    <h2>Technician name : <b>{{technicianInfo?.name}}</b></h2>
+                </div>
+            </div>
+
+
+            <div>
+                <div class="row">
+                    <div class="col-md-12 col-12" *ngFor="let patientInfo of technicianSlots">
+                        <div>
+                            <mat-card class="example-card mb-2">
+                                <mat-card-header>
+                                    <div class="col-lg-2 ">
+                                        <p>
+                                            Patient name
+                                        </p>
+
+                                        <mat-card-title>{{patientInfo?.patient?.name}}</mat-card-title>
+                                    </div>
+
+                                    <div class="col-lg-2">
+                                        <p>
+                                            PID
+                                        </p>
+                                        <mat-card-title>{{patientInfo?.patient?.pid}}</mat-card-title>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <p>
+                                            Sample collection address:
+                                        </p>
+                                        <p>
+                                            {{patientInfo?.location}}
+                                        </p>
+
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="">
+                                            <p>Sample collection Date</p>
+                                            <p>
+                                                {{patientInfo?.date}}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                </mat-card-header>
+                                <br>
+                                <mat-card-content>
+                                    <mat-accordion>
+
+                                        <mat-expansion-panel (opened)="panelOpenState = true"
+                                            (closed)="panelOpenState = false">
+                                            <mat-expansion-panel-header>
+                                                <mat-panel-title>
+                                                    Tests
+                                                </mat-panel-title>
+
+                                            </mat-expansion-panel-header>
+                                            <div class="row mt-2">
+                                            </div>
+
+                                            <div class="table-responsive details">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr class="text-center">
+                                                            <th>Sno</th>
+                                                            <th>Name</th>
+                                                            <th>Price</th>
+                                                            <th>Instructions</th>
+                                                            <th>Technician Comment</th>
+                                                            <th>Status</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let test of patientInfo?.tests; let k = index">
+                                                            <td class="text-center">{{k + 1}}</td>
+                                                            <td>{{test?.displayName}}</td>
+                                                            <td>{{test?.price}}</td>
+                                                            <td>{{test?.instructions}}</td>
+                                                            <td>{{test?.technicianComments}}</td>
+                                                            <td>Pending</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </mat-expansion-panel>
+
+                                    </mat-accordion>
+
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div> -->
+      <div class="col-md-12 col-12" *ngFor="let patientInfo of technicianSlots">
+        <div>
+          <mat-card class="example-card mb-2">
+            <mat-card-header style="background-color: whitesmoke; display: block;">
+              <div class="row p-2">
+                <table class="border-0 w-100 p-3">
+                  <thead>
+                    <tr class="text-center ">
+                      <th> Patient Name</th>
+                      <th> PID</th>
+                      <th> Sample Collection Web Address</th>
+                      <th>Sample Collection Date</th>
+                    </tr>
+                  </thead>
+
+
+                  <tbody>
+                    <tr class="text-center">
+                      <td>{{patientInfo?.patient?.name}}</td>
+                      <td>{{patientInfo?.patient?.pid}}</td>
+                      <td>{{patientInfo?.location}}</td>
+                      <td>{{patientInfo?.date}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </mat-card-header>
+            <br>
+            <mat-card-content>
+              <mat-accordion>
+
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      Tests
+                    </mat-panel-title>
+
+                  </mat-expansion-panel-header>
+                  <div class="row mt-2">
+                  </div>
+
+                  <div class="table-responsive details">
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr class="text-center">
+                          <th>Sno</th>
+                          <th>Name</th>
+                          <th>Price</th>
+                          <th>Instructions</th>
+                          <th>Technician Comment</th>
+                          <th>Status</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let test of patientInfo?.tests; let k = index">
+                          <td class="text-center">{{k + 1}}</td>
+                          <td>{{test?.displayName}}</td>
+                          <td>{{test?.price}}</td>
+                          <td>{{test?.instructions}}</td>
+                          <td>{{test?.technicianComments}}</td>
+                          <td>Pending</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </mat-expansion-panel>
+
+              </mat-accordion>
+
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

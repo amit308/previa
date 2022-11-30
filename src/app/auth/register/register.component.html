@@ -1,0 +1,17 @@
+<form [formGroup]="testForm" (ngSubmit)="onSubmit()">
+    <div formArrayName="element">
+        <ng-template #recursiveList let-element>
+              <div *ngFor="let item of element;let i=index;">
+                  <div [formGroupName]="i">
+                    <input type="text" formControlName="type">
+                  </div>
+                  <!-- {{item.get('element')?.controls?.length}} -->
+                  <div *ngIf="item.get('element')?.controls?.length > 0">
+                    <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: item.get('element').controls }"></ng-container>
+                  </div>
+              </div>
+        </ng-template>
+        <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: testForm.get('element')['controls'] }">fff</ng-container>
+    </div>
+    <input type="submit">
+   </form>

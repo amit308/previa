@@ -1,0 +1,82 @@
+<div class="country-container mt-3">
+    <div class="container-fluid">
+        <div class="card card-custom example example-compact gutter-b">
+            <div class="card-header d-none">
+                <div class="card-title">
+                    <h3 class="card-label">Reports List</h3>
+                </div>
+                <div class="card-toolbar">
+                    <div class="example-tools justify-content-centerr">
+                        <button class="btn btnGroup" (click) ="uploadReport()">
+                            Upload Reports
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+
+                <div class="container drag-file-wrapper mt-2 text-center">
+                    <h1>Upload documents</h1>
+                    <div
+                      class="uploadfilecontainer"
+                      (click)="fileInput.click()"
+                      appDragDrop
+                      (onFileDropped)="uploadFile($event)"
+                    >
+                      <input
+                        hidden
+                        type="file"
+                        #fileInput
+                        (change)="uploadFile($event.target.files)"
+                        multiple />
+                    </div>
+                    <div class="uploaded-list">
+                      <div
+                        class="files-list file-list-name"
+                        *ngFor="let file of files; let i = index"
+                      >
+                        <p>{{ file }}</p>
+                        <p class="delete_icon_color" class="delete-file" (click)="deleteAttachment(i)" >
+                            <i class="fa fa-trash "></i>
+                        </p>
+                      </div>
+                    </div>
+                    <div class="next-btn mt-3" *ngIf="uploadedFiles.length > 0" >
+                      <button class="btn btn-md btn-primary" (click)="uploadReport()" >
+                        Upload
+                      </button>
+                    </div>
+                  </div>
+                <div class="table-responsive example-container mat-elevation-z8 d-none">
+                    <table class="table  table-hover ">
+                        <thead>
+                            <tr>
+                                <th>Sno</th>
+                                <th>Report Id</th>
+                                <th>Uploaded Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>12435</td>
+                                <td>04-26-2021</td>
+                                <td><i class="fa fa-download"></i></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- pagination div starts from here -->
+                    <!-- <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+                        (page)="onPageEvent($event)">
+                    </mat-paginator> -->
+
+                    <!-- pagination div ends here -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "timer" [fullScreen] = "true"><p style="color: white" > Uploading... </p></ngx-spinner>

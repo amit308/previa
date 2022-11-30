@@ -1,0 +1,22 @@
+button{
+    background-color:  #437289;
+    color: white;
+}
+.button{
+    a{
+        background-color:  #437289;
+        color: white;
+    }
+}
+.addButton{
+    margin: 7px;
+    background: #00c9d1 !important;
+    cursor: pointer;
+    color: white;
+  }
+  .cancelButton{
+    position: absolute;
+    top: -18px;
+    right: 0;
+    border-radius: 50%;
+  }

@@ -1,0 +1,231 @@
+<mat-card>
+
+    <mat-card-content>
+        <div class="">
+            <div class="row">
+               
+                <div class="col-md-3 mt-2">
+                    <h2 class="patients_title">SUBMIT QUOTE</h2>
+
+                </div>
+                <div class="col-md-7 mt-2">
+                    <div class="form-group">
+                       
+                        <input type="text" class="form-control" (keydown.enter)="$event.preventDefault()"
+                            placeholder="Search Location" autocorrect="off" autocapitalize="off" spellcheck="off"
+                            type="text" #search>
+                    </div>
+                </div>
+
+                <div class="col-md-2 test-reg-date">
+                    <label class="date_title">Tests Registered Date</label>
+                    <input class="form-control" [ngModel]="startDate | date:'yyyy-MM-dd'"
+                        (ngModelChange)="startDate = $event" type="date" name="startDate"
+                         />
+                </div>
+
+            </div>
+            <div>
+                <div class="row ">
+                  
+
+
+                </div>
+
+               
+            </div>
+            <div class="mt-4">
+
+                <div class="container-fluid">
+                    <div class="row text-center" *ngIf="patientForm.value.patientsArray?.length < 1">
+                        <div class="col-md-12 text-center my-auto">
+                            <div class="card shadow card-block justify-content-center" style="height: 120px;">
+                                <div class="card-body">
+                                    No Records Found.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="" *ngIf="patientForm.value.patientsArray?.length > 0">
+                    <div class="card card-custom example example-compact gutter-b">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <h3 class="card-label m-0">Patients Tests</h3>
+                            </div>
+
+                        </div>
+
+                        <div class="card-body card-table-body d-none">
+                            <div class="row hr_lines">
+                                <div class="col-md-1 font-weight-bold">S.No</div>
+                                <div class="col-md-1 font-weight-bold">Patient Name</div>
+                                <div class="col-md-3 font-weight-bold">Sample Collection Web Address</div>
+                                <div class="col-md-4 font-weight-bold text-center">Test/Package & Instructions </div>
+                                <div class="col-md-2 font-weight-bold ">Date </div>
+                                <div class="col-md-1 font-weight-bold">Action</div>
+                                <div class="col-md-1 font-weight-bold">Price</div>
+
+                                
+
+                             
+
+                            </div>
+                            <form *ngIf="patientForm?.value" [formGroup]="patientForm">
+                                <div class="row m-0 mt-3 hr_line" formArrayName="patientsArray"
+                                    *ngFor="let patientInfo of patientForm.get('patientsArray')['controls']; let i = index">
+
+                                    <span class="row patient_table-body" [formGroupName]="i">
+                                        <div class="col-md-1">{{i+ 1}}</div>
+                                        <div class="col-md-1 ">{{patientInfo?.value?.name}}</div>
+                                        <div class="col-md-3 text-center "><textarea matInput class="border address-1"
+                                                placeholder="Enter Web Address..." formControlName="address"></textarea>
+                                        </div>
+                                        <div class="col-md-4 text-center">
+                                            <p>
+
+                                                <span
+                                                    *ngFor="let test of patientInfo['controls'].patientTestsArray['controls']; let j = index">
+                                                    {{test?.value?.packageInfo?.name}} {{test?.value?.test?.name}}
+                                                    <span *ngIf="test?.value?.sampleTime">-</span>
+                                                    {{test?.value?.sampleTime}}
+                                                    <br>
+
+                                                </span>
+                                                
+
+                                            </p>
+
+                                        </div>
+
+                                        <div class="col-md-2 ">{{startDate | date:'MM-dd-yyyy'}}</div>
+                                        <div class="col-md-1 text-center">
+                                            <mat-icon style="cursor: pointer; background-color: none;"
+                                            >cancel</mat-icon>
+                                        </div>
+
+                                    </span>
+                                </div>
+                            </form>
+                        </div>
+
+
+                        <br>
+                        <br>
+
+
+                        <div class="text-center align-items-center">
+                            <div class="table-responsive details">
+                                <form [formGroup]="patientForm">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <th>S.No</th>
+                                            <th>Select</th>
+                                            <th>Patient Name</th>
+                                            <th>Sample Collection Web Address</th>
+                                            <th>Test/Package</th>
+                                            <th>Instructions</th>
+                                            <th>Date</th>
+                                            <th>Action</th>
+                                            <th>price</th>
+
+
+                                        </thead>
+
+                                        <tbody formArrayName="patientsArray">
+
+                                            <tr *ngFor="let patientInfo of patientForm.get('patientsArray')['controls']; let i = index"
+                                                [formGroupName]="i">
+                                                <td>{{i+ 1}}</td>
+                                                <td>
+                                                    <mat-checkbox [checked]="patientInfo.value.isCheck"
+                                                        (change)="patientInfo.value.isCheck = !patientInfo.value.isCheck"
+                                                        class="example-margin ">
+                                                    </mat-checkbox>
+                                                </td>
+                                                <td>{{patientInfo?.value?.name | titlecase}}</td>
+                                                <td>
+                                                    <textarea matInput class="border address-1"
+                                                        placeholder="Enter Web Address..."
+                                                        formControlName="address"></textarea>
+                                                </td>
+                                                <td>
+                                                    <p formArrayName="patientTestsArray">
+                                                        <span [formGroupName]="j"
+                                                            *ngFor="let test of patientInfo['controls'].patientTestsArray['controls']; let j = index"
+                                                            [formGroupName]="j">
+                                                            {{test?.value?.test?.name}}
+                                                            <span *ngIf="test?.value?.sampleTime">-</span>
+                                                            {{test?.value?.sampleTime}}<span
+                                                                *ngIf="patientInfo['controls'].patientTestsArray['controls'].length - 1">,</span>
+                                                            <br>
+                                                        </span>
+                                                    </p>
+
+                                                </td>
+                                                <td formArrayName="patientTestsArray">
+                                                    <div [formGroupName]="j"
+                                                        *ngFor="let test of patientInfo['controls'].patientTestsArray['controls']; let j = index"
+                                                        [formGroupName]="j">
+                                                        <textarea matInput class="border text-border tex-box-width"
+                                                            placeholder="Enter Instructions..."
+                                                            formControlName="instructions"></textarea>
+                                                    </div>
+                                                </td>  
+                                                <td>{{startDate | date:'dd-MM-yyyy'}}</td>
+                                                <td>
+                                                    <mat-icon style="cursor: pointer; color: red;"
+                                                        >cancel</mat-icon>
+                                                </td>
+                                               <td>
+                                                   {{patientInfo?.value?.price}}
+                                                  
+                                                 
+                                               </td>
+
+                                            </tr>
+                                        </tbody>
+
+                                    </table>
+                                </form>
+
+                            </div>
+                        </div>
+                        <!--  -->
+                        <!--  -->
+
+                      
+
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="timer" [fullScreen]="true">
+    <p style="color: white"> assigning... </p>
+</ngx-spinner>
+</div>
+</div>
+</div>
+</div>
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div> 
+  </div>
+
+</mat-card-content>
+</mat-card>
+
+  

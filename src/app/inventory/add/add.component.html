@@ -1,0 +1,166 @@
+<div class="container-fluid registrationform">
+  <div class="body">
+    <h2>
+      {{ inventorDetails?.action === "add" ? "ADD" : "UPDATE" }} INVENTORY
+    </h2>
+    <div class="card bg-light mt-3 p-3">
+      <form [formGroup]="RegistrationForm">
+        <div class="row">
+          <div class="col md-8 mt-2 mr-2">
+            <div class="form-group">
+              <label>Select Type</label>
+              <select
+                class="form-control"
+                formControlName="type"
+                (change)="selectReferRole($event.target.value)"
+                [attr.disabled]="checkPageAccess('INVENTORY_UPDATE')"
+              >
+                <option value="" disabled>Select Type</option>
+                <option value="{{ type.name }}" *ngFor="let type of selectType">
+                  {{ type.displayName }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col md-4 mt-2 mr-2">
+            <div class="form-group">
+              <label>Select TypeName</label>
+              <select
+                class="form-control"
+                formControlName="typeName"
+                [attr.disabled]="checkPageAccess('INVENTORY_UPDATE')"
+              >
+                <option value="" disabled>Select TypeName</option>
+                <option
+                  value="{{ item.name }}"
+                  *ngFor="let item of selectTypeName"
+                >
+                  {{ item.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <mat-form-field>
+                <label
+                  >Material Name
+                  <span
+                    style="margin-left: 10px; font-size: 20px; cursor: pointer"
+                    (click)="openInvoiceModel(addMaterialType)"
+                    ><i class="fa fa-plus"></i></span
+                ></label>
+                <mat-select
+                  [attr.disabled]="checkPageAccess('INVENTORY_UPDATE')"
+                  multiple
+                  formControlName="materialName"
+                >
+                  <mat-option
+                    value="{{ type.materialName }}"
+                    *ngFor="let type of materials"
+                  >
+                    {{ type.materialName }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <label for="">Available Quantity</label>
+            <input
+              type="number"
+              class="form-control"
+              [attr.disabled]="checkPageAccess('INVENTORY_UPDATE')"
+              formControlName="availabilityQuantity"
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label for="">Used Quantity</label>
+            <input
+              type="number"
+              class="form-control"
+              [attr.disabled]="checkUsedQTYPageAccess()"
+              formControlName="usedQuantity"
+              [ngClass]="{
+                'is-invalid': f.usedQuantity.errors
+              }"
+            />
+            <div
+              *ngIf="f.usedQuantity.errors && f.usedQuantity.value"
+              class="invalid-feedback"
+            >
+              <div *ngIf="f.usedQuantity.errors.usedQuantityValidator">
+                Used Quantity must be less than available Quantity
+              </div>
+            </div>
+            <!-- </div> -->
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="col-md-12">
+      <div class="actions">
+        <section class="example-section"></section>
+
+        <div class="buttons">
+          <button mat-button (click)="backtolist()">
+            &nbsp;&nbsp;Back&nbsp;
+          </button>
+          <button mat-button (click)="submitt()">
+            &nbsp;&nbsp;Submit&nbsp;
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #addMaterialType>
+  <div class="col-md-12 d-flex mt-3 text-center">
+    <h3><b>Material Type</b></h3>
+  </div>
+
+  <div class="col-md-6 d-flex mt-2">
+    <input
+      class="input"
+      type="email"
+      name="email"
+      id="materialName"
+      placeholder="Enter materialName"
+      [(ngModel)]="materialName"
+    />
+  </div>
+
+  <br />
+  <div class="col-md-6 d-flex text-center">
+    <button
+      class="buttondialoge mt-2"
+      [disabled]="!materialName"
+      (click)="createMaterialType()"
+    >
+      Add
+    </button>
+
+    <button
+      class="buttondialoge mt-2 ml-2"
+      [mat-dialog-close]="true"
+      cdkFocusInitial
+    >
+      Close
+    </button>
+  </div>
+  <ngx-spinner
+    bdColor="rgba(0, 0, 0, 0.8)"
+    size="medium"
+    color="#fff"
+    type="timer"
+    [fullScreen]="true"
+  >
+    <p style="color: white">Loading...</p>
+  </ngx-spinner>
+</ng-template>

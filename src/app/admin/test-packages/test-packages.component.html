@@ -1,0 +1,73 @@
+<div class="country-container mt-3">
+    <div class="container-fluid">
+      <div class="card card-custom example example-compact gutter-b">
+        <div class="card-header">
+          <div class="card-title">
+            <h2 class="card-label">TEST PACKAGES</h2>
+          </div>
+          <div class="card-toolbar">
+            <div class="example-tools justify-content-centerr">
+              <button (click)="addtestPackages()" class="btn btnGroup">
+                Add
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="mx-auto" *ngIf="testPackagesDetails?.length === 0">No Data Found</div>
+            <div class="table-responsive example-container mat-elevation-z8"  *ngIf="testPackagesDetails?.length > 0">
+                <table class="table  table-hover text-center">
+                   <thead>
+                       <tr>
+                           <th>S.No</th>
+                           <th (click)="sortEvent('name')">Package Name
+                            <i class="fa fa-chevron-up" *ngIf="sortDirection === 'ASC' && sortvalue === 'name'" ></i>
+                            <i class="fa fa-chevron-down" *ngIf="sortDirection === 'DASC' && sortvalue === 'name'"></i></th>
+                            <th>Code</th>
+                           <th>Tests</th>
+                           <th (click)="sortEvent('price')">Package Price
+                            <i class="fa fa-chevron-up" *ngIf="sortDirection === 'ASC' && sortvalue === 'price'" ></i>
+                            <i class="fa fa-chevron-down" *ngIf="sortDirection === 'DASC' && sortvalue === 'price'"></i></th>
+                           <th>Action</th>
+                       </tr>
+                   </thead> 
+                   <tbody>
+                       <tr *ngFor="let item of testPackagesDetails ; let i=index">
+                           <td>{{ i + pageEvent?.pageIndex * pageEvent?.pageSize + 1 }}</td>
+                           <td>{{ item.name | titlecase}}</td>
+                           <td>{{ item.code }}</td>
+
+                           <td>
+                             <!-- <table>
+                               <tr *ngFor="let value of item.tests ; let j=index">
+                                {{ j+1 }}. {{value?.name}} - {{value?.code}}
+                               </tr>
+                             </table> -->
+                             <p *ngFor="let value of item.tests ; let j=index">
+                              {{ j+1 }}. {{value?.name}} - {{value?.code}}
+                             </p>
+                           </td>
+                           <td>{{ item.price }}</td>
+                           <td>
+                            <mat-icon (click)="edittestPackages(item)">edit</mat-icon>
+                            <mat-icon class="delete_icon_color" (click)="deletetestPackages(item)">delete</mat-icon>
+                           </td>
+                       </tr>
+                   </tbody>
+                </table>
+                <div style="border-bottom: 1px solid #ced4da ; margin-top: -12px;" ></div>
+                <!-- pagination div starts from here -->
+                <mat-paginator [length]="length" 
+                              [pageSize]="pageSize" 
+                              [pageSizeOptions]="pageSizeOptions" 
+                              (page)="onPageEvent($event)">
+                </mat-paginator>
+              
+                <!-- pagination div ends here -->
+            </div>
+        </div>
+        </div>
+    </div>
+  </div>
+
+  

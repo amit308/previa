@@ -1,0 +1,84 @@
+<div class="agent-addupdate-dialog">
+    <div class="d-flex justify-content-between">
+        <h1 mat-dialog-title>
+            {{ selectedCompany.action === "add" ? "Add" : "Update" }} Company
+          </h1>
+      <div class="button">
+        <a
+          _ngcontent-alh-c8=""
+          class="btn btn-xs btn-icon  btn-hover-primary"
+          href="javascript:void(0)"
+          (click)="onClose()"
+          >X</a>
+      </div>
+    </div>
+  
+    <div mat-dialog-content>
+<div class="body">
+    <!-- <div class="patient-heading">
+        <h3>Company</h3>
+    </div> -->
+    <div class="row">
+        <div class="col-lg-12">
+            <form [formGroup]="companyForm" (ngSubmit)="onsubmit()">
+                <div class="row">
+                    <!-- <div class="col-lg-6">
+                        <label for="usr">Company:</label>
+                        <select class="form-control" formControlName="company">
+                            <option>--select--</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                        </select>
+                    </div> -->
+                    <div class="col-lg-6">
+                        <label for="usr">Company name:</label>
+                        <input type="text" class="form-control" formControlName="company_name">
+                    </div>
+                    <div class="col-lg-6">
+                        <label for="usr">Registration No:</label>
+                        <input type="text" class="form-control" formControlName="registration_no">
+                    </div>
+                    <div class="col-lg-6">
+                        <label for="usr">Registration Date:</label>
+                        <input type="date" class="form-control" formControlName="registration_date">
+                    </div>
+                    <div class="col-lg-6">
+                        <label for="usr">VAT No:</label>
+                        <input type="text" class="form-control" formControlName="vat_no">
+                    </div>
+                    <div class="col-lg-6">
+                        <label for="usr">PAN No:</label>
+                        <input type="text" class="form-control" formControlName="pan_no">
+                    </div>
+                    <div class="col-lg-6">
+                        <label for="usr">Website address:</label>
+                        <input type="text" class="form-control" formControlName="website">
+                    </div>
+                </div>
+                <div>
+                    <label for="comment">Description:</label>
+                    <textarea class="form-control" rows="5" formControlName="description"></textarea>
+                </div>
+                <div class="btnGroup">
+                    <button type="submit" [disabled]="!companyForm.valid" class="btn" matbutton>Save</button>
+
+                </div>
+            </form>
+        </div>
+        <!-- <div class="col-lg-5">
+            <div class="row">
+                <div>
+                    <img src="./../../../assets/salman-khan-1584090953.jpg" alt="Avatar" class="avatar">
+                </div>
+                <div>
+                    <input type="file" class="form-control file-input" placeholder="link" aria-label="Username"
+                        aria-describedby="basic-addon1" #fileinput>
+                    <button type="button" (click)="fileinput.click()" class="btn btn-primary">browse image</button>
+                </div>
+            </div>
+        </div> -->
+    </div>
+</div>
+</div>
+</div>

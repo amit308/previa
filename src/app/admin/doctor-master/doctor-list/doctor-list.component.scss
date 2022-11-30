@@ -1,0 +1,13 @@
+.card-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.btnGroup{
+    background-color:  #437289;
+    color: white;
+}
+mat-icon{
+    font-size: 18px;
+    cursor: pointer;
+}

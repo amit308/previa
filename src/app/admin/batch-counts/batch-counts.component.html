@@ -1,0 +1,409 @@
+<div class="country-container mt-3">
+  <div class="container-fluid">
+    <div class="card card-custom example example-compact gutter-b">
+      <div class="card-header">
+        <div class="card-title">
+
+          <div class="row">
+            <!-- <div class="col-md-2"> -->
+            <!-- <mat-form-field>
+                  <input #datepickerInput class="mat-datepicker-input" (change)="selectedDate($event)"
+                  matInput [matDatepicker]="picker" [(ngModel)]="date" placeholder="Choose a date">
+                  <mat-icon matDatepickerToggleIcon (click)="clearDate($event)">clear</mat-icon>
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>  -->
+
+            <!-- <input type="date" [ngModel]="batchDate | date:'yyyy-MM-dd'" (ngModelChange)="batchDate = $event" class="form-control input_width" (change)="selectedDate($event)"> -->
+            <!-- </div> -->
+            <div class="col-md-4">
+              <h2 class="card-label">BATCH COUNTS</h2>
+            </div>
+            <div class="col-md-5 text-center">
+              <button matbutton class="btn btnGroup" (click)="sampleFileDownload()">
+                Download Sample Upload Patients File
+              </button>
+            </div>
+            <div class="col-md-3">
+
+              <button matbutton (click)="openUploadPatientsModel(addBulkDialog)" class="btn btnGroup">
+                Upload Patients in Bulk
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+      <div class="card-body">
+        <div class="table-responsive example-container mat-elevation-z8">
+          <!-- <div class="mt-2 mb-2 d-flex">
+              <h3> Date :</h3>
+              <input type="date" class="form-control date ml-2">
+            </div> -->
+
+
+          <table class="table  table-hover ">
+            <thead>
+              <tr class="text-center">
+                <th>S.No</th>
+                <th>Branch</th>
+                <th>Batch Id</th>
+                <th>Batch Created Date</th>
+                <th>Total Tests</th>
+                <th>SMS Sent</th>
+                <th>SMS Failed</th>
+                <th>Invalid Records</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="text-center" *ngFor="let batch of batchCounts; let i =index">
+                <td>{{i + 1}}</td>
+                <td>{{batch?.branch?.name}}</td>
+                <td>{{batch?.bid}}</td>
+                <td>{{batch?.bidDate | date : 'dd-MM-yyyy h:mm a'}}</td>
+                <td>{{batch?.tests}}</td>
+                <!-- (click)="openSmsSent(smsSent)" -->
+                <td class="cursor">{{batch?.smsSent}}</td>
+                <!-- (click)="openSmsFailed(smsFailed)" -->
+                <td class="cursor" *ngIf="batch?.smsInfo?.failed"> {{batch?.smsFaild}}</td>
+                <td class="cursor" *ngIf="!batch?.smsInfo?.failed"> 0</td>
+                <td class="class=">
+                  <span class="d-flex">
+                    <button class="download-btn" (click)="downloadInvalidRecords(batch?.bid,batch?.invalidRecords)"
+                      [disabled]="batch?.invalidRecords?.length == 0">Download
+                      ({{batch?.invalidRecords?.length}})</button>
+                    <button class="upload-btn ml-1"
+                      (click)="openInvalidpatientsmodal(uploadinvaildpatients,batch?.invalidRecords?.length)">Upload</button>
+                  </span>
+                </td>
+                <td (click)="getLatestBatchCounts(batch?.bid)"><span class="material-icons icon-color cursor">
+                    refresh
+                  </span></td>
+
+              </tr>
+            </tbody>
+          </table>
+          <div style="border-bottom: 1px solid #ced4da ; margin-top: -12px;"></div>
+          <!-- pagination div starts from here -->
+          <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+            (page)="onPageEvent($event)">
+          </mat-paginator>
+          <!-- pagination div ends here -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- <div class="p-3 mt-3">
+  <div class="">
+    <div class="row mb-2"> -->
+<!-- <div class="col-md-2"> -->
+<!-- <mat-form-field>
+            <input #datepickerInput class="mat-datepicker-input" (change)="selectedDate($event)"
+            matInput [matDatepicker]="picker" [(ngModel)]="date" placeholder="Choose a date">
+            <mat-icon matDatepickerToggleIcon (click)="clearDate($event)">clear</mat-icon>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>  -->
+
+<!-- <input type="date" [ngModel]="batchDate | date:'yyyy-MM-dd'" (ngModelChange)="batchDate = $event" class="form-control input_width" (change)="selectedDate($event)"> -->
+<!-- </div> -->
+<!-- <div class="col-md-5">
+      
+      </div>
+      <div class="col-md-4">
+        <button matbutton class="btn btnGroup" (click)="sampleFileDownload()">
+          Download Sample Upload Patients File
+        </button>
+      </div>
+      <div class="col-md-3">
+
+        <button matbutton (click)="openUploadPatientsModel(addBulkDialog)" class="btn btnGroup" >
+          Upload Patients in Bulk
+        </button>
+      </div>
+
+    </div>
+    <div class="card border-0"> -->
+<!-- <div class="table-responsive example-container mat-elevation-z8">
+      
+
+        <table class="table  table-hover ">
+          <thead>
+            <tr class="text-center">
+              <th>S.No</th>
+              <th>Branch</th>
+              <th>Batch Id</th>
+              <th>Batch Created Date</th>
+              <th>Total Tests</th>
+              <th>SMS Sent</th>
+              <th>SMS Failed</th>
+              <th>Invaild Records</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="text-center" *ngFor="let batch of batchCounts; let i =index">
+              <td>{{i + 1}}</td>
+              <td>{{batch?.branch?.name}}</td>
+              <td>{{batch?.bid}}</td>
+              <td>{{batch?.bidDate | date : 'dd-MM-yyyy h:mm a'}}</td>
+              <td>{{batch?.tests}}</td> -->
+<!-- (click)="openSmsSent(smsSent)" -->
+<!-- <td class="cursor">{{batch?.smsSent}}</td> -->
+<!-- (click)="openSmsFailed(smsFailed)" -->
+<!-- <td class="cursor" *ngIf="batch?.smsInfo?.failed"> {{batch?.smsFaild}}</td>
+              <td class="cursor" *ngIf="!batch?.smsInfo?.failed"> 0</td>
+              <td>
+                <button class="download-btn" (click)="downloadInvalidRecords(batch?.bid,batch?.invalidRecords)"
+                  [disabled]="batch?.invalidRecords?.length == 0">Download
+                  ({{batch?.invalidRecords?.length}})</button> -->
+<!-- [disabled]="batch?.invalidRecords?.length == 0" -->
+<!-- <button class="upload-btn"
+                  (click)="openInvalidpatientsmodal(uploadinvaildpatients,batch?.invalidRecords?.length)">Upload</button>
+
+              </td>
+              <td (click)="getLatestBatchCounts(batch?.bid)"><span class="material-icons icon-color cursor">
+                  refresh
+                </span></td>
+
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<ng-template #addBulkDialog>
+  <mat-dialog-content>
+    <div>
+      <div class="mb-5">
+
+        <!-- <h3 class="mb-5">Upload Bulk Tests</h3> -->
+        <div class="d-flex justify-content-between">
+          <h1 mat-dialog-title>
+            Upload Bulk Patients
+          </h1>
+          <div class="button">
+            <a class="btn btn-xs btn-icon btn-hover-primary btn_close" href="javascript:void(0)"
+              (click)="onClose()">X</a>
+          </div>
+        </div>
+        <div>
+          <!-- <mat-form-field class="full-width w-100">
+            <mat-label>Select Branch</mat-label>
+            <mat-select [(ngModel)]="selectedUploadBranch" (click)="selectBranch()">
+
+              <mat-option *ngFor="let item of branchDetails;" [value]="item._id">{{ item.name }}</mat-option>
+            </mat-select>
+
+          </mat-form-field> -->
+
+
+
+          <!-- <p class="text-danger">{{this.errormessage}}</p> -->
+          <!-- <select class="form-control" [(ngModel)]="selectedUploadBranch" (click)="selectBranch()">
+              <option value="" disabled selected>Select Branch</option>
+              <option *ngFor="let item of branchDetails;" [ngValue]="item._id">{{ item.name }}</option> 
+            </select> -->
+        </div>
+        <label>Excel File:</label>
+        <div class="input-group mb-3">
+
+          <input type="file" class="form-control field" (click)="fileUpload()" (change)="onFileChanges($event)"
+            accept=".csv,.xls,.xlsx" placeholder="Excel File" aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+        <p class="text-danger"> {{this.errormessage1}}</p>
+      </div>
+      <div class="row buttons">
+        <div class="col-lg-6 cancel">
+          <button (click)="onClose()" class="button-mat">Cancel</button>
+        </div>
+        <div class="col-lg-6 add-doctor text-right">
+          <button class="button-mat" (click)="onSubmit()">Upload</button>
+        </div>
+      </div>
+
+    </div>
+
+
+  </mat-dialog-content>
+
+  <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="timer" [fullScreen]="true">
+    <p style="color: white">Processing... </p>
+  </ngx-spinner>
+</ng-template>
+
+<ng-template #uploadinvaildpatients>
+  <mat-dialog-content>
+    <div>
+      <div class="mb-5">
+        <form>
+          <!-- <h3 class="mb-5">Upload Bulk Tests</h3> -->
+          <div class="d-flex justify-content-between">
+            <h1 mat-dialog-title>
+              Upload Batch Patients
+            </h1>
+            <div class="button">
+              <a class="btn btn-xs btn-icon btn-hover-primary btn_close" href="javascript:void(0)"
+                (click)="onClose()">X</a>
+            </div>
+          </div>
+          <label>Excel File:</label>
+          <div class="input-group mb-3">
+
+            <input type="file" class="form-control field" accept=".csv,.xls,.xlsx" (change)="onFileChanges($event)"
+              placeholder="Excel File" aria-label="Username" aria-describedby="basic-addon1">
+          </div>
+        </form>
+      </div>
+      <div class="row buttons">
+        <div class="col-lg-6 cancel">
+          <button class="button-mat" (click)="onClose()">Cancel</button>
+        </div>
+        <div class="col-lg-6 add-doctor text-right">
+          <button class="button-mat" (click)="invalidRecordsUpload()">Upload</button>
+        </div>
+      </div>
+
+    </div>
+
+
+  </mat-dialog-content>
+  <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="timer" [fullScreen]="true">
+    <p style="color: white">Processing... </p>
+  </ngx-spinner>
+
+</ng-template>
+
+<div class="d-none">
+  <table id="patient-invalid-records">
+    <tr>
+      <th>SL NO</th>
+      <th>ADDRESS</th>
+      <th>SRF ID</th>
+      <th>LAB ID</th>
+      <th>NAME</th>
+      <th>AGE</th>
+      <th>GENDER</th>
+      <th>CATEGORY</th>
+      <th>SAMPLE COLLECTION DATE</th>
+      <th>SAMPLE RECEIVED DATE</th>
+      <th>SAMPLE TESTING DATE</th>
+      <th>Condition of Specimen Received / Quality on Arrival</th>
+      <th>SPECIMEN TYPE</th>
+      <th>RESULT</th>
+      <th>CT VALUES</th>
+      <th>PHONE NUMBER</th>
+      <th>REMARKS</th>
+      <th>LOCATION</th>
+    </tr>
+    <tr *ngFor="let item of PatientbatchbulkData ; let i=index">
+      <td>{{ i + 1 }}</td>
+      <td>{{ item.ADDRESS }}</td>
+      <td>{{ item.SRFID }}</td>
+      <td>{{ item.LABID }}</td>
+      <td>{{ item.NAME }}</td>
+      <td>{{ item.AGE }}</td>
+      <td>{{ item?.GENDER }}</td>
+      <td>{{ item?.CATEGORY }}</td>
+      <td>{{ item?.sampleCollectedDate }}</td>
+      <td>{{ item?.sampleReceivedDate }}</td>
+      <td>{{ item?.sampleTestingDate }}</td>
+      <td>{{item?.conditionOfSpecimenReceived}}</td>
+      <td>{{item?.SpecimenType}}</td>
+      <td>{{ item.RESULT }}</td>
+      <td>{{item?.CTVALUES}}</td>
+      <td>{{ item.PHONENUMBER }}</td>
+      <td>{{ item.REMARKS }}</td>
+      <td>{{ item?.LOCATION }}</td>
+
+    </tr>
+  </table>
+
+</div>
+<div class="d-none">
+  <table id="patient-download-invalid-records">
+    <tr>
+      <th>SL NO</th>
+      <th>BATCH ID</th>
+      <th>BATCH TEMP ID</th>
+      <th>ADDRESS</th>
+      <th>SRF ID</th>
+      <th>LAB ID</th>
+      <th>NAME</th>
+      <th>AGE</th>
+      <th>GENDER</th>
+      <th>CATEGORY</th>
+      <th>SAMPLE COLLECTION DATE</th>
+      <th>SAMPLE RECEIVED DATE</th>
+      <th>SAMPLE TESTING DATE</th>
+      <th>Condition of Specimen Received / Quality on Arrival</th>
+      <th>SPECIMEN TYPE</th>
+      <th>RESULT</th>
+      <th>CT VALUES</th>
+      <th>PHONE NUMBER</th>
+      <th>REMARKS</th>
+      <th>LOCATION</th>
+    </tr>
+    <tr *ngFor="let item of invalidRecords ; let i=index">
+      <td>{{ i + 1 }}</td>
+      <td>{{item?.bid }}</td>
+      <td *ngIf="item?._id">{{item?._id}}</td>
+      <td *ngIf="item?.id">{{ item?.id }}</td>
+      <td>{{ item?.ADDRESS }}</td>
+      <td>{{ item?.SRFID }}</td>
+      <td>{{ item?.LABID }}</td>
+      <td>{{ item?.NAME }}</td>
+      <td>{{ item?.AGE }}</td>
+      <td>{{ item?.GENDER }}</td>
+      <td>{{ item?.CATEGORY }}</td>
+      <td>{{ item?.sampleCollectedDate }}</td>
+      <td>{{ item?.sampleReceivedDate }}</td>
+      <td>{{ item?.sampleTestingDate }}</td>
+      <td>{{item?.conditionOfSpecimenReceived}}</td>
+      <td>{{item?.SpecimenType}}</td>
+      <td>{{ item.RESULT }}</td>
+      <td>{{item?.ctValues}}</td>
+      <td>{{ item?.PHONENUMBER }}</td>
+      <td>{{ item?.REMARKS }}</td>
+      <td>{{ item?.LOCATION }}</td>
+
+    </tr>
+  </table>
+
+</div>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="timer" [fullScreen]="true">
+  <p style="color: white">Processing... </p>
+</ngx-spinner>
+<!-- <ng-template #smsSent>
+      <div>
+        <h3 mat-dialog-title>hello</h3>
+      </div>
+    
+      <div mat-dialog-content>
+      </div>
+      <div mat-dialog-actions class="button-alignment">
+        <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Close</button>
+      </div>
+    
+    
+    </ng-template> -->
+<!--   
+    <ng-template #smsFailed>
+      <h3 mat-dialog-title>hello</h3>
+      <div mat-dialog-content>
+      </div>
+      <div mat-dialog-actions class="button-alignment">
+        <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Close</button>
+      </div>
+    
+    
+    </ng-template> -->

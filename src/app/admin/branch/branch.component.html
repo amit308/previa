@@ -1,0 +1,99 @@
+<div class="country-container mt-3">
+    <div class="container-fluid">
+      <div class="card card-custom example example-compact gutter-b">
+        <div class="card-header">
+          <div class="card-title">
+            <h2 class="card-label">BRANCH</h2>
+          </div>
+          <div class="card-toolbar">
+            <div class="example-tools justify-content-centerr">
+              <button (click)="addBranch()" class="btn btnGroup">
+                Add
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="mx-auto" *ngIf="branchDetails?.length === 0">No Data Found</div>
+            <div class="table-responsive example-container mat-elevation-z8"  *ngIf="branchDetails?.length > 0">
+                <table class="table  table-hover text-center">
+                   <thead>
+                       <tr>
+                        <th>S.No</th>
+                        <th (click)="sortEvent('name')">Name
+                         <i class="fa fa-chevron-up" *ngIf="sortDirection === 'ASC' && sortvalue === 'name'" ></i>
+                         <i class="fa fa-chevron-down" *ngIf="sortDirection === 'DASC' && sortvalue === 'name'"></i>
+                       </th>
+                       <th (click)="sortEvent('referenceCode')">Reference Code
+                        <i class="fa fa-chevron-up" *ngIf="sortDirection === 'ASC' && sortvalue === 'referenceCode'" ></i>
+                        <i class="fa fa-chevron-down" *ngIf="sortDirection === 'DASC' && sortvalue === 'referenceCode'"></i>
+                      </th>
+                        <th (click)="sortEvent('type')">Type
+                         <i class="fa fa-chevron-up" *ngIf="sortDirection === 'ASC' && sortvalue === 'type'" ></i>
+                         <i class="fa fa-chevron-down" *ngIf="sortDirection === 'DASC' && sortvalue === 'type'"></i>
+                       </th>
+                        <th (click)="sortEvent('city')">City
+                         <i class="fa fa-chevron-up" *ngIf="sortDirection === 'ASC' && sortvalue === 'city'" ></i>
+                         <i class="fa fa-chevron-down" *ngIf="sortDirection === 'DASC' && sortvalue === 'city'"></i>
+                       </th>
+                        <th (click)="sortEvent('state')">State
+                         <i class="fa fa-chevron-up" *ngIf="sortDirection === 'ASC' && sortvalue === 'state'" ></i>
+                         <i class="fa fa-chevron-down" *ngIf="sortDirection === 'DASC' && sortvalue === 'state'"></i>
+                       </th>
+                        <th (click)="sortEvent('country')">Country
+                         <i class="fa fa-chevron-up" *ngIf="sortDirection === 'ASC' && sortvalue === 'country'" ></i>
+                         <i class="fa fa-chevron-down" *ngIf="sortDirection === 'DASC' && sortvalue === 'country'"></i>
+                       </th>
+                        <th (click)="sortEvent('description')">Description
+                         <i class="fa fa-chevron-up" *ngIf="sortDirection === 'ASC' && sortvalue === 'description'" ></i>
+                         <i class="fa fa-chevron-down" *ngIf="sortDirection === 'DASC' && sortvalue === 'description'"></i>
+                       </th>
+                        <th (click)="sortEvent('mobile')">Mobile
+                         <i class="fa fa-chevron-up" *ngIf="sortDirection === 'ASC' && sortvalue === 'mobile'" ></i>
+                         <i class="fa fa-chevron-down" *ngIf="sortDirection === 'DASC' && sortvalue === 'mobile'"></i>
+                       </th>
+                        <th (click)="sortEvent('contactPerson')">Contact Person
+                         <i class="fa fa-chevron-up" *ngIf="sortDirection === 'ASC' && sortvalue === 'contactPerson'" ></i>
+                         <i class="fa fa-chevron-down" *ngIf="sortDirection === 'DASC' && sortvalue === 'contactPerson'"></i>
+                       </th>
+                        <th>Action</th>
+                       </tr>
+                   </thead> 
+                   <tbody>
+                       <tr *ngFor="let item of branchDetails ; let i=index">
+                           <td>{{ i + pageEvent?.pageIndex * pageEvent?.pageSize + 1 }}</td>
+                           <td>{{ item.name | titlecase}}</td>
+                           <td>{{ item?.referenceCode}}</td>
+                           <td>{{ item.type }}</td>
+                           <td>{{ item.city }}</td>
+                           <td>{{ item.state }}</td>
+                           <td>{{ item.country }}</td>
+                           <td>{{ item.description }}</td>
+                           <td>{{ item.mobile }}</td>
+                           <td>{{ item.contactPerson }}</td>
+                           <td>
+                             <div class="d-flex">
+                            <mat-icon (click)="editBranch(item)">edit</mat-icon>
+                            <mat-icon class="delete_icon_color" (click)="deleteBranch(item)">delete</mat-icon>
+                          </div>
+                           </td>
+                       </tr>
+                   </tbody>
+                </table>
+                <div style="border-bottom: 1px solid #ced4da ; margin-top: -12px;" ></div>
+
+                <!-- pagination div starts from here -->
+                <mat-paginator [length]="length" 
+                              [pageSize]="pageSize" 
+                              [pageSizeOptions]="pageSizeOptions" 
+                              (page)="onPageEvent($event)">
+                </mat-paginator>
+              
+                <!-- pagination div ends here -->
+            </div>
+        </div>
+        </div>
+    </div>
+  </div>
+
+  

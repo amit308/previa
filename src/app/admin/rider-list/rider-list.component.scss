@@ -1,0 +1,97 @@
+
+
+agm-map {
+    height: 300px;
+  }
+  .current-btn {
+    background-color: #fff;
+    border-color: #d8d8d8;
+    // padding: 5px;
+    // font-size: 16px;
+    // position: absolute;
+    // top: 400px;
+    // right: 221px;
+    // z-index: 1;
+    padding: 5px;
+    font-size: 16px;
+    position: absolute;
+    top: 60px;
+    right: 9px;
+    z-index: 1;
+    img{
+        width: 28px;
+        height: 28px;
+    }
+}
+
+mat-icon{
+  font-size: 18px;
+  cursor: pointer;
+}
+
+::ng-deep {
+  .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+    background-color: #00c9d1!important;
+  }
+  .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+    background-color:#00c9d1 !important;
+  }
+  }
+  .mat-button {
+    box-shadow: none;
+    outline: none;
+  }
+
+  // view rider code start
+  .button-alignment{
+    float: right;
+    cursor: pointer;
+   
+}
+// h2{
+//   color: black;
+//   font-weight: 500;
+//   margin-bottom: 0px;
+//   font-size: 16px;
+// }
+.rider_name {
+  font-weight:200 !important;
+  margin-top: 2px;
+  margin-left: 2px;
+
+}
+.button-select {
+  height: 28px;
+  width: 65px;
+  box-shadow: none;
+  outline: none;
+  border-radius: 3px;
+
+}
+
+.td-data{
+  padding: 3px;
+}
+
+.select-dropdown{
+  width: 50%;
+}
+.button-view{
+  height: 32px;
+  width: 125px;
+  font-size: 13px;
+  box-shadow: none;
+  outline: none;
+  border-radius: 3px;
+}
+.tests-data{
+  display: contents;
+}
+.example-card{
+  border: 1px solid ;
+    }
+  // view rider code start
+  input[type="date"]:focus::before,
+  input[type="date"]:valid::before {
+  content: "";
+  }

@@ -1,0 +1,875 @@
+<div class="sidebar bg-light shadow" style="height: 100%">
+  <ul class="navbar-nav sidebar-dark accordion" id="accordionSidebar">
+    <a class="sidebar-brand d-flex">
+      <img src="./assets/PreviaLogo.png" />
+    </a>
+
+    <hr class="sidebar-divider my-0" />
+
+    <span>
+      <span *ngIf="enableCollapseView('patient')">
+        <li class="nav-item" [ngClass]="activePatientsParent()">
+          <a
+            role="button"
+            class="nav-link collapsed"
+            data-toggle="collapse"
+            data-target="#collapseThree"
+            aria-expanded="false"
+            aria-controls="collapseThree"
+          >
+            <span
+              ><i class="fa fa-list" aria-hidden="true"></i>&nbsp;Registration
+            </span>
+          </a>
+        </li>
+      </span>
+      <div
+        id="collapseThree"
+        class="collapse collapse-bg"
+        aria-labelledby="headingThree"
+        data-parent="#accordionSidebar"
+      >
+        <a
+          routerLink="/admin/patient"
+          *ngIf="
+            checkPageAccess('PATIENT_ADD') || checkPageAccess('PATIENT_VIEW')
+          "
+        >
+          <div class="d-block collapse_bg-hover" routerLinkActive="active">
+            <a class="collapse-item" routerLinkActive="active1" id="vmenu">
+              <i class="fa fa-male collapse_sublist mr-1" aria-hidden="true"></i
+              >&nbsp;
+              <span class="sub-list collapse_sublist"
+                >Patient Registration</span
+              ></a
+            ><br />
+          </div>
+        </a>
+        <a
+          routerLink="/admin/patientList"
+          *ngIf="
+            checkPageAccess('PATIENT_VIEW') || checkPageAccess('PATIENT_ADD')
+          "
+        >
+          <div class="d-block collapse_bg-hover" routerLinkActive="active">
+            <a class="collapse-item" routerLinkActive="active1" id="vmenu">
+              <i class="fa fa-male collapse_sublist mr-1" aria-hidden="true"></i
+              >&nbsp;
+              <span class="sub-list collapse_sublist"
+                >Patients Test Status</span
+              ></a
+            ><br />
+          </div>
+        </a>
+        <a
+          routerLink="/privia/patients-pending-test"
+          *ngIf="checkPageAccess('PATIENTS_PENDING_TESTS_VIEW')"
+        >
+          <div class="d-block collapse_bg-hover" routerLinkActive="active">
+            <a class="collapse-item" routerLinkActive="active1" id="vmenu">
+              <i class="fa fa-male collapse_sublist mr-1" aria-hidden="true"></i
+              >&nbsp;
+              <span class="sub-list collapse_sublist"
+                >Patients Pending Tests</span
+              ></a
+            ><br />
+          </div>
+        </a>
+        <a
+          routerLink="/admin/question"
+          *ngIf="checkPageAccess('QUESTIONNAIRE')"
+        >
+          <div class="d-block collapse_bg-hover" routerLinkActive="active">
+            <a class="collapse-item" routerLinkActive="active1" id="vmenu">
+              <i
+                class="fa fa-question collapse_sublist mr-1"
+                aria-hidden="true"
+              ></i
+              >&nbsp; <span class="sub-list collapse_sublist">Question</span></a
+            ><br />
+          </div>
+        </a>
+        <a
+          routerLink="/admin/promotion-page"
+          *ngIf="checkPageAccess('PROMOTION_VIEW')"
+        >
+          <div class="d-block collapse_bg-hover" routerLinkActive="active">
+            <a class="collapse-item" routerLinkActive="active1" id="vmenu">
+              <i
+                class="fa fa-bullhorn collapse_sublist mr-1"
+                aria-hidden="true"
+              ></i
+              >&nbsp;
+              <span class="sub-list collapse_sublist">Promotion Page</span></a
+            ><br />
+          </div>
+        </a>
+        <a
+          routerLink="/admin/header-footer"
+          *ngIf="checkPageAccess('PROMOTION_HEADER_FOOTER_VIEW')"
+        >
+          <div class="d-block collapse_bg-hover" routerLinkActive="active">
+            <a class="collapse-item" routerLinkActive="active1" id="vmenu">
+              <i
+                class="fa fa-question collapse_sublist mr-1"
+                aria-hidden="true"
+              ></i
+              >&nbsp;
+              <span class="sub-list collapse_sublist">Header Footer</span></a
+            ><br />
+          </div>
+        </a>
+
+        <span class="dropdown">
+        <a class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" data-bs-toggle="dropdown" 
+        *ngIf="checkPageAccess('PROMOTION_HEADER_FOOTER_VIEW')">
+          <div class="d-block collapse_bg-hover " routerLinkActive="active">
+            <a class="collapse-item" routerLinkActive="active1" id="vmenu">
+              <i
+                class="fa fa-question collapse_sublist mr-1"
+                aria-hidden="true"
+              ></i
+              >&nbsp;
+              <span class="sub-list collapse_sublist">All Quote</span></a>
+              <!-- <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" routerLink="/admin/pending-quote">Pending Quotes</a>
+                <a *ngIf="userDetails?.role == 'admin'" class="dropdown-item" routerLink="/admin/recived-quote">Send Quotes</a>
+                <a *ngIf="userDetails?.role == 'org-admin'" class="dropdown-item" routerLink="/admin/Submit-quote">Submit Quotes</a>
+                <a *ngIf="userDetails?.role == 'org-admin'" class="dropdown-item" routerLink="/admin/Accepted-quote">Accepted Quotes</a>
+
+                <a  *ngIf="userDetails?.role == 'org-admin'" class="dropdown-item" routerLink="/admin/Rajected-quote">Rejected Quotes</a>
+
+              </div> -->
+              <br />
+          </div>
+         
+        </a>
+      </span>
+      </div>
+      <span *ngIf="enableCollapseView('accession')">
+        <li class="nav-item">
+          <a
+            role="button"
+            class="nav-link collapsed"
+            data-toggle="collapse"
+            data-target="#collapseSeven"
+            aria-expanded="false"
+            aria-controls="collapseSeven"
+          >
+            <i class="fa fa-list" aria-hidden="true"></i>&nbsp;
+            <span>Accession</span>
+          </a>
+        </li>
+      </span>
+      <div
+        id="collapseSeven"
+        class="collapse collapse-bg"
+        aria-labelledby="headingSeven"
+        data-parent="#accordionSidebar"
+      >
+        <a
+          routerLink="/admin/collection"
+          *ngIf="checkPageAccess('COLLECTION_VIEW')"
+        >
+          <div class="d-block collapse_bg-hover br-0" routerLinkActive="active">
+            <a class="collapse-item" routerLinkActive="active1" id="vmenu">
+              <i
+                class="fa fa-asterisk collapse_sublist mr-1"
+                aria-hidden="true"
+              ></i
+              >&nbsp;<span class="sub-list collapse_sublist"
+                >Collection</span
+              ></a
+            ><br />
+          </div>
+        </a>
+        <!-- </div> -->
+        <!-- <div id="collapseSeven" class="collapse collapse-bg" aria-labelledby="headingSeven" data-parent="#accordionSidebar"> -->
+        <a routerLink="/admin/labassign">
+          <div class="d-block collapse_bg-hover br-0" routerLinkActive="active">
+            <a class="collapse-item" routerLinkActive="active1" id="vmenu">
+              <i
+                class="fa fa-asterisk collapse_sublist mr-1"
+                aria-hidden="true"
+              ></i
+              >&nbsp;<span class="sub-list collapse_sublist"
+                >Lab Assign</span
+              ></a
+            ><br />
+          </div>
+        </a>
+      </div>
+      <span *ngIf="enableCollapseView('testMaster')">
+        <li class="nav-item" [ngClass]="activeTestsParent()">
+          <a
+            class="sidebar-link waves-effect waves-dark has-arrow ng-star-inserted"
+            ng-reflect-ng-class="has-arrow"
+            ng-reflect-router-link-active=""
+            role="button"
+            class="nav-link collapsed"
+            data-toggle="collapse"
+            data-target="#collapseTwo"
+            aria-expanded="false"
+            aria-controls="collapseTwo"
+          >
+            <span
+              ><i class="fa fa-list" aria-hidden="true"></i>&nbsp;Tests
+            </span>
+          </a>
+        </li>
+      </span>
+      <div
+        id="collapseTwo"
+        class="collapse collapse-bg"
+        aria-labelledby="headingTwo"
+        data-parent="#accordionSidebar"
+      >
+        <a
+          routerLink="/admin/test-result"
+          *ngIf="checkPageAccess('TEST_RESULT_VIEW')"
+        >
+          <div class="d-block collapse_bg-hover" routerLinkActive="active">
+            <a class="collapse-item" routerLinkActive="active1" id="vmenu">
+              <i
+                class="fa fa-asterisk collapse_sublist mr-1"
+                aria-hidden="true"
+              ></i
+              >&nbsp;<span class="sub-list collapse_sublist"
+                >Test Result</span
+              ></a
+            ><br />
+          </div>
+        </a>
+        <a
+          routerLink="/admin/testMaster"
+          *ngIf="checkPageAccess('TEST_MASTER_VIEW')"
+        >
+          <div class="d-block collapse_bg-hover" routerLinkActive="active">
+            <a class="collapse-item" routerLinkActive="active1" id="vmenu">
+              <i
+                class="fa fa-superpowers collapse_sublist mr-1"
+                aria-hidden="true"
+              ></i
+              >&nbsp;<span class="sub-list collapse_sublist"
+                >test Master</span
+              ></a
+            ><br />
+          </div>
+        </a>
+        <a
+          routerLink="/admin/testMasterList"
+          *ngIf="checkPageAccess('TEST_RESULT_MASTER_ADD')"
+        >
+          <div class="d-block collapse_bg-hover" routerLinkActive="active">
+            <a class="collapse-item" routerLinkActive="active1" id="vmenu">
+              <i
+                class="fa fa-users collapse_sublist mr-1"
+                aria-hidden="true"
+              ></i
+              >&nbsp;<span class="sub-list collapse_sublist"
+                >Test Master List</span
+              ></a
+            ><br />
+          </div>
+        </a>
+        <a
+          routerLink="/admin/testResultMaster"
+          *ngIf="checkPageAccess('TEST_RESULT_MASTER_ADD')"
+        >
+          <div class="d-block collapse_bg-hover" routerLinkActive="active">
+            <a class="collapse-item" routerLinkActive="active1" id="vmenu">
+              <i
+                class="fa fa-asterisk collapse_sublist mr-1"
+                aria-hidden="true"
+              ></i
+              >&nbsp;<span class="sub-list collapse_sublist"
+                >test result master</span
+              ></a
+            ><br />
+          </div>
+        </a>
+
+        <a
+          routerLink="/admin/test-master-list-b2b"
+          *ngIf="checkPageAccess('TEST_RESULT_MASTER_ADD')"
+        >
+          <div class="d-block collapse_bg-hover" routerLinkActive="active">
+            <a class="collapse-item" routerLinkActive="active1" id="vmenu">
+              <i
+                class="fa fa-asterisk collapse_sublist mr-1"
+                aria-hidden="true"
+              ></i
+              >&nbsp;<span class="sub-list collapse_sublist"
+                >Test Master List B2B</span
+              ></a
+            ><br />
+          </div>
+        </a>
+
+        <a
+          routerLink="/admin/testPackages"
+          *ngIf="checkPageAccess('TEST_PACKAGES_VIEW')"
+        >
+          <div class="d-block collapse_bg-hover" routerLinkActive="active">
+            <a class="collapse-item" routerLinkActive="active1" id="vmenu">
+              <i
+                class="fa fa-asterisk collapse_sublist mr-1"
+                aria-hidden="true"
+              ></i
+              >&nbsp;<span class="sub-list collapse_sublist"
+                >Test Packages</span
+              ></a
+            ><br />
+          </div>
+        </a>
+      </div>
+      <li
+        class="nav-item"
+        routerLinkActive="active"
+        *ngIf="checkPageAccess('MANAGER_VIEW')"
+      >
+        <a class="nav-link" routerLink="/admin/manager">
+          <span class="item-color"
+            ><i class="fa fa-id-badge" aria-hidden="true"></i
+            >&nbsp;Accounts</span
+          >
+        </a>
+      </li>
+      <span *ngIf="enableCollapseView('inventory')">
+        <li class="nav-item">
+          <a
+            class="nav-link nav_icon collapsed"
+            role="tablist"
+            data-toggle="collapse"
+            data-target="#collapseSix"
+            aria-expanded="false"
+            aria-controls="collapseSix"
+          >
+            <span
+              ><i class="fa fa-list" aria-hidden="true"></i>&nbsp;Inventory
+            </span>
+          </a>
+        </li>
+      </span>
+      <div
+        id="collapseSix"
+        class="collapse collapse-bg"
+        aria-labelledby="headingSix"
+        role="tab"
+        data-parent="#accordionSidebar"
+      >
+        <a
+          routerLink="/inventory/list"
+          *ngIf="
+            checkPageAccess('INVENTORY_ADD') ||
+            checkPageAccess('INVENTORY_LIST') ||
+            checkPageAccess('INVENTORY_LIST_ALL') ||
+            checkPageAccess('INVENTORY_UPDATE') ||
+            checkPageAccess('INVENTORY_DELETE')
+          "
+        >
+          <div class="d-block collapse_bg-hover" routerLinkActive="active">
+            <a
+              role="button"
+              class="collapse-item"
+              routerLinkActive="active1"
+              id="vmenu"
+            >
+              <i
+                class="fa fa-asterisk collapse_sublist mr-1"
+                aria-hidden="true"
+              ></i
+              >&nbsp;
+              <span class="sub-list collapse_sublist">inventory</span></a
+            ><br />
+          </div>
+        </a>
+      </div>
+      <!-- *ngIf="checkPageAccess('B2B_VIEW')" -->
+      <li
+        class="nav-item"
+        routerLinkActive="active"
+        *ngIf="checkPageAccess('B2B_VIEW')"
+      >
+        <a class="nav-link" routerLink="/b2-b/invoices">
+          <span class="item-color"
+            ><i class="fa fa-list" aria-hidden="true"></i>&nbsp;B2B</span
+          >
+        </a>
+      </li>
+
+      <span>
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+          *ngIf="checkPageAccess('COMPANY_VIEW')"
+        >
+          <a class="nav-link" routerLink="/super-admin/company">
+            <span class="item-color"
+              ><i class="fa fa-list" aria-hidden="true"></i>&nbsp;company</span
+            >
+          </a>
+        </li>
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+          *ngIf="checkPageAccess('ADMIN_LIST_VIEW')"
+        >
+          <a class="nav-link" routerLink="/super-admin/admin">
+            <span class="item-color"
+              ><i class="fa fa-list" aria-hidden="true"></i>&nbsp;Admin</span
+            >
+          </a>
+        </li>
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+          *ngIf="checkPageAccess('MANAGEMENT_VIEW')"
+        >
+          <a class="nav-link" routerLink="/admin/management">
+            <span class="item-color"
+              ><i class="fa fa-users" aria-hidden="true"></i
+              >&nbsp;Management</span
+            >
+          </a>
+        </li>
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+          *ngIf="checkPageAccess('BATCH_COUNTS_VIEW')"
+        >
+          <a class="nav-link" routerLink="/admin/batch-counts">
+            <span class="item-color"
+              ><i class="fa fa-list" aria-hidden="true"></i>&nbsp;Batch Tests
+              Counts</span
+            >
+          </a>
+        </li>
+
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+          *ngIf="checkPageAccess('FTP_VIEW')"
+        >
+          <a class="nav-link" routerLink="/admin/ftp-upload">
+            <span class="item-color"
+              ><i class="fa fa-upload" aria-hidden="true"></i>&nbsp;Ftp
+              Upload</span
+            >
+          </a>
+        </li>
+        <!-- admin side panel  pending quote-->
+        <!-- <li
+        class="nav-item"
+        routerLinkActive="active"
+        *ngIf="checkPageAccess('QUOTE')"
+      >
+        <a class="nav-link" routerLink="/admin/pending-quote">
+          <span class="item-color"
+            ><i class="fa fa-upload" aria-hidden="true"></i>&nbsp;Pending Quote
+          </span
+          >
+        </a>
+      </li> -->
+        
+
+        <!--  -->
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+          *ngIf="checkPageAccess('REFERRAL_PATIENTS_VIEW')"
+        >
+          <a class="nav-link" routerLink="/admin/referral-patients">
+            <span class="item-color"
+              ><i class="fa fa-list" aria-hidden="true"></i>&nbsp;Referral
+              patients</span
+            >
+          </a>
+        </li>
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+          *ngIf="checkPageAccess('VACCINATION_VIEW')"
+        >
+          <a class="nav-link" routerLink="/admin/vaccine">
+            <span class="item-color"
+              ><i class="fa fa-asterisk" aria-hidden="true"></i
+              >&nbsp;Vaccine</span
+            >
+          </a>
+        </li>
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+          *ngIf="checkPageAccess('DD_TECHNICIAN_VIEW')"
+        >
+          <a class="nav-link" routerLink="/admin/technicianList">
+            <span class="item-color"
+              ><i class="fa fa-asterisk" aria-hidden="true"></i
+              >&nbsp;DD-Technician</span
+            >
+          </a>
+        </li>
+        <!--try again  -->
+        <li
+        class="nav-item"
+        routerLinkActive="active"
+        *ngIf="checkPageAccess('PENDING_QUOTE')"
+      >
+        <a class="nav-link" routerLink="/admin/pending-quote">
+          <span class="item-color"
+            ><i class="fa fa-asterquisk" aria-hidden="true"></i
+            >&nbsp;penndingg</span
+          >
+        </a>
+      </li>
+        <!--  -->
+
+        <!-- <li class="nav-item" routerLinkActive="active" *ngIf="checkPageAccess('ROLES_VIEW')">
+
+          <a class="nav-link" routerLink="/roles-menus/roles">
+            <span class="item-color"><i class="fa fa-asterisk" aria-hidden="true"></i>&nbsp;Roles</span>
+          </a>
+        </li> -->
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+          *ngIf="checkPageAccess('MENUS_VIEW')"
+          >
+          <a class="nav-link" routerLink="/roles-menus/menus">
+            <span class="item-color"
+              ><i class="fa fa-asterisk" aria-hidden="true"></i
+              >&nbsp;Menus</span
+            >
+          </a>
+        </li>
+      </span>
+      <span *ngIf="enableCollapseView('admin')">
+        <li class="nav-item" [ngClass]="activeAdminParent()">
+          <a
+            class="nav-link nav_icon collapsed"
+            role="tablist"
+            data-toggle="collapse"
+            data-target="#collapse"
+            aria-expanded="false"
+            aria-controls="collapse"
+          >
+            <span
+              ><i class="fa fa-list" aria-hidden="true"></i>&nbsp;Admin
+            </span>
+          </a>
+        </li>
+      </span>
+      <div
+        id="collapse"
+        class="collapse collapse-bg"
+        aria-labelledby="heading"
+        role="tab"
+        data-parent="#accordionSidebar"
+      >
+        <a
+          routerLink="/admin/hospital"
+          *ngIf="checkPageAccess('HOSPITAL_VIEW')"
+        >
+          <div class="d-block collapse_bg-hover" routerLinkActive="active">
+            <a
+              role="button"
+              class="collapse-item"
+              routerLinkActive="active1"
+              id="vmenu"
+            >
+              <i
+                class="fa fa-hospital-o collapse_sublist mr-1"
+                aria-hidden="true"
+              ></i
+              >&nbsp; <span class="sub-list collapse_sublist">Hospital</span></a
+            ><br />
+          </div>
+        </a>
+        <a
+          routerLink="/admin/location"
+          *ngIf="checkPageAccess('LOCATION_VIEW')"
+        >
+          <div class="d-block collapse_bg-hover" routerLinkActive="active">
+            <a
+              role="button"
+              class="collapse-item"
+              routerLinkActive="active1"
+              id="vmenu"
+            >
+              <i
+                class="fa fa-location-arrow collapse_sublist mr-1"
+                aria-hidden="true"
+              ></i
+              >&nbsp; <span class="sub-list collapse_sublist">Location</span></a
+            ><br />
+          </div>
+        </a>
+        <a routerLink="/admin/branch" *ngIf="checkPageAccess('BRANCH_VIEW')">
+          <div class="d-block collapse_bg-hover" routerLinkActive="active">
+            <a
+              role="button"
+              class="collapse-item"
+              routerLinkActive="active1"
+              id="vmenu"
+            >
+              <i
+                class="fa fa-bandcamp collapse_sublist mr-1"
+                aria-hidden="true"
+              ></i
+              >&nbsp; <span class="sub-list collapse_sublist">Branch</span></a
+            ><br />
+          </div>
+        </a>
+        <a
+          routerLink="/admin/frontOffice"
+          *ngIf="checkPageAccess('FRONT_OFFICE_VIEW')"
+        >
+          <div class="d-block collapse_bg-hover" routerLinkActive="active">
+            <a
+              role="button"
+              class="collapse-item"
+              routerLinkActive="active1"
+              id="vmenu"
+            >
+              <i
+                class="fa fa-briefcase collapse_sublist mr-1"
+                aria-hidden="true"
+              ></i
+              >&nbsp;
+              <span class="sub-list collapse_sublist">Front Office</span></a
+            ><br />
+          </div>
+        </a>
+        <a routerLink="/admin/financemanager">
+          <div class="d-block collapse_bg-hover" routerLinkActive="active">
+            <a
+              role="button"
+              class="collapse-item"
+              routerLinkActive="active1"
+              id="vmenu"
+            >
+              <i
+                class="fa fa-briefcase collapse_sublist mr-1"
+                aria-hidden="true"
+              ></i
+              >&nbsp; <span class="sub-list collapse_sublist">Manager</span></a
+            ><br />
+          </div>
+        </a>
+        <a
+          routerLink="/admin/organization-admin"
+          *ngIf="checkPageAccess('ORGANIZATION_ADMIN_VIEW')"
+        >
+          <div class="d-block collapse_bg-hover" routerLinkActive="active">
+            <a
+              role="button"
+              class="collapse-item"
+              routerLinkActive="active1"
+              id="vmenu"
+            >
+              <i
+                class="fa fa-briefcase collapse_sublist mr-1"
+                aria-hidden="true"
+              ></i
+              >&nbsp;
+              <span class="sub-list collapse_sublist"
+                >Organization Admin</span
+              ></a
+            ><br />
+          </div>
+        </a>
+        <a
+          routerLink="/admin/laboratory"
+          *ngIf="checkPageAccess('LABORATORY_VIEW')"
+        >
+          <div class="d-block collapse_bg-hover" routerLinkActive="active">
+            <a
+              role="button"
+              class="collapse-item"
+              routerLinkActive="active1"
+              id="vmenu"
+            >
+              <i
+                class="fa fa-flask collapse_sublist mr-1"
+                aria-hidden="true"
+              ></i
+              >&nbsp;
+              <span class="sub-list collapse_sublist">Laboratory</span></a
+            ><br />
+          </div>
+        </a>
+        <a routerLink="/admin/doctors" *ngIf="checkPageAccess('DOCTORS_VIEW')">
+          <div class="d-block collapse_bg-hover" routerLinkActive="active">
+            <a
+              role="button"
+              class="collapse-item"
+              routerLinkActive="active1"
+              id="vmenu"
+            >
+              <i
+                class="fa fa-flask collapse_sublist mr-1"
+                aria-hidden="true"
+              ></i
+              >&nbsp; <span class="sub-list collapse_sublist">DOCTOR</span></a
+            ><br />
+          </div>
+        </a>
+      </div>
+      <span *ngIf="enableCollapseView('lab')">
+        <li class="nav-item" [ngClass]="activeLabsParent()">
+          <a
+            role="button"
+            class="nav-link collapsed"
+            data-toggle="collapse"
+            data-target="#collapseOne"
+            aria-expanded="false"
+            aria-controls="collapseOne"
+          >
+            <i class="fa fa-list" aria-hidden="true"></i>&nbsp;
+            <span>Labs</span>
+          </a>
+        </li>
+      </span>
+      <div
+        id="collapseOne"
+        class="collapse collapse-bg"
+        aria-labelledby="headingOne"
+        data-parent="#accordionSidebar"
+      >
+        <a routerLink="/admin/lab" *ngIf="checkPageAccess('LAB_USER_VIEW')">
+          <div class="d-block collapse_bg-hover br-0" routerLinkActive="active">
+            <a class="collapse-item" routerLinkActive="active1" id="vmenu">
+              <i
+                class="fa fa-flask collapse_sublist mr-1"
+                aria-hidden="true"
+              ></i
+              >&nbsp;<span class="sub-list collapse_sublist">Lab user</span></a
+            ><br />
+          </div>
+        </a>
+        <a
+          routerLink="/admin/labIncharge"
+          *ngIf="checkPageAccess('LAB_INCHARGE_VIEW')"
+        >
+          <div class="d-block collapse_bg-hover br-0" routerLinkActive="active">
+            <a class="collapse-item" routerLinkActive="active1" id="vmenu">
+              <i
+                class="fa fa-flask collapse_sublist mr-1"
+                aria-hidden="true"
+              ></i
+              >&nbsp;<span class="sub-list collapse_sublist"
+                >Lab Incharge</span
+              ></a
+            ><br />
+          </div>
+        </a>
+        <a
+          routerLink="/admin/labTechnician"
+          *ngIf="checkPageAccess('LAB_TECHNICIAN_VIEW')"
+        >
+          <div class="d-block collapse_bg-hover br-0" routerLinkActive="active">
+            <a class="collapse-item" routerLinkActive="active1" id="vmenu">
+              <i
+                class="fa fa-flask collapse_sublist mr-1"
+                aria-hidden="true"
+              ></i
+              >&nbsp;<span class="sub-list collapse_sublist"
+                >Lab Technician</span
+              ></a
+            ><br />
+          </div>
+        </a>
+      </div>
+
+      <span *ngIf="enableCollapseView('rider')">
+        <li class="nav-item" [ngClass]="activeRiderParent()">
+          <a
+            class="nav-link nav_icon collapsed"
+            role="tablist"
+            data-toggle="collapse"
+            data-target="#collapseFive"
+            aria-expanded="false"
+            aria-controls="collapseFive"
+          >
+            <span
+              ><i class="fa fa-list" aria-hidden="true"></i>&nbsp;Rider
+            </span>
+          </a>
+        </li>
+      </span>
+      <div
+        id="collapseFive"
+        class="collapse collapse-bg"
+        aria-labelledby="headingFive"
+        role="tab"
+        data-parent="#accordionSidebar"
+      >
+        <a routerLink="/admin/rider-list" *ngIf="checkPageAccess('RIDER_VIEW')">
+          <div class="d-block collapse_bg-hover" routerLinkActive="active">
+            <a
+              role="button"
+              class="collapse-item"
+              routerLinkActive="active1"
+              id="vmenu"
+            >
+              <i
+                class="fa fa-asterisk collapse_sublist mr-1"
+                aria-hidden="true"
+              ></i
+              >&nbsp;
+              <span class="sub-list collapse_sublist">Rider List</span></a
+            ><br />
+          </div>
+        </a>
+        <a
+          routerLink="/admin/rider-assign"
+          *ngIf="checkPageAccess('RIDER_ASSIGN')"
+        >
+          <div class="d-block collapse_bg-hover" routerLinkActive="active">
+            <a
+              role="button"
+              class="collapse-item"
+              routerLinkActive="active1"
+              id="vmenu"
+            >
+              <i
+                class="fa fa-asterisk collapse_sublist mr-1"
+                aria-hidden="true"
+              ></i
+              >&nbsp;
+              <span class="sub-list collapse_sublist">Rider Assign</span></a
+            ><br />
+          </div>
+        </a>
+        <a
+          routerLink="/riderselfslots"
+          *ngIf="checkPageAccess('RIDER_SELF_SLOTS_VIEW')"
+        >
+          <div class="d-block collapse_bg-hover" routerLinkActive="active">
+            <a
+              role="button"
+              class="collapse-item"
+              routerLinkActive="active1"
+              id="vmenu"
+            >
+              <i
+                class="fa fa-asterisk collapse_sublist mr-1"
+                aria-hidden="true"
+              ></i
+              >&nbsp;
+              <span class="sub-list collapse_sublist">Rider Self Slots</span></a
+            ><br />
+          </div>
+        </a>
+      </div>
+
+      <!-- <li class="nav-item" routerLinkActive="active">
+
+        <a class="nav-link" routerLink="/inventory/list" *ngIf="checkPageAccess('INVENTORY_ADD') || checkPageAccess('INVENTORY_LIST') || checkPageAccess('INVENTORY_LIST_ALL') || checkPageAccess('INVENTORY_UPDATE') || checkPageAccess('INVENTORY_DELETE')">
+          <span class="item-color"><i class="fa fa-list" aria-hidden="true"></i>&nbsp;Inventory</span>
+        </a>
+      </li> -->
+    </span>
+  </ul>
+</div>

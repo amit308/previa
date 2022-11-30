@@ -1,0 +1,65 @@
+.body{
+    margin:1rem;
+    .patient-heading h3 {
+        color: rgba(31,32,34,.5);
+        margin: 0 0 1.42857rem;
+        font-size: 2rem;
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    input, textarea{
+        height: calc(1.5em + 0.75rem + 2px);
+       outline: none;
+      border:1px solid #ced4da;
+      border-radius: 0.25rem;
+      width:100%
+
+    }
+
+    mat-select{
+        height: calc(1.5em + 0.75rem + 2px);
+        outline: none;
+       border:1px solid #ced4da;
+       border-radius: 0.25rem;
+    }
+   
+    mat-radio-button{
+        margin-right: 1rem;
+    }
+    .check{
+        padding-left: 1rem;
+        margin-top: 1rem;
+    }
+    .b-buttons{
+        margin-top: 1rem;
+        float: right;
+        button{
+            margin-right: 0.2rem;
+            font-size: 0.5rem;
+        }
+    }
+
+   .price-table{
+       margin-top: 5rem;
+       .header{
+        width: 80%;
+        background-color: #a09e9e;
+        height: 2rem;
+        text-align: center;
+       }
+       table{
+        width: 80%;
+       }
+       td{
+        padding: 0.5rem;
+        vertical-align: top;
+        border: 1px solid #dee2e6;
+        input{
+            height: calc(1em + 0.5rem + 2px);
+        }
+       }
+    }
+}
+
+

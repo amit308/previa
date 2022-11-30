@@ -1,0 +1,302 @@
+<div class="country-container mt-3">
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-header">
+        <div class="row">
+          <h2>LAB ASSIGN</h2>
+          <!-- </div> -->
+
+          <!-- <div class="row mt-1"> -->
+          <!-- <div class="col-md-12"> -->
+          <!-- <input class="date-picker date_content mt-2" [(ngModel)]="selectedPatientsDate"
+            type="date" (change)="changePatientsDate()" /> -->
+          <div>
+            <input
+              class="labassign-date mr-2"
+              type="text"
+              ngxDaterangepickerMd
+              placeholder="Select Date Range"
+              (change)="changePatientsDate()"
+              [locale]="{ applyLabel: 'ok', format: 'DD-MM-YYYY' }"
+              [(ngModel)]="selectedPatientsDate"
+              [ranges]="ranges"
+              [showCustomRangeLabel]="true"
+              [showCancel]="true"
+            />
+            <mat-icon
+              matDatepickerToggleIcon
+              (click)="clearDate()"
+              class="clear-icon"
+              >clear</mat-icon
+            >
+          </div>
+          <!-- <input
+              class="select_options date-picker date_content mt-2"
+              [(ngModel)]="startDate"
+              name="startDate"
+              type="date"
+              onkeydown="return false"
+            /> -->
+
+          <!-- <mat-icon
+              matDatepickerToggleIcon
+              (click)="clearDate()"
+              class="clear-icon"
+              >clear</mat-icon
+            > -->
+          <button
+            style="height: 35px; border-radius: 5px"
+            class="btn-primary"
+            (click)="upload(addBulkDialog)"
+          >
+            Bulk Upload
+          </button>
+          <!-- </div> -->
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="container-fluid mt-1">
+          <div class="mx-auto" *ngIf="patientDetails?.length == 0">
+            No Data Found
+          </div>
+          <div class="table-responsive" *ngIf="patientDetails?.length > 0">
+            <table class="table table-hover">
+              <thead>
+                <tr class="text-center">
+                  <th>
+                    <input
+                      type="checkbox"
+                      [checked]="checkAllPatients"
+                      (click)="selectAllPatientsToLab($event, patientDetails)"
+                    />
+                  </th>
+                  <th>S.NO</th>
+                  <th>Created Date</th>
+                  <th>Patient Name</th>
+                  <th>PID</th>
+                  <th>SID</th>
+                  <th>Test Name</th>
+                  <th>Refer By</th>
+                  <th>Lab</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  class="text-center"
+                  *ngFor="let testInfo of patientDetails; let i = index"
+                >
+                  <td>
+                    <input
+                      type="checkbox"
+                      [checked]="testInfo.isChecked"
+                      (click)="selectPatientToLab($event, testInfo)"
+                    />
+                  </td>
+                  <td>
+                    {{
+                      i + labPageEvent?.pageIndex * labPageEvent?.pageSize + 1
+                    }}
+                  </td>
+                  <td>
+                    {{ testInfo?.createdAt | date: "dd-MM-yyyy hh:mm a" }}
+                  </td>
+                  <td>{{ testInfo?.patient?.name }}</td>
+                  <td>{{ testInfo?.patient?.pid }}</td>
+                  <td>{{ testInfo?.sid }}</td>
+                  <td>{{ testInfo?.testMasterInfo?.name }}</td>
+                  <td>{{ testInfo?.referInfo?.name }}</td>
+                  <!-- <td>{{ testInfo?.labInfo?.name }}</td> -->
+                  <td></td>
+                  <td>
+                    <button
+                      class="action-btn"
+                      [disabled]="checkedLabPatients.length == 0"
+                      (click)="assignToLab(assignToLabModel)"
+                    >
+                      Assign
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div
+              style="border-bottom: 1px solid #ced4da; margin-top: -12px"
+            ></div>
+            <!-- pagination div starts from here -->
+            <mat-paginator
+              [length]="length"
+              [pageSize]="pageSize"
+              [pageSizeOptions]="pageSizeOptions"
+              (page)="onLabAssignPageEvent($event)"
+            >
+            </mat-paginator>
+            <!-- pagination div ends here -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #addBulkDialog>
+  <mat-dialog-content>
+    <div>
+      <form>
+        <div [formGroup]="bulkUploadForm">
+          <div class="mb-2">
+            <div class="d-flex justify-content-between">
+              <h1 mat-dialog-title>Upload Bulk List</h1>
+              <div class="button">
+                <a
+                  class="btn btn-xs btn-icon btn-hover-primary btn_close"
+                  href="javascript:void(0)"
+                  (click)="clear()"
+                  >X</a
+                >
+              </div>
+            </div>
+          </div>
+          <div class="mt-2">
+            <mat-form-field class="full-width">
+              <mat-label>Select Organization</mat-label>
+              <mat-select
+                formControlName="subdivisionID"
+                (selectionChange)="selectedOrganization($event.value)"
+              >
+                <mat-option
+                  *ngFor="let item of organizations"
+                  [value]="item?._id"
+                  >{{ item?.name }} - {{ item?.category }} -
+                  {{ item?.referenceCode }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <p class="text-danger"></p>
+          </div>
+          <label>Excel File:</label>
+          <div class="input-group mb-3">
+            <input
+              type="file"
+              class="form-control field"
+              accept=".csv,.xls,.xlsx"
+              placeholder="Excel File"
+              aria-label="Username"
+              aria-describedby="basic-addon1"
+              (change)="onFileChanges($event)"
+            />
+          </div>
+          <p class="text-danger"></p>
+          <p class="text-danger">{{ errormessage1 }}</p>
+          <br />
+        </div>
+        <div class="row buttons" style="justify-content: center">
+          <div class="cancel mr-1">
+            <button (click)="sampleFileDownload()" class="button-mat">
+              Download Sample File
+            </button>
+          </div>
+          <div class="cancel mr-1">
+            <button (click)="onClose()" class="button-mat">Cancel</button>
+          </div>
+          <div class="">
+            <button class="button-mat" (click)="onSubmitUpload()">
+              Upload
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </mat-dialog-content>
+  <!-- <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="timer" [fullScreen]="true">
+      <p style="color: white">Processing... </p>
+    </ngx-spinner> -->
+</ng-template>
+<ng-template #assignToLabModel>
+  <div class="col-md-12 d-flex mb-2">
+    <p style="text-align: center"><b>Are you sure want to assign ?</b></p>
+  </div>
+
+  <select style="width: 182px" class="select_vaccine" [(ngModel)]="selectedLab">
+    <option hidden value="" disabled selected>Select Referral Name</option>
+    <option
+      value="{{ referInfo?._id }}"
+      *ngFor="let referInfo of referRoleList"
+    >
+      {{ referInfo?.name }}
+    </option>
+  </select>
+  <label>
+    <span
+      (click)="openInvoiceModel(addMaterialType)"
+      style="margin-left: 10px; font-size: 20px; cursor: pointer"
+      ><i class="fa fa-plus"></i></span
+  ></label>
+
+  <div class="text-center">
+    <button class="button-select" [mat-dialog-close]="true" cdkFocusInitial>
+      No
+    </button>
+    <button
+      class="button-select ml-2"
+      [disabled]="disabled"
+      [ngClass]="{ disabled: disabled }"
+      (click)="submitAssign()"
+    >
+      Yes
+    </button>
+  </div>
+  <ngx-spinner
+    bdColor="rgba(0, 0, 0, 0.8)"
+    size="medium"
+    color="#fff"
+    type="timer"
+    [fullScreen]="true"
+  >
+    <p style="color: white">Loading...</p>
+  </ngx-spinner>
+</ng-template>
+
+<ng-template #addMaterialType>
+  <div class="col-md-12 d-flex mt-3 text-center">
+    <h3><b>Lab</b></h3>
+  </div>
+
+  <div class="col-md-6 d-flex mt-2">
+    <input
+      class="input"
+      type="text"
+      name="email"
+      id="materialName"
+      placeholder="Enter Name"
+      [(ngModel)]="materialName"
+    />
+  </div>
+
+  <br />
+  <div class="col-md-6 d-flex text-center">
+    <button
+      class="buttondialoge mt-2"
+      [disabled]="!materialName"
+      (click)="createMaterialType()"
+    >
+      Add
+    </button>
+
+    <button
+      class="buttondialoge mt-2 ml-2"
+      [mat-dialog-close]="true"
+      cdkFocusInitial
+    >
+      Close
+    </button>
+  </div>
+  <ngx-spinner
+    bdColor="rgba(0, 0, 0, 0.8)"
+    size="medium"
+    color="#fff"
+    type="timer"
+    [fullScreen]="true"
+  >
+    <p style="color: white">Loading...</p>
+  </ngx-spinner>
+</ng-template>

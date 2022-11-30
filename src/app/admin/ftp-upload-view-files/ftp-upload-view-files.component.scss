@@ -1,0 +1,50 @@
+.select_search {
+    padding: 0.375rem 0.75rem;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    box-shadow: none;
+    outline: none;
+}
+.date-picker {
+   
+    color: #495057;
+  
+    border: none;
+    border-bottom: 1px solid #ced4da;
+   
+    box-shadow: none;
+    outline: none; 
+}
+
+.date_content {
+    position: relative;
+}
+
+.date-picker {
+    text-transform: uppercase;
+}
+
+// .select_vaccine{
+//     border: 1px solid !important;
+// }
+
+
+.card-header{
+    display: flex;
+    justify-content: space-between;
+}
+.btnGroup{
+    background-color:  #437289;
+    color: white;
+}
+.clear-icon {
+    position: absolute;
+    left: 120px;
+    font-size: 18px;
+    top: 10px;
+}

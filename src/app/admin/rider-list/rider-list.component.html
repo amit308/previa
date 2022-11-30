@@ -1,0 +1,233 @@
+<div class="container">
+  <div class="row mt-4">
+    <div class="col-md-2">
+      <h2 class="card-label">RIDER LIST</h2>
+
+    </div>
+    <div class="col-md-8">
+      <div class="form-group">
+ 
+        <input type="text" class="form-control" (keydown.enter)="$event.preventDefault()" placeholder="Search Location"
+          autocorrect="off" autocapitalize="off" spellcheck="off" type="text" #search>
+      </div>
+    </div>
+    <div class="col-md-2 text-right">
+      <button type="button" class="btn btn-green" (click)="addRider()">Add Rider</button>
+      <!-- <button type="button" class="btn btn-green" (click)="backtoBankList()" *ngIf="hideBackbtn">Back</button> -->
+    </div>
+  </div>
+
+  <!-- <div class="row mt-4">
+    <div class="col-md-12 col-12">
+      <div class="form-group">
+ 
+        <input type="text" class="form-control" (keydown.enter)="$event.preventDefault()" placeholder="Search Location"
+          autocorrect="off" autocapitalize="off" spellcheck="off" type="text" #search>
+      </div>
+    </div>
+
+
+  </div> -->
+
+  <div class="mt-2 position-relative">
+    <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
+      <!-- <agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="true" [iconUrl]=""
+        (dragEnd)="markerDragEnd($event)">
+      </agm-marker> -->
+      <ng-container *ngFor="let rider of riderListData">
+        <agm-marker [latitude]="rider?.latitude" [longitude]="rider?.longitude"
+          (markerClick)="selcetDealerInMap(rider)">
+          <agm-info-window [disableAutoPan]="true" [isOpen]="false">
+            <p>Rider Name: <b>{{rider?.name}}</b> </p>
+            <!-- <p>Role: <b>{{rider?.role}}</b> </p> -->
+          </agm-info-window>
+        </agm-marker>
+      </ng-container>
+    </agm-map>
+    <div class="currentlocation">
+      <div>
+        <button class="btn current-btn" (click)="CurrentAddress()">
+          <img src="assets/images/352557-128.png">
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-body mt-4">
+    <div class="mx-auto" *ngIf="riderListData?.length === 0">No Data Found</div>
+    <div class="table-responsive example-container mat-elevation-z8" *ngIf="riderListData?.length > 0">
+      <!-- <div class="table-responsive example-container mat-elevation-z8"> -->
+      <table class="table  table-hover text-center">
+        <thead>
+          <th>S.No</th>
+          <th (click)="sortEvent('name')">Name
+            <i class="fa fa-chevron-up" *ngIf="sortDirection === 'ASC' && sortvalue === 'name'"></i>
+            <i class="fa fa-chevron-down" *ngIf="sortDirection === 'DASC' && sortvalue === 'name'"></i>
+          </th>
+          <th (click)="sortEvent('email')">Email
+            <i class="fa fa-chevron-up" *ngIf="sortDirection === 'ASC' && sortvalue === 'email'"></i>
+            <i class="fa fa-chevron-down" *ngIf="sortDirection === 'DASC' && sortvalue === 'email'"></i>
+          </th>
+          <th (click)="sortEvent('mobileNumber')">Mobile
+            <i class="fa fa-chevron-up" *ngIf="sortDirection === 'ASC' && sortvalue === 'mobileNumber'"></i>
+            <i class="fa fa-chevron-down" *ngIf="sortDirection === 'DASC' && sortvalue === 'mobileNumber'"></i>
+          </th>
+          <th>Assigned Rides</th>
+          <th>Action</th>
+          <th>Password</th>
+          <th>Status</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of riderListData ; let i= index;">
+            <td>{{ i + pageEvent?.pageIndex * pageEvent?.pageSize + 1 }}</td>
+            <td>{{item.name | titlecase}}</td>
+            <td>{{item.emailAddress}}</td>
+            <td>{{item.mobileNumber}}</td>
+            <td> <button class="button-view"
+              (click)="openTests(testModal , item)">View {{item?.riderSlots | riderSlotsCounts}}</button></td>
+            <td>
+              <mat-icon (click)="editRider(item)">edit</mat-icon>
+              <mat-icon class="delete_icon_color" (click)="deleteRider(item)">delete</mat-icon>
+            </td>
+            <td>
+              <button (click)="resendPassword(item)" class="btn btnGroup">Resend</button>
+            </td>
+            <td >
+              <span class="d-flex"><p class="mr-2">On</p>
+                <mat-slide-toggle (change)="onToggle($event ,item._id)" [checked]="item.isOnline"></mat-slide-toggle>
+                <p class="ml-2">Off</p></span>
+              
+            </td>
+           
+          </tr>
+        </tbody>
+      </table>
+      <div style="border-bottom: 1px solid #ced4da ; margin-top: -12px;" ></div>
+
+      <!-- pagination div starts from here -->
+      <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+        (page)="onPageEvent($event)">
+      </mat-paginator>
+
+      <!-- pagination div ends here -->
+
+    </div>
+  </div>
+
+
+
+</div>
+
+
+<ng-template #testModal>
+  <div class="row mb-2">
+      <div class="col-md-3">
+          <h2 mat-dialog-title>Rides</h2>
+
+      </div>
+      <div class="col-md-6 d-flex">
+          <h2 class="mr-2"> Select Ride Status</h2>
+          <select class="input mr-3" class="form-control select-dropdown" [(ngModel)]="mySelect"
+              (change)="selectChange($event)">
+              <option *ngFor="let item of statuss" [value]="item.viewName">{{item.viewName}}</option>
+          </select>
+      </div>
+      <div class="col-md-3 d-none">
+          <h2>Date</h2>
+          <input type="date" class="form-control">
+      </div>
+      <div class="col-md-3 d-flex">
+          <h2>Rider Name: <span class="rider_name">{{riderdata?.name}}</span></h2>
+
+      </div>
+  </div>
+<div  *ngIf="riderSlots.length == 0">
+No Records Found
+</div>
+
+  <div mat-dialog-content *ngIf="riderSlots?.length > 0">
+      <div class="row">
+          <div class="col-md-12 col-12 mt-3" *ngFor="let patientInfo of riderSlots">
+              <div>
+                  <mat-card class="example-card mb-2">
+                      <mat-card-header style="background-color: whitesmoke; display: block; padding-left: 12px; padding-right: 5px;">
+                          
+                              <table class="border-0 w-100 ">
+                                  <thead>
+                                      <tr >
+                                          <th>Pickup Address</th>
+                                          <th>Hospital Name</th>
+                                          <th>Drop Address</th>
+                                          <th>Lab Name</th>
+                                          <th>Date</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                      <tr>
+                                          <td class="td-data">{{patientInfo?.pickupLocation?.address}}</td>
+                                          <td class="td-data">{{patientInfo?.labInfo?.name}}</td>
+                                          <td class="td-data">{{patientInfo?.deliveryLocation?.address}}</td>
+                                          <td class="td-data">{{patientInfo?.hosiptalInfo?.name}}</td>
+                                          <td class="td-data">{{patientInfo?.date}}</td>                                       
+                                      </tr>
+                                  </tbody>
+                              </table>
+                          
+                      </mat-card-header>
+                      <br>
+                      <mat-card-content>
+                          <mat-accordion>
+
+                              <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                                <mat-expansion-panel-header>
+                                  <mat-panel-title>
+                                   <b>Tests</b>
+                                
+                                   <div class="tests-data ml-2" *ngIf="!panelOpenState && patientInfo?.tests.length > 0">
+                                     (<p *ngFor="let test of patientInfo?.tests;"class="text-color mr-1">{{test?.test?.testName}} ,</p>)
+                                   </div>
+                                  </mat-panel-title>
+              
+                                </mat-expansion-panel-header>
+                                <div class="row mt-2">
+                                </div>
+              
+                                <div class="table-responsive details">
+                                   <table class="table table-bordered">
+                                    <thead>
+                                      <tr class="text-center">
+                                        <th>Sno</th>
+                                        <th>Patient Name</th>
+                                        <th>Test Name</th>
+                                        <th>Status</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>                                      
+                         
+                                        <tr *ngFor="let test of patientInfo?.tests; let k = index"  class="text-center">
+                                          <td>{{k + 1}}</td>
+                                        <td>{{test?.test?.patientName}}</td>                                        
+                                        <td>{{test?.test?.testName}}</td>                                        
+                                        <td>{{test?.status}}</td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </mat-expansion-panel>
+              
+                            </mat-accordion>
+                      </mat-card-content>
+                  </mat-card>
+              </div>
+          </div>
+
+      </div>
+
+  </div>
+  <div mat-dialog-actions class="button-alignment">
+      <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Close</button>
+  </div>
+</ng-template>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="timer" [fullScreen]="true">
+  <p style="color: white">Processing... </p>
+</ngx-spinner> 

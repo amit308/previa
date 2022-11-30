@@ -1,0 +1,26 @@
+.doctor-fields{
+    border-bottom: 1px solid #d2cdcd;
+}
+
+.field {
+    border-radius: 3rem;
+}
+
+.buttons{
+    .cancel button{
+        float: left;
+    }
+    .add-doctor button{
+        float:right;
+    }
+}
+
+.file-input{
+    display: none;
+}
+
+img{
+    width:40px;
+    height:40px;
+    border-radius: 50%;
+}

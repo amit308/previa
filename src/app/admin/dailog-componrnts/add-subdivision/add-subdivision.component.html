@@ -1,0 +1,331 @@
+<div class="body">
+    <form [formGroup]="branchForm">
+        <div class="patient-heading">
+            <h3>{{ subDivisionDetails?.action === "add" ? "ADD" : "UPDATE" }} {{ subDivisionDetails?.role | uppercase}}
+            </h3>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <label for="usr">Category:</label>
+                <div>
+                    <mat-select class="form-control" [disabled] formControlName="category">
+                        <mat-option value="branch">branch</mat-option>
+                        <mat-option value="hospital">hospital</mat-option>
+                        <mat-option value="location">location</mat-option>
+                        <mat-option value="lab">lab</mat-option>
+                    </mat-select>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <label for="usr">{{ this.subDivisionDetails?.role | titlecase }} Name:</label>
+                <div>
+                    <!-- <input class="autocomplete" type="text" placeholder="branch" aria-label="Number" matInput
+                    [matAutocomplete]="auto">
+                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                    <mat-option>
+                        1
+                    </mat-option>
+                    <mat-option>
+                        2
+                    </mat-option>
+                </mat-autocomplete> -->
+                    <input type="text" placeholder="Name" class="form-control" formControlName="name" required
+                        [ngClass]="{ 'is-invalid': isSubmit && f.name.errors }">
+                    <div *ngIf="isSubmit && f.name.errors" class="invalid-feedback">
+                        <div *ngIf="f.name.errors.required">Please enter name</div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="col-lg-3">
+            <label for="usr">Company name:</label>
+            <div>
+                <input matInput placeholder="company"  class="from-control" formControlName="">
+            </div>
+        </div> -->
+            <div class="col-lg-4">
+                <label for="usr">{{ this.subDivisionDetails?.role | titlecase }} Type:</label>
+                <div>
+                    <input placeholder="Type" class="from-control" formControlName="type">
+                    <!-- <mat-select class="form-control" formControlName="type">
+                    <mat-option value="option1">Option 1</mat-option>
+                    <mat-option value="option2" >Option 2 </mat-option>
+                    <mat-option value="option3">Option 3</mat-option>
+                </mat-select> -->
+                </div>
+            </div>
+        </div>
+        <div class="check row">
+            <div class="col-lg-2">
+                <mat-checkbox class="example-margin" class="form-control" formControlName="enableSMS">Sms</mat-checkbox>
+            </div>
+            <div class="col-lg-2">
+                <mat-checkbox class="example-margin" class="form-control" formControlName="enableEmail">Email
+                </mat-checkbox>
+            </div>
+            <div class="col-lg-2">
+                <mat-checkbox class="example-margin" class="form-control" formControlName="enableScheme">Scheme
+                </mat-checkbox>
+            </div>
+            <div class="col-lg-2">
+                <mat-checkbox class="example-margin" class="form-control" formControlName="enableTokenSystem">Token
+                    system</mat-checkbox>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-lg-4">
+                <label for="usr">Description</label>
+                <div>
+                    <textarea class="form-control" formControlName="description"></textarea>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <label for="usr">Invoice footer</label>
+                <div>
+                    <textarea class="form-control" formControlName="invoiceFooter"></textarea>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <label for="usr">Padding code:</label>
+                <div>
+                    <input class="form-control" formControlName="paddingCode">
+                </div>
+            </div>
+        </div>
+        <div>
+            <mat-tab-group>
+                <mat-tab label="Address Info">
+                    <div class="card p-3 mt-3">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="">Country</label>
+                                    <select name="" id="" class="form-control" formControlName="country">
+                                        <option value="" disabled>Select Country</option>
+                                        <option *ngFor="let item of countries" [value]="item.name">{{item.name}}
+                                        </option>
+                                        <!-- <option value="usa">USA</option> -->
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="">State</label>
+                                    <select class="form-control" formControlName="state">
+                                        <option value="" disabled>select state</option>
+                                        <option value="andhra pradesh">Andhra Pradesh</option>
+                                        <option value="Telangana">Telangana</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="">City</label>
+                                    <select class="form-control" formControlName="city">
+                                        <option value="" disabled>Select City</option>
+                                        <option value="Hyderabad">Hyderabad</option>
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="">Street</label>
+                                    <input class="form-control" formControlName="street">
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="">Pincode</label>
+                                    <input class="form-control" formControlName="pin"
+                                        [ngClass]="{ 'is-invalid': isSubmit && f.pin.errors }" pattern="^[0-9]\d{5}$"
+                                        min="6" max="6" (keypress)="checkIfNumber3($event)" required>
+                                    <div *ngIf="isSubmit && f.pin.errors" class="invalid-feedback">
+                                        <div *ngIf="f.pin.errors.required">Please enter PIN Code</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="">Mobile</label>
+                                    <input class="form-control" formControlName="mobile" required
+                                        [ngClass]="{ 'is-invalid': isSubmit && f.mobile.errors }" max="10" min="10"
+                                        pattern="^[0-9]\d{9}$" (keypress)="checkIfNumber($event)">
+                                    <div *ngIf="isSubmit && f.mobile.errors" class="invalid-feedback">
+                                        <div *ngIf="f.mobile.errors.required">MobileNumber must be a valid MobileNumber
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="">Phone</label>
+                                    <input class="form-control" formControlName="phone" max="10" min="10"
+                                        pattern="^[0-9]\d{9}$" (keypress)="checkIfNumber1($event)">
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="">Contact Person</label>
+                                    <input class="form-control" formControlName="contactPerson">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Technical Info">
+                    <div class="card p-3 mt-3">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="">Template Name</label>
+                                    <input type="text" class="form-control" placeholder="Enter Template Name">
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="">Template URL</label>
+
+                                    <textarea matInput class="text-border" placeholder="Enter Template URL"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-lg-4"></div>
+                        </div>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Discount Schem"> Discount Schem</mat-tab>
+                <mat-tab label="Working Days"> Working Days</mat-tab>
+                <mat-tab label="Portal Info">
+                    <div class="card p-3 mt-3">
+                        <div class="row">
+
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="">User Name</label>
+                                    <input type="text" class="form-control" formControlName="user_name"
+                                        placeholder="Enter User Name">
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="">Password</label>
+                                    <input type="password" class="form-control" formControlName="password"
+                                        placeholder="Enter Password">
+
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="">Portal API Base URL</label>
+                                    <input class="form-control" formControlName="portal_api"
+                                        placeholder="Enter Portal API Base URL">
+
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Test Status">
+                    <div class="card p-3 mt-3">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="">Status Name</label>
+                                    <input type="text" class="form-control" placeholder="Enter Status Name"
+                                        formControlName="statusName">
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="">Status Display Name</label>
+                                    <input type="text" class="form-control" placeholder="Enter Status Display Name"
+                                        formControlName="statusDisplayName">
+                                </div>
+                            </div>
+                            <div class="col-lg-4 mt-4">
+                                <button matbutton class="btn btnGroup" (click)="addStatus()">Add</button>
+                            </div>
+                        </div>
+                        <div class="" *ngIf="testStatus?.length > 0">
+                            <!-- <div [formGroupName]="i">
+                                <p>{{status?.value.name}}</p>
+                                <p>{{status?.value.displayName}}</p>
+                            </div> -->
+                            <div class="table-responsive mt-2">
+                                <table class="table table-hover text-center">
+                                    <thead>
+                                        <tr>
+                                            <th>S.No</th>
+                                            <th>Status Name</th>
+                                            <th>Status Display Name</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody formArrayName="testStatus"
+                                        *ngFor="let status of branchForm.get('testStatus')['controls'] ; let i = index">
+                                        <tr [formGroupName]="i">
+                                            <td>{{i+1}}</td>
+                                            <td>{{status?.value.name}}</td>
+                                            <td>{{status?.value.displayName}}</td>
+                                            <td>
+                                                <mat-icon style="cursor: pointer; color: red;" (click)="removeTest(i)">
+                                                    cancel</mat-icon>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div style="border-bottom: 1px solid #ced4da"></div>
+
+                            </div>
+                        </div>
+
+                        <div *ngIf="subDivisionDetails?.data?.testStatusInfo">
+                            <div class="table-responsive mt-3">
+                                <h2 class="card-label font_info">Previous Test Status</h2>
+                                <table class="table table-hover text-center">
+                                    <thead>
+                                        <tr>
+                                            <th>S.No</th>
+                                            <th>Status Name</th>
+                                            <th>Status Display Name</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr
+                                            *ngFor="let testStatus of subDivisionDetails?.data?.testStatusInfo ; let k = index">
+                                            <td>{{k+1}}</td>
+                                            <td>{{testStatus?.name}}</td>
+                                            <td>{{testStatus?.displayName}}</td>
+                                            <td>
+                                                <mat-icon style="cursor: pointer; color: red;">cancel</mat-icon>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div style="border-bottom: 1px solid #ced4da"></div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </mat-tab>
+
+            </mat-tab-group>
+        </div>
+        <div class="buttons mt-2">
+            <button mat-button color="accent" (click)="clearForm()"><span
+                    class="material-icons">edit</span>&nbsp;Clear</button>
+            <button mat-button type="submit" color="primary" (click)="onSubmit()"><span
+                    class="material-icons">save</span>&nbsp;Save</button>
+        </div>
+    </form>
+</div>
+
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="timer" [fullScreen]="true">
+    <p style="color: white">Processing... </p>
+  </ngx-spinner>

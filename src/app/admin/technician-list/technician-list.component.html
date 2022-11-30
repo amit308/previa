@@ -1,0 +1,302 @@
+<div class="country-container mt-3">
+  <div class="container-fluid">
+    <div class="card card-custom example example-compact gutter-b">
+      <div class="card-header">
+        <div class="card-title">
+          <h2 class="card-label">DD-TECHNICIAN</h2>
+        </div>
+
+        <div class="card-toolbar">
+          <div class="example-tools justify-content-centerr">
+            <button class="btn btnGroup" (click)="addTechnician()">
+              Add DD-Technician
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+
+        <div class="table-responsive example-container mat-elevation-z8">
+          <table class="table  table-hover ">
+            <thead>
+              <th>S.No</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Mobile</th>
+              <th>Patient</th>
+              <th>Vaccination</th>
+              <!-- <th>Address</th> -->
+              <th>Action</th>
+              <th>Password</th>
+              <th>Status</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of technicianListData; let i= index;">
+                <td>{{ i + pageEvent?.pageIndex * pageEvent?.pageSize + 1 }}</td>
+                <td>{{item.name | titlecase}}</td>
+                <td>{{item.emailAddress}}</td>
+                <td>{{item.mobileNumber}}</td>
+                <td> <button class="button-select-view" (click)="openTests(testModal , item)">View
+                    {{item?.technicianSlots | technicianSlotsCounts}}</button></td>
+
+
+                <td> <button class="button-select" (click)="openVaccine(vaccineModal, item)">View
+                  </button></td>
+
+                <td>
+                  <mat-icon (click)="editTechnician(item)">edit</mat-icon>
+                  <mat-icon class="delete_icon_color" (click)="deleteTechnician(item)">delete</mat-icon>
+                </td>
+                <td>
+                  <button (click)="resendPassword(item)" class="btn btnGroup">Resend</button>
+                </td>
+                <td>
+                  <span class="d-flex">
+                    <p class="mr-2 mb-0">On</p>
+                    <mat-slide-toggle (change)="onToggle($event ,item._id)" [checked]="item.isOnline">
+                    </mat-slide-toggle>
+                    <p class="ml-2 mb-0">Off</p>
+                  </span>
+
+                </td>
+
+              </tr>
+            </tbody>
+          </table>
+          <div style="border-bottom: 1px solid #ced4da ; margin-top: -12px;"></div>
+
+          <!-- pagination div starts from here -->
+          <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+            (page)="onPageEvent($event)">
+          </mat-paginator>
+          <!-- pagination div ends here -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #testModal>
+  <div class="row mb-2">
+    <div class="col-md-1">
+      <h3 mat-dialog-title>Patients</h3>
+
+    </div>
+    <div class="col-md-2"><input type="date" class="select_date" [(ngModel)]="selectedDate">
+    <mat-icon style="margin-left:-32%" (click)="clearDate()">clear</mat-icon>
+    </div>
+     <!-- <div class="col-md-1"></div> -->
+     <div class="col-md-6 d-flex">
+      <h3 class="mr-2" style="margin-left:11%"> Select Status :</h3>
+      <select class="input mr-2" class="form-control" [(ngModel)]="mySelect" (change)="selectChange($event)">
+        <option *ngFor="let item of statuss" [value]="item.viewName">{{item.viewName}}</option>
+      </select>
+    </div>
+    <!-- <div class="col-md-3 d-none">
+      <h3>Date</h3>
+      <input type="date" class="form-control">
+    </div> -->
+
+
+
+
+    <div class="col-md-3 d-flex">
+
+      <h3 class="mr-2">Technician Name : </h3>
+      <h4 class="tech-name">{{technicianInfo?.name}} </h4>
+    </div>
+  </div>
+  <div *ngIf="technicianSlots?.length == 0">
+    No Records Found
+  </div>
+  <div mat-dialog-content *ngIf="technicianSlots?.length > 0">
+    <div class="row">
+      <div class="col-md-12 col-12" *ngFor="let patientInfo of technicianSlots">
+        <div>
+          <mat-card class="example-card mb-2">
+            <mat-card-header style="background-color: whitesmoke; display: block; padding-left: 12px;"
+              [ngClass]="patientInfo.status == 'AssignedToTechnician'?'bg-color-green':'bg-color-orange'">
+
+              <div class="table-responsive">
+                <table style="text-align: center;" class="border-0 w-100 mt-2">
+                  <thead>
+                    <tr>
+                      <th class="col-md-3">Patient Name</th>
+                      <th class="col-md-3">PID</th>
+                      <th class="col-md-3">Sample Collection Web Address</th>
+                      <th class="col-md-2">Sample Collection Date</th>
+                      <th class="col-md-1"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="td-data col-md-3">{{patientInfo?.patient?.name | titlecase}}</td>
+                      <td class="td-data col-md-3">{{patientInfo?.patient?.pid}}</td>
+                      <td class="td-data col-md-3">{{patientInfo?.location}}</td>
+                      <td class="td-data col-md-3">{{patientInfo?.date | date:'dd/MM/yyyy'}}</td>
+                      <td class="col-md-1">
+                        <mat-icon *ngIf="patientInfo.status == 'AssignedToTechnician'"
+                          style="cursor: pointer; color: black;" (click)="removeTest(patientInfo)">cancel</mat-icon>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+
+              </div>
+            </mat-card-header>
+            <br>
+            <mat-card-content>
+              <mat-accordion>
+
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      <b>Tests</b>
+                      <div class="tests-data ml-2" *ngIf="!panelOpenState && patientInfo?.tests.length > 0">
+                        (<p *ngFor="let test of patientInfo?.tests" class="text-color mr-1">{{test?.displayName}} ,</p>)
+                      </div>
+                    </mat-panel-title>
+
+                  </mat-expansion-panel-header>
+                  <div class="row mt-2">
+                  </div>
+
+                  <div class="table-responsive details">
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr class="text-center">
+                          <th>S.No</th>
+                          <th>Name</th>
+                          <th>Price</th>
+                          <th>Instructions</th>
+                          <th>Technician Comment</th>
+                          <th>Status</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+
+                        <tr *ngFor="let test of patientInfo?.tests; let k = index" class="text-center">
+                          <td>{{k + 1}}</td>
+                          <td>{{test?.displayName | titlecase}}</td>
+                          <td>{{test?.price}}</td>
+                          <td>{{test?.instructions}}</td>
+                          <td>{{test?.technicianComments}}</td>
+                          <td>{{patientInfo?.status}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </mat-expansion-panel>
+
+              </mat-accordion>
+
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+  <div mat-dialog-actions class="button-alignment">
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Close</button>
+  </div>
+</ng-template>
+
+<!-------Vaccine-modal-->
+<ng-template #vaccineModal>
+  <div class="row mb-2">
+    <div class="col-md-2">
+      <h3 mat-dialog-title>Patients</h3>
+
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-md-6 d-flex">
+      <h3 class="mr-2"> Select Status :</h3>
+      <select class="input mr-2" class="form-control" [(ngModel)]="mySelect" (change)="selectVaccineChange($event)">
+        <option *ngFor="let item of statuss" [value]="item.viewName">{{item.viewName}}</option>
+      </select>
+    </div>
+
+    <div class="col-md-3 d-flex">
+
+      <h3 class="mr-2">Technician Name : </h3>
+      <h4 class="tech-name">{{technicianInfo?.name | titlecase}} </h4>
+    </div>
+  </div>
+
+  <div *ngIf="vaccineSlots?.length == 0">
+    No Records Found
+  </div>
+  <div mat-dialog-content *ngIf="vaccineSlots?.length > 0">
+    <div class="row">
+      <div class="col-md-12 col-12" *ngFor="let patientInfo of vaccineSlots; let k = index">
+        <div>
+          <mat-card class="example-card mb-2">
+            <mat-card-header style="background-color: whitesmoke; display: block; padding-left: 12px;">
+
+              <div class="table-responsive">
+                <table class="border-0 w-100 mt-2">
+                  <thead>
+                    <tr>
+                      <th>Patient Name</th>
+                      <th>PID</th>
+                      <th>Address</th>
+                      <th>Vaccination Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="td-data">{{patientInfo?.patient?.name | titlecase}}</td>
+                      <td class="td-data">{{patientInfo?.patient?.pid}}</td>
+                      <td class="td-data">{{patientInfo?.patient?.address}}</td>
+                      <td class="td-data">{{patientInfo?.patient?.vaccinatedDate | date:'dd/MM/yyyy' }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+
+              </div>
+            </mat-card-header>
+            <br>
+            <mat-card-content>
+              <div class="table-responsive details">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr class="text-center">
+                      <th>Vaccine Name</th>
+                      <th>Dose Type</th>
+                      <th>Aadhaar</th>
+                      <th>Organization</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    <tr class="text-center">
+                      <td>{{patientInfo?.patient?.vaccineName}}</td>
+                      <td>{{patientInfo?.patient?.vaccinationDose}}</td>
+                      <td>{{patientInfo?.patient?.aadhaar}}</td>
+                      <td>{{patientInfo?.patient?.organization}}</td>
+                      <td>{{patientInfo?.patient?.isVaccinated == true ? 'Completed' : 'Pending'}}</td>
+
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+  <div mat-dialog-actions class="button-alignment">
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Close</button>
+  </div>
+</ng-template>
+
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="timer" [fullScreen]="true">
+  <p style="color: white">Processing... </p>
+</ngx-spinner>

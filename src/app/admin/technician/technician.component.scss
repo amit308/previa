@@ -1,0 +1,101 @@
+.body{
+    margin:1rem;
+    .test-heading{
+        // display: flex;
+        // justify-content: space-between;
+        // margin-bottom: 10px;
+         h3 {
+        color: rgba(31,32,34,.5);
+        // margin: 0 0 1.42857rem;
+        font-size: 2rem;
+        width: 100%;
+        margin-top: 20px;
+        
+    }
+}
+.departments{
+    label{
+        font-weight: 500;
+    }
+    .search-label{
+        margin-top: 14px;
+    }
+    .btn-group{
+        text-align: end;
+        
+        display: flow-root;
+       .btn{
+           background-color: #437289;
+           color: white;
+           margin-right: 10px;
+         }
+      }
+      .applicable{
+          border: 1px solid lightgray;
+        //   padding: 10px;
+      }
+    }
+    .mat-icons{
+        display: flex;
+        mat-icon {
+            // margin-top: 4px;
+            font-size: 25px;
+            background: #437289;
+            color: #fff;
+            font-weight: bold;
+            margin-left: 9px;
+        }
+    }
+
+    
+}
+
+::ng-deep{
+    .mat-tab-label:focus:not(.mat-tab-disabled) {
+        opacity: 1;
+        background: #437289 !important;
+        color: white !important;
+    }
+}
+.question{
+    font-size: 21px;
+    cursor: pointer;
+    margin-left: 6px !important;
+}
+
+.btn-group, .btn-group-vertical {
+    margin-top: -2%;
+    float: right;
+    position: relative;
+    display: inline-flex;
+    vertical-align: middle;
+}
+.test-heading{
+    text-align: center;
+}
+
+.btnDisabled {
+    background: #757575 !important;
+    border: 1px solid #a7afab !important;
+    color: white;
+}
+
+::ng-deep {
+    input[type=date].form-control, input[type=time].form-control, input[type=datetime-local].form-control, input[type=month].form-control {
+     
+      text-transform: uppercase !important;
+    }
+    }
+    .color-red{
+        color: red;
+        
+    }
+    .mat-button {
+        box-shadow: none;
+        outline: none;
+      }
+
+      input[type="date"]:focus::before,
+input[type="date"]:valid::before {
+content: "";
+}

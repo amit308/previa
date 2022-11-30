@@ -1,0 +1,251 @@
+.body {
+  margin: 1rem;
+  .patient-heading {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+
+    h3 {
+      color: rgba(31, 32, 34, 0.5);
+      // margin: 0 0 1.42857rem;
+      font-size: 2rem;
+      // width: 100%;
+      // margin-top: 20px;
+    }
+  }
+
+  button {
+    color: #fff;
+    background: #437289;
+    padding: 10px 11px;
+    // padding: 10px 25px;
+    // margin: 15px 0px 0px 0px;
+    border: 1px solid #437289;
+    border-radius: 5px;
+  }
+  table {
+    width: 100%;
+    th {
+      background-color: lightgray;
+      // color:white;
+      padding: 6px 13px;
+    }
+
+    td {
+      background: hsla(0, 0%, 92.2%, 0.3);
+      padding: 6px 13px;
+
+      .icon1 {
+        background: #000;
+        color: #fff;
+        padding: 8px;
+        border-radius: 25px;
+        margin-right: 10px;
+      }
+
+      .icon2 {
+        background: #ed5564;
+        color: #fff;
+        padding: 8px;
+        border-radius: 25px;
+        margin-right: 10px;
+      }
+
+      .icon3 {
+        background: #2759fa;
+        color: #fff;
+        padding: 8px;
+        border-radius: 25px;
+        margin-right: 10px;
+      }
+    }
+
+    td .number {
+      font-size: 12px;
+      color: blue;
+    }
+
+    .actions:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.add-doctor {
+  float: right;
+  bottom: 0;
+  position: sticky;
+  cursor: pointer;
+  span {
+    font-size: 4rem;
+  }
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+}
+.btnGroup {
+  background-color: #437289;
+  color: white;
+}
+mat-icon {
+  font-size: 18px;
+  cursor: pointer;
+}
+
+// .mat-dropdown{
+//     height: 40px !important;
+// }
+// .mat-form-field-appearance-fill .mat-form-field-flex {
+//     border-radius: 4px 4px 0 0;
+//     padding: 0px .75em 0 .75em !important;
+// }
+
+.select_vaccine {
+  padding: 0.375rem 0.75rem;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  box-shadow: none;
+  outline: none;
+  // float: right;
+}
+.clear-icon {
+  position: absolute;
+  top: 20px;
+  left: 340px;
+}
+.select_options {
+  float: right;
+  border: none;
+  outline: none;
+  // border-bottom: 1px solid;
+}
+::ng-deep .patients-date {
+  margin-left: 20px;
+  width: 220px;
+  border-radius: 5px;
+  line-height: 2.2;
+  z-index: 1000;
+  overflow: auto;
+}
+.date_content {
+  position: absolute;
+}
+
+.button-mat {
+  padding: 5px 11px 5px 11px;
+  font-size: 13px;
+  border-radius: 4px;
+  box-shadow: none;
+  outline: none;
+}
+// .date_content {
+//     position: relative;
+// }
+.full-width {
+  margin-right: 4px;
+}
+
+.all {
+  // display: inline-flex;
+  margin-left: 1rem;
+  span {
+    color: black;
+  }
+}
+.completed {
+  // display: inline-flex;
+  margin-left: 1rem;
+  span {
+    color: green;
+  }
+}
+.SampleRepeat {
+  margin-left: 1rem;
+  span {
+    color: navy;
+  }
+}
+.IsolationRepeat {
+  margin-left: 1rem;
+  span {
+    color: lightcoral;
+  }
+}
+.AwaitingSampleTechnician {
+  // display: inline-flex;
+  margin-left: 1rem;
+  span {
+    color: orange;
+  }
+}
+.AssignedToTechnician {
+  // display:inline-flex;
+  margin-left: 1rem;
+  span {
+    color: mediumseagreen;
+  }
+}
+.CollectedByTechnician {
+  // display:inline-flex;
+  margin-left: 1rem;
+  span {
+    color: blue;
+  }
+}
+.SampleAssignedToRider {
+  // display:inline-flex;
+  margin-left: 1rem;
+  span {
+    color: brown;
+  }
+}
+.CollectedByRider {
+  // display:inline-flex;
+  margin-left: 1rem;
+  span {
+    color: cyan;
+  }
+}
+.DeliveredByRider {
+  // display:inline-flex;
+  margin-left: 1rem;
+  span {
+    color: violet;
+  }
+}
+.AwaitingForSampleReceive {
+  // display:inline-flex;
+  margin-left: 1rem;
+  span {
+    color: red;
+  }
+}
+.SampleReceived {
+  // display:inline-flex;
+  margin-left: 1rem;
+  span {
+    color: purple;
+  }
+}
+span {
+  cursor: pointer;
+}
+
+// .completed{
+//     span{
+//         color: green;
+//     }
+// }

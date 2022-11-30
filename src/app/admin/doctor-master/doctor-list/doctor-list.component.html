@@ -1,0 +1,72 @@
+<div class="country-container mt-3">
+    <div class="container-fluid">
+      <div class="card card-custom example example-compact gutter-b">
+        <div class="card-header">
+          <div class="card-title">
+            <h2 class="card-label">DOCTORS</h2>
+          </div>
+          <div class="card-toolbar">
+            <div class="example-tools justify-content-centerr">
+              <button (click)="addDoctor()" class="btn btnGroup">
+                Add Doctor
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="mx-auto" *ngIf="doctorDetails?.length === 0">No Data Found</div>
+            <div class="table-responsive example-container mat-elevation-z8"  *ngIf="doctorDetails?.length > 0">
+                <table class="table  table-hover text-center">
+                   <thead>
+                       <tr>
+                           <th >S.No
+                           </th>
+                           <th (click)="sortEvent('name')">Name
+                            <i class="fa fa-chevron-up" *ngIf="sortDirection === 'ASC' && sortvalue === 'name'" ></i>
+                            <i class="fa fa-chevron-down" *ngIf="sortDirection === 'DASC' && sortvalue === 'name'"></i></th>
+                           <th (click)="sortEvent('emailAddress')">Email
+                            <i class="fa fa-chevron-up" *ngIf="sortDirection === 'ASC' && sortvalue === 'emailAddress'" ></i>
+                            <i class="fa fa-chevron-down" *ngIf="sortDirection === 'DASC' && sortvalue === 'emailAddress'"></i></th>
+                           <th (click)="sortEvent('mobileNumber')">Mobile
+                            <i class="fa fa-chevron-up" *ngIf="sortDirection === 'ASC' && sortvalue === 'mobileNumber'" ></i>
+                            <i class="fa fa-chevron-down" *ngIf="sortDirection === 'DASC' && sortvalue === 'mobileNumber'"></i></th>
+                           <th  (click)="sortEvent('qualification')">Qualification
+                            <i class="fa fa-chevron-up" *ngIf="sortDirection === 'ASC' && sortvalue === 'qualification'" ></i>
+                            <i class="fa fa-chevron-down" *ngIf="sortDirection === 'DASC' && sortvalue === 'qualification'"></i></th>
+                            <th  (click)="sortEvent('details?.specialization')">Specialization
+                              <i class="fa fa-chevron-up" *ngIf="sortDirection === 'ASC' && sortvalue === 'details?.specialization'" ></i>
+                              <i class="fa fa-chevron-down" *ngIf="sortDirection === 'DASC' && sortvalue === 'details?.specialization'"></i></th>
+                           <th>Action</th>
+                       </tr>
+                   </thead> 
+                   <tbody>
+                       <tr *ngFor="let item of doctorDetails ; let i=index">
+                        <td>{{ i + pageEvent?.pageIndex * pageEvent?.pageSize + 1 }}</td>
+                           <td>{{ item.name | titlecase}}</td>
+                           <td>{{ item.emailAddress }}</td>
+                           <td>{{ item.mobileNumber }}</td>
+                           <td>{{ item.qualification }}</td>
+                           <td>{{ item.details?.specialization }}</td>
+                           <td>
+                            <mat-icon (click)="editDoctor(item)">edit</mat-icon>
+                            <mat-icon class="delete_icon_color" (click)="deleteDoctor(item)">delete</mat-icon>
+                           </td>
+                       </tr>
+                   </tbody>
+                </table>
+                <div style="border-bottom: 1px solid #ced4da ; margin-top: -12px;" ></div>
+                 <!-- pagination div starts from here -->
+                 <mat-paginator [length]="length" 
+                                [pageSize]="pageSize" 
+                                [pageSizeOptions]="pageSizeOptions" 
+                                (page)="onPageEvent($event)">
+                  </mat-paginator>
+                
+                  <!-- pagination div ends here -->
+            </div>
+        </div>
+        </div>
+    </div>
+  </div>
+
+  

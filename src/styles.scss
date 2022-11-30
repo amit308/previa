@@ -1,0 +1,216 @@
+/* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import other style files */
+// @import "themes/styles/dashboard.scss";
+// @import "themes/styles/dashboardTheme.scss";
+/* Importing Bootstrap SCSS file. */
+@import "sweetalert2/src/sweetalert2.scss";
+@import url("https://fonts.googleapis.com/css2?family=Mulish&display=swap");
+@import "~igniteui-angular/lib/core/styles/themes/index";
+@import "~@ng-select/ng-select/themes/default.theme.css";
+@import "~ng-pick-datetime/assets/style/picker.min.css";
+@include igx-core();
+@include igx-theme($default-palette, $legacy-support: true);
+
+body.swal2-height-auto {
+  height: 100% !important;
+}
+
+.btn-green {
+  color: #fff;
+  background-color: #1cc88a;
+  border-color: #1cc88a;
+}
+.btn-green:hover {
+  color: #fefefe;
+  border: 1px solid #32a852;
+}
+
+.order-info {
+  color: #32a852;
+  text-decoration: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.btn_close {
+  box-shadow: none;
+  outline: none;
+  background-color: #00c9d1 !important;
+  color: white;
+}
+
+/* Importing Bootstrap SCSS file. */
+// @import '~bootstrap/scss/bootstrap';
+
+.swal2-popup {
+  width: 23em !important;
+  padding: 10px !important;
+}
+
+.swal2-title {
+  font-size: 20px !important;
+}
+.swal2-styled.swal2-confirm {
+  background-color: #437289 !important;
+  //font-size: 11px !important;
+}
+.swal2-icon.swal2-success {
+  margin: 0px !important;
+}
+// .swal2-styled.swal2-cancel {
+// 	// font-size: 12px !important;
+// }
+// .swal2-icon.swal2-warning {
+// 	margin: 0px !important;
+// 	font-size: 11px;
+// }
+
+/* Hide the type number icons */
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  // -moz-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: "Mulish", sans-serif !important;
+}
+
+mat-button {
+  background-color: #00c9d1 !important;
+  color: #fff !important;
+  border: 1px solid #00c9d1 !important;
+}
+
+mat-button:hover {
+  background-color: #fff !important;
+  color: #00c9d1 !important;
+  border: 1px solid #00c9d1 !important;
+}
+
+button {
+  // background-color: #00c9d1 !important;
+  // color: #fff !important;
+  border: 1px solid #00c9d1 !important;
+}
+
+button:hover {
+  // background-color: #fff !important;
+  // color:  #00c9d1 !important;
+  // border: 1px solid #00c9d1 !important;
+}
+
+svg {
+  color: #fff;
+}
+.box_shadow {
+  box-shadow: none;
+  outline: none;
+}
+.cursor {
+  cursor: pointer !important;
+}
+.button-alignment {
+  float: right;
+}
+svg:hover {
+  // color: #00c9d1 !important;
+  cursor: pointer !important;
+}
+
+.mat-checkbox-layout {
+  margin-right: 10px;
+}
+
+body.swal2-height-auto {
+  height: 100% !important;
+  max-height: 100% !important;
+}
+
+.mat-body,
+.mat-body-1,
+.mat-typography,
+.mat-h3,
+.mat-subheading-2,
+.mat-typography h3,
+.mat-tab-label,
+.mat-tab-link,
+.mat-tab-group,
+.mat-checkbox,
+.mat-expansion-panel-header,
+.mat-radio-label-content {
+  font-family: "Mulish", sans-serif !important;
+}
+
+.mat-h2,
+.mat-title,
+.mat-typography h2 {
+  font: 500 20px/32px Roboto, "Helvetica Neue", sans-serif;
+  letter-spacing: normal;
+  margin: 0 0 0px !important;
+}
+
+::ng-deep {
+  input[type="date"].form-control,
+  input[type="time"].form-control,
+  input[type="datetime-local"].form-control,
+  input[type="month"].form-control {
+    text-transform: uppercase !important;
+  }
+}
+mat-icon {
+  cursor: pointer !important;
+}
+.mat-button {
+  box-shadow: none !important;
+  outline: none !important;
+  cursor: pointer;
+}
+.button-select {
+  height: 28px;
+  width: 65px;
+  box-shadow: none !important;
+  outline: none !important;
+  border-radius: 3px;
+}
+
+.word_break {
+  word-break: break-word;
+}
+.card-title {
+  margin-bottom: 0px !important;
+}
+
+/* Importing Bootstrap SCSS file. */
+@import "~bootstrap/scss/bootstrap";
+
+.riderActive,
+.technicianActive,
+.adminActive,
+.testsActive,
+.labsActive,
+.patientsActive {
+  background-color: #437289;
+  color: white;
+  > a {
+    color: white !important;
+    > i {
+      color: white !important;
+    }
+  }
+}
+.delete_icon_color {
+  color: red;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

@@ -1,0 +1,39 @@
+<div class="header ">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8 ">
+                <span *ngIf="!toggle" class="material-icons" (click)="menuToggle()">
+                    clear
+                </span>
+                <span *ngIf="toggle" class="material-icons" (click)="clearToggle()">
+                    menu
+                </span>
+            </div>
+
+            <div class="col-lg-4">
+                <a routerLink="/admin/pending-quote">Pending Quotes</a>
+                <a *ngIf="userDetails?.role == 'admin'" routerLink="/admin/recived-quote">Send Quotes</a>
+                <a *ngIf="userDetails?.role == 'org-admin'"  routerLink="/admin/Submit-quote">Submit Quotes</a>
+                <a *ngIf="userDetails?.role == 'org-admin'" routerLink="/admin/Accepted-quote">Accepted Quotes</a>
+
+                <a  *ngIf="userDetails?.role == 'org-admin'"  routerLink="/admin/Rajected-quote">Rejected Quotes</a>
+
+            </div>
+    
+      <div class="col-lg-4 col-md-4 col-sm-4 user_profile">
+
+        <span>{{subdivisionName}} | </span>
+              <a class="dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+                aria-expanded="false" class="logout"><i class="fa fa-user mr-1"></i><span style="text-decoration: none;">   {{ user?.name | titlecase  }}</span> </a>
+                <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+                    <li><a class="dropdown-item" routerLink="/settings/profile">
+                        <i  class="fa fa-user" aria-hidden="true"></i> Profile</a></li>
+                    <li><a class="dropdown-item" (click)="logOut()"><i  class="fa fa-sign-out color-red" aria-hidden="true"></i>
+                            Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <router-outlet></router-outlet> -->

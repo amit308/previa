@@ -1,0 +1,71 @@
+.body{
+    overflow-x: hidden;
+    .btns{
+        margin-top: 1rem;
+        margin-left: 1rem;
+    }
+
+    .table{
+        margin: 0px;    
+    }
+
+    .registered-1 {
+        width: 46%;
+    }
+
+    .registered-2 {
+        width: 8%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 55px 0px 0px 0px;
+        span {
+            padding: 10px;
+            background: #00c9d1;
+            border: 1px solid #00c9d1;
+            border-radius: 50%;
+            color: #fff;
+            margin: 10px 0px;
+            &:hover {
+                border: 1px solid #00c9d1;
+                background-color: #fff;
+                color: #00c9d1;
+            }
+        }
+    }
+
+    .registered-3 {
+        width: 46%;
+    }
+
+    table {
+        width: 100%;
+      }
+
+    .arrows{
+        // margin-top: 6rem;
+        span{
+            cursor: pointer;
+        }
+    }
+}
+
+td.mat-cell {
+    padding-left: 24px;
+    padding-top: 14px;
+    padding-bottom: 0px;
+}
+
+.mat-paginator-range-actions {
+    svg {
+        &:hover {
+            color: #00c9d1 !important;
+        }
+    }
+}
+
+
+input[type="date"]:focus::before,
+input[type="date"]:valid::before {
+content: "";
+}

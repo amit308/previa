@@ -1,0 +1,420 @@
+<section>
+    <div class="container-fluid">
+        <div class="doctor-master">
+            <h2>DOCTOR MASTER</h2>
+        </div>
+        <form [formGroup]="doctorForm" (ngSubmit)="onSubmit()">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div>
+                            <div class="form-group row">
+                                <label for="inputPassword" class="col-sm-3 col-form-label"><b>Select Doctor:</b></label>
+                                <div class="col-sm-3">
+                                  <input type="text" class="form-control"   placeholder="Enter code">
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="search-doctor">
+                                        <input type="text" class="form-control"  placeholder="Select Doctor">
+                                        <div class="search">
+                                            <span class="material-icons">
+                                                search
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>    
+                        
+                        
+                    </div>
+    
+                    <div class="col-md-6">
+                        <div class="doctor-name">
+                            <div class="form-group row">
+                                <label for="inputPassword" class="col-sm-3 col-form-label"><b>Doctor Name:</b></label>
+                                <div class="col-sm-1 icon text-center">
+                                    <mat-icon aria-hidden="false" aria-label="Example add icon">add</mat-icon>
+                                </div>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" formControlName="name"  placeholder="Select Doctor">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div>
+                            <div class="form-group row">
+                                <label for="inputPassword" class="col-sm-4 col-form-label"><b>Qualification:</b></label>
+                                <div class="col-sm-6">
+                                  <input type="text" class="form-control" formControlName="qualification"  placeholder="Enter Qualification">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div>
+                            <div class="form-group row">
+                                <label for="inputPassword" class="col-sm-4 col-form-label"><b>Email Address:</b></label>
+                                <div class="col-sm-6">
+                                  <input type="text" class="form-control" formControlName="emailAddress" placeholder="Enter Email">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div>
+                            <div class="form-group row">
+                                <label for="inputPassword" class="col-sm-4 col-form-label"><b>Mobile Number:</b></label>
+                                <div class="col-sm-6">
+                                  <input class="form-control" formControlName="mobileNumber" 
+                                  [ngClass]="{
+                                    'is-invalid':this.doctorForm.get('mobileNumber').errors && f.mobileNumber.value
+                                  }"
+                                  min="10" max="10" pattern="^[0-9]\d{9}$" placeholder="Enter Number" (keypress)="checkIfNumber6($event)">
+                                  <div *ngIf="f.mobileNumber.errors  "  class="invalid-feedback">  
+                                    <div *ngIf=" f.mobileNumber.errors.pattern">Please Enter 10 digit Mobile Number </div>  
+                                  
+                                </div>  
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <mat-tab-group>
+                <mat-tab label="Doctor Details">
+                  <ng-template matTabContent>
+                    <div class="container-fluid card p-3 mt-3">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="address-section">
+                                        <div class="form-group row">
+                                            <label for="inputPassword" class="col-sm-4 col-form-label"><b>Specilization:</b></label>
+                                            <div class="col-sm-8">
+                                              <input type="text" class="form-control" formControlName="specialization"  placeholder="Enter Specilization">
+                                            </div>
+                                        </div>
+    
+                                        <div class="form-group row">
+                                            <label for="inputPassword" class="col-sm-4 col-form-label"><b>Region:</b></label>
+                                            <div class="col-sm-8">
+                                                <mat-form-field appearance="fill">
+                                                    <mat-label>Region</mat-label>
+                                                    <mat-select formControlName="region">
+                                                      <mat-option *ngFor="let food of foods" [value]="food.value">
+                                                        {{food.viewValue}}
+                                                      </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+    
+                                        <div class="form-group row">
+                                            <label for="inputPassword" class="col-sm-4 col-form-label"><b>Default Profile:</b></label>
+                                            <div class="col-sm-8">
+                                                <mat-form-field appearance="fill">
+                                                    <mat-label>Default Profile</mat-label>
+                                                    <mat-select formControlName="defaultProfile">
+                                                      <mat-option *ngFor="let food of foods" [value]="food.value">
+                                                        {{food.viewValue}}
+                                                      </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+    
+                                        <div class="form-group row">
+                                            <label for="inputPassword" class="col-sm-4 col-form-label"><b>Contact Person:</b></label>
+                                            <div class="col-sm-8">
+                                              <input type="text" class="form-control" formControlName="contactPerson"  placeholder="Contact Person Name">
+                                            </div>
+                                        </div>
+    
+                                        <div class="form-group row">
+                                            <label for="inputPassword" class="col-sm-4 col-form-label"><b>Price Scheme:</b></label>
+                                            <div class="col-sm-8">
+                                                <mat-form-field appearance="fill">
+                                                    <mat-label>Enter Price Scheme</mat-label>
+                                                    <mat-select formControlName="priceSchema">
+                                                      <mat-option *ngFor="let food of foods" [value]="food.value">
+                                                        {{food.viewValue}}
+                                                      </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+    
+                                        <div class="form-group row">
+                                            <label for="inputPassword" class="col-sm-4 col-form-label"><b>DOB</b></label>
+                                            <div class="col-sm-8">
+                                              <input type="date" class="form-control" formControlName="DOB"  placeholder="Enter Specilization">
+                                            </div>
+                                        </div>
+    
+                                        <div class="form-group row">
+                                            <label for="inputPassword" class="col-sm-4 col-form-label"><b>Credit Limit</b></label>
+                                            <div class="col-sm-8">
+                                              <input type="number" class="form-control" formControlName="creditLimit"  placeholder="Enter Credit Limit">
+                                            </div>
+                                        </div>
+    
+                                        <div class="form-group row">
+                                            <label for="inputPassword" class="col-sm-4 col-form-label"><b>Advanced Amount</b></label>
+                                            <div class="col-sm-8">
+                                              <input type="number" class="form-control" formControlName="advanceAmount"  placeholder="Enter Amount">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+    
+                                <div class="col-md-6">
+                                    <div class="address-section">
+                                        <div class="form-group row">
+                                            <label for="inputPassword" class="col-sm-4 col-form-label"><b>MarketingExec:</b></label>
+                                            <div class="col-sm-8">
+                                                <mat-form-field appearance="fill">
+                                                    <mat-label>Enter Price Scheme</mat-label>
+                                                    <mat-select formControlName="marketingExecutive">
+                                                    <mat-option *ngFor="let food of foods" [value]="food.value">
+                                                        {{food.viewValue}}
+                                                    </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+    
+                                        <div class="form-group row">
+                                            <label for="inputPassword" class="col-sm-4 col-form-label"><b>Remarks</b></label>
+                                            <div class="col-sm-8">
+                                              <textarea rows="2" class="form-control " formControlName="remarks"></textarea>
+                                            </div>
+                                        </div>
+    
+                                        <div class="form-group row">
+                                            <label for="inputPassword" class="col-sm-4 col-form-label"><b>Contact Number</b></label>
+                                            <div class="col-sm-8">
+                                              <input class="form-control" formControlName="contactNumber" min="10" max="10" pattern="^[0-9]\d{9}$" placeholder="Enter Number" (keypress)="checkIfNumber5($event)">
+                                            </div>
+                                        </div>
+    
+                                        <div class="form-group row">
+                                            <label for="inputPassword" class="col-sm-4 col-form-label"><b>Packages:</b></label>
+                                            <div class="col-sm-8">
+                                                <mat-form-field appearance="fill">
+                                                    <mat-label>Packages</mat-label>
+                                                    <mat-select formControlName="packages">
+                                                    <mat-option *ngFor="let food of foods" [value]="food.value">
+                                                        {{food.viewValue}}
+                                                    </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+    
+                                        <div class="form-group row">
+                                            <label for="inputPassword" class="col-sm-4 col-form-label"><b>Anniversary Date</b></label>
+                                            <div class="col-sm-8">
+                                              <input type="date" class="form-control" formControlName="anniversaryDate"  placeholder="Enter Date">
+                                            </div>
+                                        </div>
+    
+                                        <div class="form-group row">
+                                            <label for="inputPassword" class="col-sm-4 col-form-label"><b>Target Amount</b></label>
+                                            <div class="col-sm-8">
+                                              <input type="number" class="form-control" formControlName="targetAmount"  placeholder="Enter Amount">
+                                            </div>
+                                        </div>                                    
+                                    </div>                                
+                                </div>
+                            </div>
+                        </div>
+    
+                        <hr>
+    
+                        
+                       
+    
+                        <hr>
+                    </div> 
+                  </ng-template>
+                </mat-tab>
+    
+                <mat-tab label="Address">
+                  <ng-template matTabContent>
+                      <div class="card p-3 mt-3">
+                          <div class="row">
+                              <div class="col-lg-4">
+                                  <div class="form-group">
+                                      <label for="">Country</label>
+                                      <select name="" id="" class="form-control" formControlName="country">
+                                          <option [ngValue]="null" selected hidden>Select Country</option>
+                                          <option *ngFor="let item of countries" [value]="item.name">{{item.name}}</option>
+                                      </select>
+                                  </div>
+                              </div>
+                              <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="">State</label>
+                                   <select class="form-control" formControlName="state">
+                                        <option [ngValue]="null" selected hidden>select state</option>
+                                        <option value="andhra pradesh">Andhra Pradesh</option>
+                                        <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                                        <option value="Assam">Assam</option>
+                                        <option value="Bihar">Bihar</option>
+                                        <option value="Chhattisgarh">Chhattisgarh</option>
+                                        <option value="Telangana">Telangana</option>
+                                   </select>
+                                </div>
+                              </div>
+                              <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label for="">City</label>
+                                       <select class="form-control" formControlName="city">
+                                            <option [ngValue]="null" selected hidden>Select City</option>
+                                            <option value="visakhapatnam">Visakhapatnam</option>
+                                            <option value="Vizianagaram">Vizianagaram</option>
+                                            <option value="West Godavari">West Godavari</option>
+                                            <option value="Srikakulam">Srikakulam</option>
+                                            <option value="Nellore">Nellore</option>
+                                            <option value="Kurnool">Kurnool</option>
+                                            <option value="Kadapa">Kadapa</option>
+                                       </select>
+                                    </div> 
+                               </div>
+                               <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="">Place</label>
+                                    <input class="form-control" formControlName="place">
+                                   <!-- <select class="form-control" formControlName="place">
+                                    <option>Select Place</option>
+                                    <option>Madilapalem</option>
+                                   </select> -->
+                                </div>
+                               </div>
+                               <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="">Street</label>
+                                    <input class="form-control" formControlName="street">
+                                </div>
+                               </div>
+                               <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="">Pincode</label>
+                                    <input class="form-control" formControlName="pin" pattern="^[0-9]\d{5}$" min="6" max="6" (keypress)="checkIfNumber3($event)">
+                                </div>
+                               </div>
+                               <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="">Zone</label>
+                                    <input class="form-control" formControlName="zone">
+                                </div>
+                               </div>
+                               <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="">Email</label>
+                                    <input class="form-control" formControlName="email">
+                                </div>
+                               </div>
+                               <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="">Mobile</label>
+                                    <input class="form-control" formControlName="mobile" 
+                                    pattern="^[0-9]\d{9}$" min="10" max="10" (keypress)="checkIfNumber1($event)">
+                                </div>
+                               </div>
+                               <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="">Fax</label>
+                                    <input class="form-control" formControlName="fax">
+                                </div>
+                               </div>
+                               <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="">Phone1</label>
+                                    <input class="form-control" formControlName="phone1" 
+                                    pattern="^[0-9]\d{9}$" min="10" max="10" (keypress)="checkIfNumber2($event)">
+                                </div>
+                               </div>
+                               <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="">Phone2</label>
+                                    <input class="form-control" formControlName="phone2" 
+                                    pattern="^[0-9]\d{9}$" min="10" max="10" (keypress)="checkIfNumber4($event)">
+                                </div>
+                               </div>
+                               <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="">Website</label>
+                                    <input class="form-control" formControlName="website">
+                                </div>
+                               </div>
+                               
+                          </div>
+                        </div>
+                  </ng-template>
+                </mat-tab>
+                
+                <mat-tab label="Settings">
+                  <ng-template matTabContent>
+                    <div class="card p-3 mt-3">
+                        <div class="row">
+                          <div class="col-lg-4 form-group" *ngFor="let item of options">
+                            <mat-checkbox formControlName="{{item.value}}" >{{item.name}}</mat-checkbox>
+                          </div>
+                          <div class="col-lg-4">
+                             <!-- <label></label> -->
+                             <div class="formgroup">
+                                 <select class="form-control" formControlName="preferredDoctorStaff">
+                                     <option>select Preferred Doctor staff</option>
+                                 </select>
+                             </div>
+                          </div>
+                        </div>
+                      </div>
+                  </ng-template>
+                </mat-tab>
+    
+            </mat-tab-group>
+
+            <div class="row card webpass-card">
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label for="">Webpass</label>
+                        <div class="row webpass form-group">
+                            <div class="col-lg-2 mt-2">
+                                <mat-checkbox formControlName="sms">SMS</mat-checkbox>   
+                            </div>
+                            <div class="col-lg-2 mt-2">
+                                <mat-checkbox formControlName="webemail">Email</mat-checkbox>    
+                            </div>
+                            <div class="col-lg-2 mt-2">
+                                <mat-checkbox formControlName="reset">Reset</mat-checkbox>  
+                            </div>
+                        </div>
+                    </div>
+                   </div>
+                <div class="col-md-12">
+                    <div class="actions">
+                        <section class="example-section">
+                            <!-- <mat-checkbox class="example-margin">Genarate Online Password</mat-checkbox> -->
+                          </section>
+
+                        <div class="buttons">
+                            <button mat-button color="accent" type="reset" (click)="clearForm()"><span class="material-icons">clear</span>&nbsp;Clear</button>
+                            <button mat-button type="submit" color="primary"><span class="material-icons">update</span>&nbsp;Update</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        
+        
+    </div>
+</section>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="timer" [fullScreen]="true">
+    <p style="color: white">Processing... </p>
+  </ngx-spinner>

@@ -1,0 +1,134 @@
+<!-- <p>test-master-list works!</p> -->
+
+<div class="country-container mt-3">
+    <div class="container-fluid">
+      <div class="card card-custom example example-compact gutter-b">
+        <div class="card-header">
+          <div class="card-title">
+            <h2 class="card-label">TEST MASTER LIST</h2>
+          </div>
+          <div >
+            <input style="margin-left: 350px;" type="text" placeholder="Search By Test/Code" class="select_vaccine" [(ngModel)]="searchText">
+            <input type="text" placeholder="Search By Organization" class="select_vaccine"  [(ngModel)]="searchText1">
+          </div>
+          <div class="card-toolbar">
+            
+            <div class="example-tools justify-content-centerr">
+              <button (click)="createTest()" class="btn btnGroup">
+                Create Test
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="mx-auto" *ngIf="testMasterList?.length === 0">No Data Found</div>
+            <div class="table-responsive mat-elevation-z8" *ngIf="testMasterList?.length > 0">
+                <table class="table table-hover text-center">
+                    <tr>
+                        <th>S.No</th>
+                        <!-- class="w-75" -->
+                        <th (click)="sortEvent('name')">Test
+                            <i class="fa fa-chevron-up" *ngIf="sortDirection === 'ASC' && sortvalue === 'name'" ></i>
+                            <i class="fa fa-chevron-down" *ngIf="sortDirection === 'DASC' && sortvalue === 'name'"></i></th>
+                        <th (click)="sortEvent('code')">Code
+                            <i class="fa fa-chevron-up" *ngIf="sortDirection === 'ASC' && sortvalue === 'code'" ></i>
+                            <i class="fa fa-chevron-down" *ngIf="sortDirection === 'DASC' && sortvalue === 'code'"></i>
+                        </th>
+                        <th (click)="sortEvent('displayName')">Display Name
+                            <i class="fa fa-chevron-up" *ngIf="sortDirection === 'ASC' && sortvalue === 'displayName'" ></i>
+                            <i class="fa fa-chevron-down" *ngIf="sortDirection === 'DASC' && sortvalue === 'displayName'"></i>
+                        </th>
+                        <th>Price</th>
+                        <th (click)="sortEvent('subdivisionInfo?.name')">Organization
+                            <i class="fa fa-chevron-up" *ngIf="sortDirection === 'ASC' && sortvalue === 'subdivisionInfo?.name'" ></i>
+                            <i class="fa fa-chevron-down" *ngIf="sortDirection === 'DASC' && sortvalue === 'subdivisionInfo?.name'"></i>
+                        </th>
+                        <th class="d-flex mb-0" >Action</th>
+                    </tr>
+                    <!-- <ng-template #rowTemplateOutlet let-index="index" let-index2="index2" let-mainTest="mainTest"
+                        let-parentTest="parentTest"> -->
+                    <ng-container *ngFor="let mainTest of (testMasterList | searchorg :searchText1)| searchdata: searchText   ;let index2=index; ">
+
+                        <tr class="tableheader">
+                            <!-- style=" text-align:center;"colspan="5"  -->
+                            <td> {{ index2 + pageEvent?.pageIndex * pageEvent?.pageSize + 1 }} </td>
+                            <td> {{mainTest?.name | titlecase}} </td>
+                            <td> {{mainTest.code}} </td>
+                            <td> {{mainTest.displayName}} </td>
+                            <td>{{mainTest.price}}</td>
+                            <td>{{mainTest?.subdivisionInfo?.name}}</td>
+
+                            <td class="text-center">
+
+                                <div class="d-flex mb-0 " >
+                                    <mat-icon  (click)="editTest(mainTest,'1')">edit</mat-icon>
+                                    <mat-icon class="delete_icon_color" (click)="deleteTest(mainTest,'1')">delete</mat-icon>
+                                
+                                </div>
+                                <!-- <span class="material-icons ml-4" (click)="editTest(mainTest,'1')"> create </span>
+                                <span class="material-icons" (click)="deleteTest(mainTest,'1')">delete</span> -->
+                            </td>
+                        </tr>
+                        <ng-container *ngFor="let parentTest of mainTest?.subTests; let index=index;">
+                            <tr>
+                                <td> {{ index2 + pageEvent?.pageIndex * pageEvent?.pageSize + 1 }}.{{index+1}} </td>
+                                <td> {{parentTest?.name}} </td>
+                                <td> {{parentTest.code}} </td>
+                                <td> {{parentTest.displayName}} </td>
+                                <td>{{parentTest.price}}</td>
+                                <td>{{parentTest?.subdivisionInfo?.name}}</td>
+
+                                <td class="text-right">
+                                    <div class="d-flex mb-0" >
+                                        <mat-icon (click)="editTest(parentTest,'2')">edit</mat-icon>
+                                        <mat-icon class="delete_icon_color" (click)="deleteTest(parentTest,'2')">delete</mat-icon>
+                                    
+                                    </div>
+                                    <!-- <span class="material-icons" (click)="editTest(parentTest,'2')"> create </span>
+                                    <span class="material-icons" (click)="deleteTest(parentTest,'2')">delete</span> -->
+                                </td>
+                            </tr>
+                            <tr *ngFor="let subTest of parentTest?.subTests; let ind=index;">
+                                <td> {{ index2 + pageEvent?.pageIndex * pageEvent?.pageSize + 1 }}.{{index+1}}.{{ind+1}} </td>
+                                <td> {{subTest?.name}} </td>
+                                <td> {{subTest.code}} </td>
+                                <td> {{subTest.displayName}} </td>
+                                <td>{{subTest?.price}}</td>
+                                <td>{{subTest?.subdivisionInfo?.name}}</td>
+
+                                <td class="text-right">
+                                    <div class="d-flex mb-0">
+                                        <mat-icon  (click)="editTest(subTest,'3')">edit</mat-icon>
+                                        <mat-icon class="delete_icon_color" (click)="deleteTest(subTest,'sub3')">delete</mat-icon>
+                                    
+                                    </div>
+                                    <!-- <span class="material-icons" (click)="editTest(subTest,'3')"> create </span>
+                                    <span class="material-icons" (click)="deleteTest(subTest,'sub3')">delete</span> -->
+                                </td>
+                            </tr>
+                        </ng-container>
+                        <!-- </ng-template> -->
+
+                        <!-- <ng-container *ngFor="let mainTest of testMasterList;let inde=index;">
+                        <ng-container *ngFor="let parentTest of mainTest?.subTests; let i=index;">
+                            <ng-container
+                                *ngTemplateOutlet="rowTemplateOutlet; context:{mainTest: mainTest, parentTest: parentTest, index: i,index2:inde}">
+                            </ng-container> -->
+
+                    </ng-container>
+                    
+                </table>
+                <div style="border-bottom: 1px solid #ced4da ; margin-top: -12px;" ></div>
+                <!-- pagination div starts from here -->
+                <mat-paginator [length]="length" 
+                                [pageSize]="pageSize" 
+                                [pageSizeOptions]="pageSizeOptions" 
+                                (page)="onPageEvent($event)">
+                </mat-paginator>
+
+        <!-- pagination div ends here -->
+            </div>
+        </div>
+    </div>
+</div>
+</div>

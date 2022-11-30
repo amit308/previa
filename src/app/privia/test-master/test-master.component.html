@@ -1,0 +1,508 @@
+<div class="container-fluid">
+  <div class="body">
+    <div class="test-heading">
+      <h2 class="card-label">TEST MASTER</h2>
+    </div>
+    <div class="departments">
+      <form [formGroup]="testMasterForm">
+        <div class="row">
+          <div class="col-lg-3">
+            <div class="form-group">
+              <label>Test Type:</label>
+              <select class="form-control" formControlName="isSubTest" (change)="onChangeTestType($event)">
+                <option value="" disabled>Select Type</option>
+                <option *ngFor="let item of testTypes" value="{{ item.name }}"
+                  [selected]="item?.name === 'Add Main Test'">
+                  {{ item.name }}
+                </option>
+                <!-- <option [ngValue]="false">Add Main Test</option>
+                <option [ngValue]="true">Add Sub Test</option> -->
+              </select>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="form-group">
+              <label>Select Test Or Title :</label>
+              <mat-radio-group class="form-control" formControlName="isTest">
+                <mat-radio-button [value]="true">Test</mat-radio-button>
+                <mat-radio-button class="ml-2" [value]="false">Title</mat-radio-button>
+              </mat-radio-group>
+            </div>
+          </div>
+          <div class="col-lg-3" *ngIf="showParentTest">
+            <div class="form-group">
+              <label>Parent Test :</label>
+              <!-- <input class="form-control" placeholder="TestName" formControlName="code" *ngIf="testMasterForm.value.isSubTest !== 'subTest'"> -->
+              <select class="form-control" formControlName="parentTest"
+                (change)="onChangeParentTest($event.target.value)">
+                <option value="null" disabled>Select Parent Tests</option>
+                <option [selected]="parentTestSelected" *ngFor="let item of testDetails" [value]="item._id">
+                  {{ item.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-lg-3" *ngIf="
+              (showParentTest && subTestData?.length > 0) || isShowSubParentTest
+            ">
+            <div class="form-group">
+              <label>Sub Test<i class="fa fa-question-circle question" data-toggle="tooltip" data-placement="right"
+                  title="If You Want Add sub Test In Sub Test "></i></label>
+              <!-- <li><a href="#" data-toggle="tooltip" data-placement="top" title="Hooray!">Top</a></li> -->
+              <select class="form-control" formControlName="subParentTest" (change)="onChangeTestTrue($event)">
+                <option value="null" disabled>Select Sub Tests</option>
+                <option [selected]="selectedSubParent" *ngFor="let item of subTestData" [value]="item._id">
+                  {{ item.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="form-group">
+              <label>Department:</label>
+              <select class="form-control" formControlName="department"  >
+                <option [ngValue]="null" selected hidden>
+                  Select Department
+                </option>
+                <option *ngFor="let item of departments" [value]="item._id">
+                  {{ item.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="testMasterForm.value.isTest === false">
+          <div class="card mt-3 p-3">
+            <div class="row">
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label class="mat-icons mt-0">Test Name :</label>
+                  <input class="form-control" placeholder="Test" formControlName="name" />
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label class="mat-icons mt-0">Test Code :</label>
+                  <input class="form-control" placeholder="Test" formControlName="code" />
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label>Short Name :</label>
+                  <input class="form-control mt-1" placeholder="Short Name" formControlName="shortName" />
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label>HMS Code :</label>
+                  <input class="form-control mt-1" placeholder="HMS Code" formControlName="HIMSCode" />
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label>Display Name :</label>
+                  <input class="form-control" placeholder="Display Name" formControlName="displayName" />
+                </div>
+              </div>
+              <!-- <div class="col-lg-4">
+                <div class="form-group">
+                  <label>SpeciMan : </label>
+                  <select class="form-control" formControlName="specimen">
+                    <option value="1">Select marketining excu</option>
+                  </select>
+                </div>
+              </div> -->
+              <!-- <div class="col-lg-4">
+                <div class="form-group">
+                  <label>Mthode : </label>
+                  <select class="form-control" formControlName="method">
+                    <option value="1">Select marketining excu</option>
+                  </select>
+                </div>
+              </div> -->
+              <!-- <div class="col-lg-6">
+                <div class="form-group">
+                  <label>Applicable To:</label>
+                  <div class="applicable" class="form-control">
+                    <mat-radio-group aria-label="Select an option" formControlName="applicableTo">
+                      <mat-radio-button class="mr-2" value="male">Male</mat-radio-button>
+                      <mat-radio-button class="mr-2" value="female">Female</mat-radio-button>
+                      <mat-radio-button class="mr-2" value="both">Both</mat-radio-button>
+                    </mat-radio-group>
+                  </div>
+                </div>
+              </div> -->
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label>Container :</label>
+                  <select class="form-control" formControlName="container">
+                    <option value="1">Default Profile</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="btn-group">
+              <div *ngIf="!showUpdateBtns">
+                <button class="btn" mat-button (click)="clearTest()">
+                  Clear
+                </button>
+                <button class="btn" mat-button (click)="saveTest()">
+                  Save
+                </button>
+              </div>
+              <div *ngIf="showUpdateBtns">
+                <button class="btn" mat-button (click)="updateTestMaster()">
+                  Update
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <mat-tab-group #matgroup *ngIf="testMasterForm.value.isTest === true">
+          <mat-tab label="Add Test">
+            <div class="card mt-3 p-3">
+              <div class="row">
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <span style="color: red;font-size: 17px;" class="ng-star-inserted"> *</span>
+                    <label>Select Test : </label>
+        
+                    <select class="form-control" formControlName="testMaster"
+                      (change)="onChangeTestMaster($event.target.value)" [attr.disabled]="showUpdateBtns">
+                     
+                      <option value="null" disabled>Select Test</option>
+                      <option *ngFor="let item of testMasterList" [value]="item._id">
+                        {{ item.name }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label class="mat-icons mt-0">Test Name :</label>
+                    <input class="form-control" placeholder="Test" formControlName="name" value="{{ selectedTestMaster?.name }}" readonly />
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label class="mat-icons mt-0">Test Code :</label>
+                    <input class="form-control" placeholder="Test"  formControlName="code" value="{{ selectedTestMaster?.code }}" readonly />
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label>Short Name :</label>
+                    <input class="form-control mt-1" formControlName="shortName" placeholder="Short Name"
+                      value="{{ selectedTestMaster?.shortName }}" readonly />
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label>HMS Code :</label>
+                    <input class="form-control mt-1" placeholder="HMS Code" formControlName="HIMSCode"  value="{{ selectedTestMaster?.HIMSCode }}"
+                      readonly />
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label>Display Name :</label>
+                    <input class="form-control" placeholder="Display Name" formControlName="displayName" value="{{ selectedTestMaster?.displayName }}"
+                      readonly />
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label>SpeciMen : </label>
+                    <select class="form-control" formControlName="specimen">
+                      <option [ngValue]="null" selected hidden>
+                        Select Specimen
+                      </option>
+                      <!-- <option value="1">Select marketining excu</option> -->
+                    </select>
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label>Method : </label>
+                    <select class="form-control" formControlName="method">
+                      <option [ngValue]="null" selected hidden>
+                       Select Method
+                      </option>
+                      <!-- <option value="1">Select marketining excu</option> -->
+                    </select>
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label>Container :</label>
+                    <select class="form-control" formControlName="container">
+                      <option [ngValue]="null" selected hidden>
+Select Container
+                      </option>
+                      <!-- <option value="1">Default Profile</option> -->
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label>Interpretation :</label>
+                    <input class="form-control" placeholder="Interpretatione" formControlName="interpretation" />
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label>Instruction :</label>
+                    <input class="form-control" placeholder="Instruction" formControlName="instruction" />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-4" *ngIf="checkPageAccess('TEST_MASTER_ORGANISATION_ADD')">
+                  <div class="form-group">
+                    <label>Select Organization Type:</label>
+                    <select class="form-control" (change)="selectReferRole($event.target.value)" formControlName="subdivision"
+                      [attr.disabled]="showUpdateBtns">
+                      <option hidden value="" disabled selected>
+                        Select Organization Type
+                      </option>
+                      <option value="{{ refer.name }}" *ngFor="let refer of referRoles">
+                        {{ refer.displayName }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-lg-4" *ngIf="checkPageAccess('TEST_MASTER_ORGANISATION_ADD')">
+                  <div class="form-group">
+                    <label>Select Organization :</label>
+                    <select class="form-control" formControlName="subdivision_id" [attr.disabled]="showUpdateBtns">
+                      <option hidden value="" disabled selected>
+                        Select Organization Name
+                      </option>
+                      <option value="{{ referInfo?._id }}" *ngFor="let referInfo of referRoleList">
+                        {{ referInfo?.name }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label>Price :</label>
+                    <input class="form-control" type="number" placeholder="Price" formControlName="basePrice"
+                      (input)="onChangePrice()" />
+                  </div>
+                </div> 
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label>Discount Percentage(%) :</label>
+                    <input class="form-control" type="number" placeholder="Percentage"
+                      formControlName="discountPercentage" (input)="calculateDiscountPercentage()" />
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label>Discount Price :</label>
+                    <input class="form-control" type="number" placeholder="Price" formControlName="discountPrice"
+                      (keypress)="calculateDiscountPrice()" />
+                  </div>
+                </div>
+
+               
+              </div>
+              <div class="btn-group">
+                <button *ngIf="!showUpdateBtns" class="btn" mat-button (click)="clearTest()">
+                  Clear
+                </button>
+                <button  [disabled]="(testMasterForm.value.testMaster == '' || testMasterForm.value.testMaster == null)? true:false" (click)="matgroup.selectedIndex = 1 " class="btn" mat-button>
+                  Next
+                </button>
+              </div>
+            </div>
+          </mat-tab>
+          <!-- <mat-tab label="Sub Test">
+            <div class="card mt-3 p-3" formArrayName="subTests" *ngFor="let item of getSubtest();let i = index">
+              <div class="form-group">
+                <label>Sub Test(s)</label>
+                <div class="mat-icons"  [formGroupName]="i" >
+                  <input class="form-control" placeholder="please enter sub test name" formControlName="name">
+                  <textarea class="form-control" placeholder="comment"></textarea>
+                </div>
+              </div>
+            </div>
+            <mat-icon aria-hidden="false" class="mt-2" aria-label="Example add icon" (click)="addSubtest()">add</mat-icon>
+          </mat-tab> -->
+          <mat-tab label="Settings">
+            <div class="card p-3 mt-3">
+              <div class="row" formGroupName="settings">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="">Unacceptable Condition :</label>
+                    <input type="text" class="form-control" placeholder="Unacceptable Condition :"
+                      formControlName="unAcceptableConditions" />
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="">Min. Sample Qty :</label>
+                    <input type="text" class="form-control" placeholder="min. sample qty :"
+                      formControlName="minSampleQuantity" />
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label for="">Cut Off Time:</label>
+                    <input type="time" class="form-control" placeholder="cut off time :" formControlName="cutOffTime" />
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label for="">Test Suffix :</label>
+                    <input type="text" class="form-control" placeholder="test suffix:" formControlName="testSuffix" />
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label for="">Suffix Desc:</label>
+                    <input type="text" class="form-control" placeholder="suffix desc:" formControlName="suffixDesc" />
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for=""> Min. Process Time:</label>
+                    <input type="time" class="form-control" placeholder="min. process time:"
+                      formControlName="minProcessTime" />
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="">Min. Process Period :</label>
+                    <select name="" id="" class="form-control" formControlName="minProcessPeriod">
+                      <option [ngValue]="null" selected hidden>
+                        Select Min. Process Period
+                      </option>
+                      <option value="1">Hrs</option>
+                      <option value="2">Mins</option>
+                      <option value="3">Days</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="">Emergency. Process Time:</label>
+                    <input type="time" class="form-control" placeholder="emergency. process time:"
+                      formControlName="emergencyProcessTime" />
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="">Emergency. Process Period:</label>
+                    <select name="" id="" class="form-control" formControlName="emergencyProcessPeriod">
+                      <option [ngValue]="null" selected hidden>
+                        Select Emergency. Process Period
+                      </option>
+                      <option value="1">Hrs</option>
+                      <option value="2">Mins</option>
+                      <option value="3">Days</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="">Expiry Time:</label>
+                    <input type="time" class="form-control" placeholder="Expiry Time" formControlName="expiryTime" />
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="">Expiry Period:</label>
+                    <select type="time" name="" id="" class="form-control" formControlName="expiryPeriod">
+                      <option [ngValue]="null" selected hidden>
+                        Select Expiry Period
+                      </option>
+                      <option value="1">Hrs</option>
+                      <option value="2">Mins</option>
+                      <option value="3">Days</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label>Applicable To:</label>
+                    <div class="applicable" class="form-control">
+                      <mat-radio-group aria-label="Select an option" formControlName="applicableTo">
+                        <mat-radio-button class="mr-2" value="male">Male</mat-radio-button>
+                        <mat-radio-button class="mr-2" value="female">Female</mat-radio-button>
+                        <mat-radio-button class="mr-2" value="both">Both</mat-radio-button>
+                      </mat-radio-group>
+                    </div>
+                    <!-- <div>
+                        <input type="radio" value="Male" name="gender">Male
+                        <input type="radio" value="Female" name="gender">Female
+                        <input type="radio" value="Both" name="gender">Both
+                      </div> -->
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label>Reporting Days</label>
+                    <input type="number" class="form-control" placeholder="Reporting Days"
+                      formControlName="reportingDays" />
+                  </div>
+                </div>
+                <div class="col-lg-12">
+                  <div class="form-group">
+                    <label>Test Done On
+                      <mat-checkbox  (click)="checkUncheckAll($event)"></mat-checkbox>
+                    </label>
+                    <div class="applicable form-control">
+                      <div class="row" formGroupName="testDoneOn">
+                        <div class="col-lg-1" *ngFor="let item of days">
+                          <mat-checkbox  [(ngModel)]="item.isSelected"   [formControlName]="item.name">{{ item.value }}</mat-checkbox>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="btn-group">
+                <button *ngIf="!showUpdateBtns" class="btn" mat-button (click)="clearTest()">
+                  Clear
+                </button>
+                <button (click)="matgroup.selectedIndex = 2" class="btn" mat-button>
+                  Next
+                </button>
+              </div>
+            </div>
+          </mat-tab>
+          <mat-tab label="Options">
+            <div class="card p-3 mt-3">
+              <div class="row" formGroupName="options">
+                <div class="col-lg-4" *ngFor="let item of options">
+                  <mat-checkbox [checked]="checked" [formControlName]="item.name">{{ item.value }}</mat-checkbox>
+                </div>
+              </div>
+              <div class="btn-group">
+                <div *ngIf="!showUpdateBtns">
+                  <button class="btn" mat-button (click)="clearTest()">
+                    Clear
+                  </button>
+                  <button class="btn" mat-button (click)="saveTest()">
+                    Save
+                  </button>
+                </div>
+                <div *ngIf="showUpdateBtns">
+                  <button class="btn" mat-button (click)="updateTestMaster()">
+                    Update
+                  </button>
+                </div>
+              </div>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </form>
+    </div>
+  </div>
+</div>
